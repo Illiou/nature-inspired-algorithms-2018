@@ -38,7 +38,18 @@ def small_neighborhood(assignment):
 
 
 def large_neighborhood(assignment):
-    pass
+    neighbors = []
+    for i in range(len(assignment)):
+        new_assignment = assignment.copy()
+        new_assignment[i] ^= 1  # toggle variable
+        if satisfies_constraints(new_assignment):
+            neighbors.append(new_assignment)
+        for j in range(i + 1, len(assignment)):
+            newer_assignment = new_assignment.copy()
+            newer_assignment[j] ^= 1  # toggle variable
+            if satisfies_constraints(newer_assignment):
+                neighbors.append(newer_assignment)
+    return neighbors
 
 
 def hill_climbing(assignment=None, neighborhood_func=small_neighborhood):
@@ -69,4 +80,5 @@ def first_choice_hill_climbing(assignment=None, neighborhood_func=small_neighbor
 
 gen_pattern()
 print(pattern)
-print(assignment_value(hill_climbing([0,0,0,0,0,0,0,0,0,0,0,0])))
+#print(large_neighborhood([0,0,0,0,0,0,0,0,0,0,0,0]))
+print(assignment_weight(hill_climbing([1,1,1,0,0,0,0,0,0,0,0,0], neighborhood_func=large_neighborhood)))
