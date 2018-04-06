@@ -80,5 +80,6 @@ def first_choice_hill_climbing(assignment=None, neighborhood_func=small_neighbor
 
 gen_pattern()
 print(pattern)
-#print(large_neighborhood([0,0,0,0,0,0,0,0,0,0,0,0]))
-print(assignment_weight(hill_climbing([1,1,1,0,0,0,0,0,0,0,0,0], neighborhood_func=large_neighborhood)))
+print(large_neighborhood([0,0,0,0,0,0,0,0,0,0,0,0]))
+# TODO: what to do with initial assignment that violates constraints:
+# print(assignment_weight(hill_climbing([1,1,1,0,0,0,0,0,0,0,0,0], neighborhood_func=large_neighborhood)))
