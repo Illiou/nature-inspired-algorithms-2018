@@ -1,4 +1,4 @@
-from Week_1.Jo.Knapsack.KnapsackProblem import KnapsackProblem, Item
+from KnapsackProblem import KnapsackProblem, Item
 import time
 import random
 
@@ -62,7 +62,7 @@ def save_data(use_large, use_first_choice, opened_file, needed_iterations, neede
 
 if __name__ == '__main__':
     iterations = 100
-    with open("./data/evaluation2.csv", "w+") as file:
+    with open("./data/evaluation.csv", "w+") as file:
         knapsack = random_knapsack(30, 500, 5000)
         file.write("neighbourhood\talgorithm\titerations\ttime\ttimeperiteration\tvalue")
         for i in range(iterations):

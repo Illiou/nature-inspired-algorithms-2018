@@ -1,5 +1,4 @@
 import random
-from copy import copy
 
 
 class Item:
@@ -28,7 +27,7 @@ class KnapsackProblem:
             raise AssertionError("assignment must match item_count")
         neighbourhood = []
         for i in range(self.item_count):
-            neighbour = copy(assignment)
+            neighbour = assignment.copy()
             neighbour[i] = int(not neighbour[i])
             if self.is_feasible(neighbour):
                 neighbourhood.append(neighbour)
@@ -39,12 +38,17 @@ class KnapsackProblem:
             raise AssertionError("assignment must match item_count")
         neighbourhood = []
         for i in range(self.item_count):
+            # Add neighbours with one bit toggled
+            neighbour = assignment.copy()
+            neighbour[i] = int(not neighbour[i])
+            if self.is_feasible(neighbour):
+                neighbourhood.append(neighbour)
             for j in range(i+1, self.item_count):
-                neighbour = copy(assignment)
-                neighbour[i] = int(not neighbour[i])
-                neighbour[j] = int(not neighbour[j])
-                if self.is_feasible(neighbour):
-                    neighbourhood.append(neighbour)
+                new_neighbour = neighbour.copy()
+                # Add neighbour with two bit toggled
+                new_neighbour[j] = int(not new_neighbour[j])
+                if self.is_feasible(new_neighbour):
+                    neighbourhood.append(new_neighbour)
         return neighbourhood
 
     def value_for_assignment(self, assignment):

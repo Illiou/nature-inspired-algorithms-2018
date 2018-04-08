@@ -1,6 +1,6 @@
 import unittest
 import random
-from Woche1.Jo.Knapsack.KnapsackProblem import KnapsackProblem, Item
+from Week_1.Jo.Knapsack.KnapsackProblem import KnapsackProblem, Item
 
 
 class KnapsackProblemTest(unittest.TestCase):
@@ -38,8 +38,8 @@ class KnapsackProblemTest(unittest.TestCase):
     def test_large_neighbourhood(self):
         assignment = [0, 1, 1, 0, 0]
         neighbourhood = self.knapsack.large_neighbourhood(assignment)
-        expected_neighbourhood = [[1, 0, 1, 0, 0], [1, 1, 0, 0, 0], [0, 0, 0, 0, 0],
-                                  [0, 0, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 0, 0, 1]]
+        expected_neighbourhood = [[1, 0, 1, 0, 0], [1, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 0, 0],
+                                  [0, 0, 1, 1, 0], [0, 1, 0, 0, 0], [0, 1, 0, 1, 0], [0, 1, 0, 0, 1]]
         self.assertEqual(expected_neighbourhood, neighbourhood)
 
 
