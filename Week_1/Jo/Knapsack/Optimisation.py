@@ -61,10 +61,12 @@ def save_data(use_large, use_first_choice, opened_file, needed_iterations, neede
 
 
 if __name__ == '__main__':
-    iterations = 10
-    with open("./data/evaluation.csv", "w+") as file:
-        knapsack = random_knapsack(10, 500, 5000)
+    iterations = 100
+    with open("./data/evaluation2.csv", "w+") as file:
+        knapsack = random_knapsack(30, 500, 5000)
+        file.write("neighbourhood\talgorithm\titerations\ttime\ttimeperiteration\tvalue")
         for i in range(iterations):
+            print("start iteration", i+1)
             initial_assignment = knapsack.random_assignment()
             file.write("\nRUN {}\n".format(i+1))
 
