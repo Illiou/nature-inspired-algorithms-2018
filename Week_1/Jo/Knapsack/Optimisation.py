@@ -1,6 +1,7 @@
 from KnapsackProblem import KnapsackProblem, Item
 import time
 import random
+import pandas
 
 
 def current_milli_time():
@@ -13,7 +14,8 @@ def random_knapsack(item_count, max_item_weight, max_item_value):
         random_weight = random.randint(1, max_item_weight)
         random_value = random.randint(1, max_item_value)
         items.append(Item(random_weight, random_value))
-    max_weight = random.randint(max_item_weight * (int(item_count / 10) + 1), max_item_weight * (int(item_count / 3) + 1))
+    max_weight = random.randint(max_item_weight * (int(item_count / 10) + 1),
+                                max_item_weight * (int(item_count / 3) + 1))
     return KnapsackProblem(items, max_weight)
 
 
@@ -51,29 +53,43 @@ class Optimisation:
             assignment = neighbour
 
 
-def save_data(use_large, use_first_choice, opened_file, needed_iterations, needed_time, achieved_value):
+def save_data_to_csv(use_large, use_first_choice, opened_file, needed_iterations, needed_time, achieved_value):
     time_per_iteration = needed_time / needed_iterations
     neighbourhood_string = "large" if use_large else "small"
-    algorithm_string = "hillClimbing" if use_first_choice else "firstChoice"
+    algorithm_string = "hillClimbing" if not use_first_choice else "firstChoice"
     total_string = "\t".join([neighbourhood_string, algorithm_string, str(needed_iterations),
                               str(needed_time), str(time_per_iteration), str(achieved_value)]) + "\n"
     opened_file.write(total_string)
 
 
+def save_to_array(dict, needed_iterations, needed_time, achieved_value):
+    time_per_iteration = needed_time / needed_iterations
+    dict["iter"].append(needed_iterations)
+    dict["time"].append(needed_time)
+    dict["time_per_iter"].append(time_per_iteration)
+    dict["value"].append(achieved_value)
+
+
 if __name__ == '__main__':
-    iterations = 100
+    runs = 100
+    dict = {"iter": [], "time": [], "time_per_iter": [], "value": []}
     with open("./data/evaluation.csv", "w+") as file:
         knapsack = random_knapsack(30, 500, 5000)
         file.write("neighbourhood\talgorithm\titerations\ttime\ttimeperiteration\tvalue")
-        for i in range(iterations):
-            print("start iteration", i+1)
+        for i in range(runs):
+            print("start iteration", i + 1)
             initial_assignment = knapsack.random_assignment()
-            file.write("\nRUN {}\n".format(i+1))
+            file.write("\nRUN {}\n".format(i + 1))
 
             for use_large in [False, True]:
                 for use_first_choice in [False, True]:
-                    iteration, needed_time, assignment = Optimisation(knapsack, use_large, use_first_choice)\
+                    iteration, needed_time, assignment = Optimisation(knapsack, use_large, use_first_choice) \
                         .run(initial_assignment)
-                    save_data(use_large, use_first_choice, file, iteration,
-                              needed_time, knapsack.value_for_assignment(assignment))
-
+                    save_data_to_csv(use_large, use_first_choice, file, iteration,
+                                     needed_time, knapsack.value_for_assignment(assignment))
+                    save_to_array(dict, iteration,
+                                  needed_time, knapsack.value_for_assignment(assignment))
+    iterables = [[str(i+1) for i in range(runs)], ['small', 'large'], ['hillClimbing', 'firstChoice']]
+    index = pandas.MultiIndex.from_product(iterables, names=['Run', 'Neighbourhood', 'Algorithm'])
+    frame = pandas.DataFrame(dict, index=index)
+    print(frame)
