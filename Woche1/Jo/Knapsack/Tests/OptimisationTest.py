@@ -1,5 +1,5 @@
 import unittest
-from Knapsack import Optimisation
+from Woche1.Jo.Knapsack import Optimisation
 
 
 class OptimisationTest(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 import random
-from Knapsack.KnapsackProblem import KnapsackProblem, Item
+from Woche1.Jo.Knapsack.KnapsackProblem import KnapsackProblem, Item
 
 
 class KnapsackProblemTest(unittest.TestCase):

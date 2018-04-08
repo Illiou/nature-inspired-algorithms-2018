@@ -1,4 +1,4 @@
-from Knapsack.KnapsackProblem import KnapsackProblem, Item
+from Woche1.Jo.Knapsack.KnapsackProblem import KnapsackProblem, Item
 import time
 import random
 
