@@ -1,4 +1,4 @@
-from Woche1.Jo.Knapsack.KnapsackProblem import KnapsackProblem, Item
+from Week_1.Jo.Knapsack.KnapsackProblem import KnapsackProblem, Item
 import time
 import random
 
@@ -51,19 +51,27 @@ class Optimisation:
             assignment = neighbour
 
 
-if __name__ == '__main__':
-    knapsack = random_knapsack(100, 500, 5000)
-    initial_assignment = knapsack.random_assignment()
+def save_data(use_large, use_first_choice, opened_file, needed_iterations, needed_time, achieved_value):
+    time_per_iteration = needed_time / needed_iterations
+    neighbourhood_string = "large" if use_large else "small"
+    algorithm_string = "hillClimbing" if use_first_choice else "firstChoice"
+    total_string = "\t".join([neighbourhood_string, algorithm_string, str(needed_iterations),
+                              str(needed_time), str(time_per_iteration), str(achieved_value)]) + "\n"
+    opened_file.write(total_string)
 
-    iteration, needed_time, assignment = Optimisation(knapsack, False, False).run(initial_assignment)
-    time_per_iteration = needed_time / iteration
-    print(iteration, needed_time, time_per_iteration, knapsack.assignment_to_value_weight_string(assignment))
-    iteration, needed_time, assignment = Optimisation(knapsack, False, True).run(initial_assignment)
-    time_per_iteration = needed_time / iteration
-    print(iteration, needed_time, time_per_iteration, knapsack.assignment_to_value_weight_string(assignment))
-    iteration, needed_time, assignment = Optimisation(knapsack, True, False).run(initial_assignment)
-    time_per_iteration = needed_time / iteration
-    print(iteration, needed_time, time_per_iteration, knapsack.assignment_to_value_weight_string(assignment))
-    iteration, needed_time, assignment = Optimisation(knapsack, True, True).run(initial_assignment)
-    time_per_iteration = needed_time / iteration
-    print(iteration, needed_time, time_per_iteration, knapsack.assignment_to_value_weight_string(assignment))
+
+if __name__ == '__main__':
+    iterations = 10
+    with open("./data/evaluation.csv", "w+") as file:
+        knapsack = random_knapsack(10, 500, 5000)
+        for i in range(iterations):
+            initial_assignment = knapsack.random_assignment()
+            file.write("\nRUN {}\n".format(i+1))
+
+            for use_large in [False, True]:
+                for use_first_choice in [False, True]:
+                    iteration, needed_time, assignment = Optimisation(knapsack, use_large, use_first_choice)\
+                        .run(initial_assignment)
+                    save_data(use_large, use_first_choice, file, iteration,
+                              needed_time, knapsack.value_for_assignment(assignment))
+
