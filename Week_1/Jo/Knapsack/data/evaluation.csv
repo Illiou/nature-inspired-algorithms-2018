@@ -1,600 +1,600 @@
 neighbourhood	algorithm	iterations	time	timeperiteration	value
 RUN 1
-small	hillClimbing	5	2	0.4	45234
-small	firstChoice	5	1	0.2	43292
-large	hillClimbing	8	35	4.375	57513
-large	firstChoice	23	70	3.0434782608695654	58282
+small	hillClimbing	2	1	0.5	31868
+small	firstChoice	2	0	0.0	31868
+large	hillClimbing	8	30	3.75	48933
+large	firstChoice	16	51	3.1875	46720
 
 RUN 2
-small	hillClimbing	6	2	0.3333333333333333	49404
-small	firstChoice	7	2	0.2857142857142857	47176
-large	hillClimbing	7	30	4.285714285714286	60030
-large	firstChoice	20	60	3.0	60030
+small	hillClimbing	6	2	0.3333333333333333	41234
+small	firstChoice	5	1	0.2	37087
+large	hillClimbing	7	28	4.0	47529
+large	firstChoice	23	69	3.0	48126
 
 RUN 3
-small	hillClimbing	4	2	0.5	39600
-small	firstChoice	3	0	0.0	31816
-large	hillClimbing	10	45	4.5	58282
-large	firstChoice	25	75	3.0	60030
+small	hillClimbing	3	1	0.3333333333333333	33304
+small	firstChoice	3	1	0.3333333333333333	29628
+large	hillClimbing	10	39	3.9	48933
+large	firstChoice	24	71	2.9583333333333335	48126
 
 RUN 4
-small	hillClimbing	7	2	0.2857142857142857	54215
-small	firstChoice	6	1	0.16666666666666666	40812
-large	hillClimbing	8	55	6.875	60102
-large	firstChoice	21	65	3.0952380952380953	60030
+small	hillClimbing	7	2	0.2857142857142857	36189
+small	firstChoice	10	2	0.2	30754
+large	hillClimbing	9	36	4.0	47642
+large	firstChoice	32	94	2.9375	48126
 
 RUN 5
-small	hillClimbing	5	2	0.4	56204
-small	firstChoice	4	1	0.25	43949
-large	hillClimbing	4	17	4.25	59603
-large	firstChoice	16	48	3.0	60030
+small	hillClimbing	5	2	0.4	39480
+small	firstChoice	3	0	0.0	30155
+large	hillClimbing	11	43	3.909090909090909	48126
+large	firstChoice	25	74	2.96	48126
 
 RUN 6
-small	hillClimbing	5	2	0.4	44338
-small	firstChoice	6	1	0.16666666666666666	41429
-large	hillClimbing	11	52	4.7272727272727275	60102
-large	firstChoice	25	75	3.0	58282
+small	hillClimbing	3	1	0.3333333333333333	30189
+small	firstChoice	3	0	0.0	26126
+large	hillClimbing	9	35	3.888888888888889	47764
+large	firstChoice	22	65	2.9545454545454546	47529
 
 RUN 7
-small	hillClimbing	3	0	0.0	50054
-small	firstChoice	2	1	0.5	44729
-large	hillClimbing	8	32	4.0	60030
-large	firstChoice	16	55	3.4375	60030
+small	hillClimbing	5	2	0.4	40241
+small	firstChoice	5	1	0.2	40241
+large	hillClimbing	7	26	3.7142857142857144	48933
+large	firstChoice	17	50	2.9411764705882355	46720
 
 RUN 8
-small	hillClimbing	6	2	0.3333333333333333	42939
-small	firstChoice	6	1	0.16666666666666666	40443
-large	hillClimbing	9	43	4.777777777777778	59324
-large	firstChoice	25	93	3.72	58282
+small	hillClimbing	8	2	0.25	45282
+small	firstChoice	8	1	0.125	44651
+large	hillClimbing	8	30	3.75	48933
+large	firstChoice	18	59	3.2777777777777777	48933
 
 RUN 9
-small	hillClimbing	1	1	1.0	48967
-small	firstChoice	1	0	0.0	48967
-large	hillClimbing	6	24	4.0	60102
-large	firstChoice	10	32	3.2	59324
+small	hillClimbing	7	2	0.2857142857142857	39126
+small	firstChoice	6	1	0.16666666666666666	35594
+large	hillClimbing	8	30	3.75	45038
+large	firstChoice	29	86	2.9655172413793105	48126
 
 RUN 10
-small	hillClimbing	2	0	0.0	43039
-small	firstChoice	2	1	0.5	42864
-large	hillClimbing	7	28	4.0	59572
-large	firstChoice	14	41	2.9285714285714284	60030
+small	hillClimbing	6	2	0.3333333333333333	39670
+small	firstChoice	9	2	0.2222222222222222	38540
+large	hillClimbing	9	35	3.888888888888889	48933
+large	firstChoice	25	75	3.0	48126
 
 RUN 11
-small	hillClimbing	2	1	0.5	40794
-small	firstChoice	2	0	0.0	40274
-large	hillClimbing	7	30	4.285714285714286	59603
-large	firstChoice	19	79	4.157894736842105	60030
+small	hillClimbing	8	2	0.25	45534
+small	firstChoice	6	1	0.16666666666666666	39813
+large	hillClimbing	8	31	3.875	48933
+large	firstChoice	18	55	3.0555555555555554	47642
 
 RUN 12
-small	hillClimbing	6	2	0.3333333333333333	53173
-small	firstChoice	8	2	0.25	45376
-large	hillClimbing	7	31	4.428571428571429	60030
-large	firstChoice	19	60	3.1578947368421053	58282
+small	hillClimbing	9	2	0.2222222222222222	44234
+small	firstChoice	7	2	0.2857142857142857	39849
+large	hillClimbing	7	29	4.142857142857143	48126
+large	firstChoice	21	73	3.4761904761904763	48126
 
 RUN 13
-small	hillClimbing	1	1	1.0	40466
-small	firstChoice	1	0	0.0	40466
-large	hillClimbing	7	28	4.0	56362
-large	firstChoice	20	81	4.05	60030
+small	hillClimbing	5	1	0.2	40112
+small	firstChoice	5	1	0.2	39448
+large	hillClimbing	8	31	3.875	48933
+large	firstChoice	20	64	3.2	48126
 
 RUN 14
-small	hillClimbing	4	1	0.25	41963
-small	firstChoice	4	1	0.25	41443
-large	hillClimbing	8	34	4.25	58282
-large	firstChoice	21	74	3.5238095238095237	58282
+small	hillClimbing	4	1	0.25	42461
+small	firstChoice	4	1	0.25	42461
+large	hillClimbing	8	31	3.875	48126
+large	firstChoice	14	48	3.4285714285714284	48126
 
 RUN 15
-small	hillClimbing	8	3	0.375	47458
-small	firstChoice	7	2	0.2857142857142857	30844
-large	hillClimbing	12	51	4.25	60030
-large	firstChoice	27	98	3.6296296296296298	58282
+small	hillClimbing	8	3	0.375	40697
+small	firstChoice	8	1	0.125	40697
+large	hillClimbing	9	35	3.888888888888889	48131
+large	firstChoice	20	59	2.95	46720
 
 RUN 16
-small	hillClimbing	8	3	0.375	56707
-small	firstChoice	8	2	0.25	47920
-large	hillClimbing	6	30	5.0	59581
-large	firstChoice	18	95	5.277777777777778	58675
+small	hillClimbing	6	2	0.3333333333333333	42168
+small	firstChoice	6	2	0.3333333333333333	42168
+large	hillClimbing	9	36	4.0	48126
+large	firstChoice	17	50	2.9411764705882355	48126
 
 RUN 17
-small	hillClimbing	6	2	0.3333333333333333	46301
-small	firstChoice	5	1	0.2	33894
-large	hillClimbing	10	41	4.1	58282
-large	firstChoice	28	90	3.2142857142857144	60030
+small	hillClimbing	2	0	0.0	21400
+small	firstChoice	2	1	0.5	21400
+large	hillClimbing	12	46	3.8333333333333335	48933
+large	firstChoice	31	90	2.903225806451613	48126
 
 RUN 18
-small	hillClimbing	5	2	0.4	34780
-small	firstChoice	4	0	0.0	30282
-large	hillClimbing	14	79	5.642857142857143	60102
-large	firstChoice	29	88	3.0344827586206895	60030
+small	hillClimbing	2	0	0.0	30262
+small	firstChoice	2	1	0.5	30262
+large	hillClimbing	9	34	3.7777777777777777	48933
+large	firstChoice	18	52	2.888888888888889	46599
 
 RUN 19
-small	hillClimbing	5	1	0.2	48178
-small	firstChoice	6	2	0.3333333333333333	41791
-large	hillClimbing	9	39	4.333333333333333	60102
-large	firstChoice	16	48	3.0	60030
+small	hillClimbing	5	1	0.2	42352
+small	firstChoice	5	1	0.2	38927
+large	hillClimbing	6	24	4.0	48933
+large	firstChoice	14	44	3.142857142857143	45692
 
 RUN 20
-small	hillClimbing	1	0	0.0	25472
-small	firstChoice	1	1	1.0	25472
-large	hillClimbing	9	37	4.111111111111111	59405
-large	firstChoice	20	59	2.95	57513
+small	hillClimbing	9	3	0.3333333333333333	42366
+small	firstChoice	7	2	0.2857142857142857	37450
+large	hillClimbing	8	32	4.0	48933
+large	firstChoice	21	61	2.9047619047619047	46720
 
 RUN 21
-small	hillClimbing	7	2	0.2857142857142857	54187
-small	firstChoice	8	2	0.25	47992
-large	hillClimbing	8	38	4.75	60102
-large	firstChoice	20	62	3.1	58282
+small	hillClimbing	3	1	0.3333333333333333	34089
+small	firstChoice	3	1	0.3333333333333333	34089
+large	hillClimbing	10	39	3.9	48933
+large	firstChoice	16	50	3.125	47355
 
 RUN 22
-small	hillClimbing	4	1	0.25	43299
-small	firstChoice	3	1	0.3333333333333333	34870
-large	hillClimbing	9	36	4.0	58282
-large	firstChoice	26	107	4.115384615384615	58282
+small	hillClimbing	4	1	0.25	34202
+small	firstChoice	4	1	0.25	30526
+large	hillClimbing	8	31	3.875	48933
+large	firstChoice	22	65	2.9545454545454546	48126
 
 RUN 23
-small	hillClimbing	4	2	0.5	41073
-small	firstChoice	4	2	0.5	39872
-large	hillClimbing	9	41	4.555555555555555	59603
-large	firstChoice	25	108	4.32	60030
+small	hillClimbing	8	3	0.375	44913
+small	firstChoice	8	1	0.125	42397
+large	hillClimbing	9	36	4.0	46720
+large	firstChoice	19	59	3.1052631578947367	48126
 
 RUN 24
-small	hillClimbing	6	2	0.3333333333333333	48614
-small	firstChoice	8	2	0.25	45966
-large	hillClimbing	9	45	5.0	60030
-large	firstChoice	24	100	4.166666666666667	60030
+small	hillClimbing	5	2	0.4	45143
+small	firstChoice	7	1	0.14285714285714285	41759
+large	hillClimbing	8	31	3.875	48933
+large	firstChoice	18	59	3.2777777777777777	48933
 
 RUN 25
-small	hillClimbing	5	3	0.6	44907
-small	firstChoice	4	2	0.5	35797
-large	hillClimbing	9	46	5.111111111111111	58282
-large	firstChoice	21	77	3.6666666666666665	60030
+small	hillClimbing	8	2	0.25	47207
+small	firstChoice	8	2	0.25	44142
+large	hillClimbing	7	28	4.0	48933
+large	firstChoice	15	47	3.1333333333333333	48933
 
 RUN 26
-small	hillClimbing	3	1	0.3333333333333333	38514
-small	firstChoice	3	2	0.6666666666666666	33252
-large	hillClimbing	9	56	6.222222222222222	60030
-large	firstChoice	22	94	4.2727272727272725	58282
+small	hillClimbing	5	1	0.2	48302
+small	firstChoice	5	1	0.2	48302
+large	hillClimbing	4	16	4.0	48933
+large	firstChoice	10	32	3.2	48933
 
 RUN 27
-small	hillClimbing	2	1	0.5	49949
-small	firstChoice	2	1	0.5	49949
-large	hillClimbing	6	46	7.666666666666667	59603
-large	firstChoice	14	55	3.9285714285714284	59405
+small	hillClimbing	5	2	0.4	35673
+small	firstChoice	7	2	0.2857142857142857	36999
+large	hillClimbing	9	40	4.444444444444445	48126
+large	firstChoice	21	61	2.9047619047619047	48126
 
 RUN 28
-small	hillClimbing	5	1	0.2	47899
-small	firstChoice	5	2	0.4	44240
-large	hillClimbing	7	32	4.571428571428571	59603
-large	firstChoice	19	67	3.526315789473684	60030
+small	hillClimbing	5	1	0.2	40087
+small	firstChoice	5	1	0.2	39874
+large	hillClimbing	8	30	3.75	47642
+large	firstChoice	17	54	3.176470588235294	47529
 
 RUN 29
-small	hillClimbing	3	1	0.3333333333333333	49945
-small	firstChoice	4	1	0.25	42230
-large	hillClimbing	8	37	4.625	60102
-large	firstChoice	15	67	4.466666666666667	60030
+small	hillClimbing	9	2	0.2222222222222222	39251
+small	firstChoice	8	2	0.25	36073
+large	hillClimbing	11	44	4.0	47642
+large	firstChoice	28	82	2.9285714285714284	48126
 
 RUN 30
-small	hillClimbing	6	2	0.3333333333333333	51844
-small	firstChoice	5	2	0.4	44612
-large	hillClimbing	8	40	5.0	60030
-large	firstChoice	19	67	3.526315789473684	59831
+small	hillClimbing	6	1	0.16666666666666666	38437
+small	firstChoice	5	1	0.2	37663
+large	hillClimbing	7	26	3.7142857142857144	48933
+large	firstChoice	21	60	2.857142857142857	47764
 
 RUN 31
-small	hillClimbing	3	0	0.0	42509
-small	firstChoice	3	1	0.3333333333333333	42334
-large	hillClimbing	9	46	5.111111111111111	60102
-large	firstChoice	18	74	4.111111111111111	60030
+small	hillClimbing	4	1	0.25	36330
+small	firstChoice	3	1	0.3333333333333333	31516
+large	hillClimbing	10	43	4.3	48933
+large	firstChoice	25	75	3.0	48126
 
 RUN 32
-small	hillClimbing	3	1	0.3333333333333333	37367
-small	firstChoice	3	0	0.0	35474
-large	hillClimbing	9	41	4.555555555555555	58282
-large	firstChoice	26	133	5.115384615384615	60030
+small	hillClimbing	10	3	0.3	42695
+small	firstChoice	8	1	0.125	39209
+large	hillClimbing	9	36	4.0	48933
+large	firstChoice	23	69	3.0	47764
 
 RUN 33
-small	hillClimbing	2	1	0.5	43871
-small	firstChoice	2	0	0.0	43871
-large	hillClimbing	6	34	5.666666666666667	59324
-large	firstChoice	18	66	3.6666666666666665	59324
+small	hillClimbing	10	3	0.3	43912
+small	firstChoice	9	2	0.2222222222222222	39980
+large	hillClimbing	7	30	4.285714285714286	47764
+large	firstChoice	18	54	3.0	47764
 
 RUN 34
-small	hillClimbing	3	1	0.3333333333333333	40658
-small	firstChoice	3	1	0.3333333333333333	40658
-large	hillClimbing	9	41	4.555555555555555	60030
-large	firstChoice	20	82	4.1	60030
+small	hillClimbing	8	3	0.375	47146
+small	firstChoice	9	2	0.2222222222222222	42075
+large	hillClimbing	6	27	4.5	48933
+large	firstChoice	14	42	3.0	47642
 
 RUN 35
-small	hillClimbing	3	1	0.3333333333333333	44152
-small	firstChoice	3	1	0.3333333333333333	44152
-large	hillClimbing	8	34	4.25	58282
-large	firstChoice	22	73	3.3181818181818183	60030
+small	hillClimbing	12	4	0.3333333333333333	43689
+small	firstChoice	12	2	0.16666666666666666	37915
+large	hillClimbing	9	38	4.222222222222222	47230
+large	firstChoice	29	85	2.9310344827586206	44822
 
 RUN 36
-small	hillClimbing	3	1	0.3333333333333333	44240
-small	firstChoice	2	1	0.5	40928
-large	hillClimbing	8	33	4.125	60030
-large	firstChoice	17	69	4.0588235294117645	58282
+small	hillClimbing	4	1	0.25	37342
+small	firstChoice	4	1	0.25	34411
+large	hillClimbing	8	31	3.875	48126
+large	firstChoice	20	63	3.15	48126
 
 RUN 37
-small	hillClimbing	5	2	0.4	46983
-small	firstChoice	4	1	0.25	42773
-large	hillClimbing	8	33	4.125	58282
-large	firstChoice	23	91	3.9565217391304346	58282
+small	hillClimbing	5	1	0.2	38891
+small	firstChoice	5	1	0.2	38891
+large	hillClimbing	8	34	4.25	48933
+large	firstChoice	13	41	3.1538461538461537	48933
 
 RUN 38
-small	hillClimbing	8	2	0.25	43454
-small	firstChoice	8	2	0.25	33980
-large	hillClimbing	11	51	4.636363636363637	60102
-large	firstChoice	32	125	3.90625	58282
+small	hillClimbing	10	3	0.3	44324
+small	firstChoice	9	2	0.2222222222222222	38737
+large	hillClimbing	7	27	3.857142857142857	45801
+large	firstChoice	24	73	3.0416666666666665	46720
 
 RUN 39
-small	hillClimbing	3	1	0.3333333333333333	47120
-small	firstChoice	4	1	0.25	45656
-large	hillClimbing	8	34	4.25	60030
-large	firstChoice	16	48	3.0	60030
+small	hillClimbing	11	3	0.2727272727272727	41409
+small	firstChoice	6	1	0.16666666666666666	26345
+large	hillClimbing	10	41	4.1	48933
+large	firstChoice	30	90	3.0	48126
 
 RUN 40
-small	hillClimbing	2	1	0.5	45979
-small	firstChoice	3	0	0.0	46925
-large	hillClimbing	8	34	4.25	60102
-large	firstChoice	17	52	3.0588235294117645	58282
+small	hillClimbing	4	1	0.25	35451
+small	firstChoice	5	1	0.2	33858
+large	hillClimbing	9	38	4.222222222222222	48933
+large	firstChoice	19	59	3.1052631578947367	46720
 
 RUN 41
-small	hillClimbing	4	1	0.25	52774
-small	firstChoice	4	1	0.25	52128
-large	hillClimbing	7	30	4.285714285714286	60102
-large	firstChoice	17	52	3.0588235294117645	58282
+small	hillClimbing	7	1	0.14285714285714285	41643
+small	firstChoice	7	2	0.2857142857142857	41430
+large	hillClimbing	7	27	3.857142857142857	47355
+large	firstChoice	17	50	2.9411764705882355	47642
 
 RUN 42
-small	hillClimbing	4	2	0.5	45103
-small	firstChoice	3	0	0.0	43593
-large	hillClimbing	8	39	4.875	58282
-large	firstChoice	16	56	3.5	60030
+small	hillClimbing	6	1	0.16666666666666666	41668
+small	firstChoice	7	2	0.2857142857142857	41052
+large	hillClimbing	10	39	3.9	48933
+large	firstChoice	18	55	3.0555555555555554	46720
 
 RUN 43
-small	hillClimbing	2	1	0.5	42581
-small	firstChoice	2	0	0.0	42581
-large	hillClimbing	9	37	4.111111111111111	60102
-large	firstChoice	19	63	3.3157894736842106	58282
+small	hillClimbing	7	2	0.2857142857142857	36292
+small	firstChoice	8	2	0.25	32314
+large	hillClimbing	12	49	4.083333333333333	48933
+large	firstChoice	25	73	2.92	46720
 
 RUN 44
-small	hillClimbing	6	1	0.16666666666666666	46140
-small	firstChoice	4	0	0.0	34527
-large	hillClimbing	9	39	4.333333333333333	59831
-large	firstChoice	25	95	3.8	58282
+small	hillClimbing	8	2	0.25	46541
+small	firstChoice	10	2	0.2	44080
+large	hillClimbing	8	34	4.25	48933
+large	firstChoice	24	72	3.0	48126
 
 RUN 45
-small	hillClimbing	8	2	0.25	43867
-small	firstChoice	8	2	0.25	32697
-large	hillClimbing	12	89	7.416666666666667	60102
-large	firstChoice	32	95	2.96875	60030
+small	hillClimbing	3	1	0.3333333333333333	36531
+small	firstChoice	6	1	0.16666666666666666	38154
+large	hillClimbing	9	35	3.888888888888889	48933
+large	firstChoice	19	57	3.0	47529
 
 RUN 46
-small	hillClimbing	4	1	0.25	47699
-small	firstChoice	5	1	0.2	47612
-large	hillClimbing	9	49	5.444444444444445	59581
-large	firstChoice	17	55	3.235294117647059	57513
+small	hillClimbing	8	3	0.375	42278
+small	firstChoice	8	2	0.25	41813
+large	hillClimbing	8	31	3.875	48933
+large	firstChoice	20	62	3.1	46720
 
 RUN 47
-small	hillClimbing	5	1	0.2	47711
-small	firstChoice	4	1	0.25	44286
-large	hillClimbing	9	50	5.555555555555555	60102
-large	firstChoice	18	75	4.166666666666667	60030
+small	hillClimbing	7	2	0.2857142857142857	41200
+small	firstChoice	3	1	0.3333333333333333	34255
+large	hillClimbing	8	31	3.875	48933
+large	firstChoice	21	63	3.0	48126
 
 RUN 48
-small	hillClimbing	3	1	0.3333333333333333	45308
-small	firstChoice	3	1	0.3333333333333333	43012
-large	hillClimbing	8	33	4.125	60030
-large	firstChoice	21	68	3.238095238095238	58282
+small	hillClimbing	4	1	0.25	36099
+small	firstChoice	9	2	0.2222222222222222	40503
+large	hillClimbing	10	39	3.9	48933
+large	firstChoice	23	71	3.0869565217391304	48933
 
 RUN 49
-small	hillClimbing	4	1	0.25	53643
-small	firstChoice	6	1	0.16666666666666666	50337
-large	hillClimbing	6	28	4.666666666666667	60102
-large	firstChoice	14	44	3.142857142857143	60030
+small	hillClimbing	6	1	0.16666666666666666	39225
+small	firstChoice	3	0	0.0	32769
+large	hillClimbing	9	36	4.0	48933
+large	firstChoice	21	62	2.9523809523809526	48126
 
 RUN 50
-small	hillClimbing	3	1	0.3333333333333333	34757
-small	firstChoice	3	0	0.0	34237
-large	hillClimbing	9	39	4.333333333333333	60102
-large	firstChoice	24	76	3.1666666666666665	60030
+small	hillClimbing	3	1	0.3333333333333333	24229
+small	firstChoice	3	0	0.0	24229
+large	hillClimbing	12	49	4.083333333333333	48126
+large	firstChoice	21	63	3.0	46720
 
 RUN 51
-small	hillClimbing	5	1	0.2	51090
-small	firstChoice	7	2	0.2857142857142857	46884
-large	hillClimbing	8	37	4.625	58282
-large	firstChoice	21	68	3.238095238095238	60030
+small	hillClimbing	10	3	0.3	42652
+small	firstChoice	7	1	0.14285714285714285	34672
+large	hillClimbing	8	32	4.0	48933
+large	firstChoice	25	77	3.08	48126
 
 RUN 52
-small	hillClimbing	2	1	0.5	26016
-small	firstChoice	2	0	0.0	26016
-large	hillClimbing	11	46	4.181818181818182	58282
-large	firstChoice	31	129	4.161290322580645	60030
+small	hillClimbing	2	1	0.5	35255
+small	firstChoice	2	0	0.0	35255
+large	hillClimbing	6	26	4.333333333333333	48126
+large	firstChoice	13	39	3.0	47764
 
 RUN 53
-small	hillClimbing	4	1	0.25	43064
-small	firstChoice	4	1	0.25	41379
-large	hillClimbing	10	47	4.7	60102
-large	firstChoice	21	63	3.0	58282
+small	hillClimbing	8	2	0.25	45029
+small	firstChoice	7	2	0.2857142857142857	41754
+large	hillClimbing	7	27	3.857142857142857	48126
+large	firstChoice	14	45	3.2142857142857144	45692
 
 RUN 54
-small	hillClimbing	7	2	0.2857142857142857	47505
-small	firstChoice	9	2	0.2222222222222222	43209
-large	hillClimbing	9	39	4.333333333333333	58282
-large	firstChoice	23	69	3.0	60030
+small	hillClimbing	3	1	0.3333333333333333	40122
+small	firstChoice	5	1	0.2	40265
+large	hillClimbing	10	42	4.2	48933
+large	firstChoice	19	57	3.0	47642
 
 RUN 55
-small	hillClimbing	2	0	0.0	41524
-small	firstChoice	2	1	0.5	39631
-large	hillClimbing	9	37	4.111111111111111	60030
-large	firstChoice	18	60	3.3333333333333335	58282
+small	hillClimbing	6	2	0.3333333333333333	37364
+small	firstChoice	5	1	0.2	28559
+large	hillClimbing	11	42	3.8181818181818183	48933
+large	firstChoice	25	72	2.88	46720
 
 RUN 56
-small	hillClimbing	3	1	0.3333333333333333	44525
-small	firstChoice	2	0	0.0	36096
-large	hillClimbing	9	42	4.666666666666667	58282
-large	firstChoice	21	68	3.238095238095238	60030
+small	hillClimbing	6	2	0.3333333333333333	40104
+small	firstChoice	7	1	0.14285714285714285	40712
+large	hillClimbing	8	32	4.0	48126
+large	firstChoice	19	55	2.8947368421052633	47764
 
 RUN 57
-small	hillClimbing	4	1	0.25	52043
-small	firstChoice	4	1	0.25	45006
-large	hillClimbing	9	40	4.444444444444445	60102
-large	firstChoice	17	53	3.1176470588235294	60030
+small	hillClimbing	4	1	0.25	32254
+small	firstChoice	7	1	0.14285714285714285	36394
+large	hillClimbing	13	50	3.8461538461538463	48933
+large	firstChoice	23	66	2.869565217391304	46720
 
 RUN 58
-small	hillClimbing	3	1	0.3333333333333333	44594
-small	firstChoice	4	1	0.25	44212
-large	hillClimbing	8	35	4.375	60030
-large	firstChoice	20	64	3.2	58282
+small	hillClimbing	7	2	0.2857142857142857	34696
+small	firstChoice	8	2	0.25	35804
+large	hillClimbing	12	48	4.0	48126
+large	firstChoice	28	81	2.892857142857143	48126
 
 RUN 59
-small	hillClimbing	2	1	0.5	35181
-small	firstChoice	2	0	0.0	35181
-large	hillClimbing	10	41	4.1	60102
-large	firstChoice	22	75	3.409090909090909	60030
+small	hillClimbing	8	2	0.25	42348
+small	firstChoice	6	1	0.16666666666666666	34624
+large	hillClimbing	9	37	4.111111111111111	48933
+large	firstChoice	24	68	2.8333333333333335	46720
 
 RUN 60
-small	hillClimbing	3	1	0.3333333333333333	40504
-small	firstChoice	3	1	0.3333333333333333	39858
-large	hillClimbing	10	45	4.5	60102
-large	firstChoice	20	67	3.35	60030
+small	hillClimbing	3	1	0.3333333333333333	35264
+small	firstChoice	3	1	0.3333333333333333	31588
+large	hillClimbing	8	30	3.75	48126
+large	firstChoice	18	57	3.1666666666666665	48126
 
 RUN 61
-small	hillClimbing	6	2	0.3333333333333333	45067
-small	firstChoice	5	1	0.2	36369
-large	hillClimbing	12	54	4.5	60102
-large	firstChoice	26	85	3.269230769230769	58282
+small	hillClimbing	7	2	0.2857142857142857	43044
+small	firstChoice	3	1	0.3333333333333333	38213
+large	hillClimbing	6	23	3.8333333333333335	48933
+large	firstChoice	15	45	3.0	45692
 
 RUN 62
-small	hillClimbing	3	1	0.3333333333333333	44918
-small	firstChoice	3	1	0.3333333333333333	44918
-large	hillClimbing	8	33	4.125	60102
-large	firstChoice	16	69	4.3125	60030
+small	hillClimbing	8	2	0.25	44164
+small	firstChoice	7	2	0.2857142857142857	41476
+large	hillClimbing	7	27	3.857142857142857	48126
+large	firstChoice	18	56	3.111111111111111	48126
 
 RUN 63
-small	hillClimbing	2	0	0.0	37632
-small	firstChoice	2	1	0.5	37632
-large	hillClimbing	9	37	4.111111111111111	58282
-large	firstChoice	23	75	3.260869565217391	60030
+small	hillClimbing	9	3	0.3333333333333333	43048
+small	firstChoice	10	2	0.2	40561
+large	hillClimbing	10	40	4.0	48933
+large	firstChoice	22	65	2.9545454545454546	46720
 
 RUN 64
-small	hillClimbing	7	3	0.42857142857142855	51410
-small	firstChoice	7	2	0.2857142857142857	42202
-large	hillClimbing	9	40	4.444444444444445	60102
-large	firstChoice	19	59	3.1052631578947367	60030
+small	hillClimbing	3	1	0.3333333333333333	38326
+small	firstChoice	5	1	0.2	38077
+large	hillClimbing	7	27	3.857142857142857	48126
+large	firstChoice	15	50	3.3333333333333335	47764
 
 RUN 65
-small	hillClimbing	2	1	0.5	44063
-small	firstChoice	2	0	0.0	43543
-large	hillClimbing	8	35	4.375	59581
-large	firstChoice	18	56	3.111111111111111	60102
+small	hillClimbing	4	1	0.25	35223
+small	firstChoice	4	1	0.25	31861
+large	hillClimbing	10	40	4.0	48933
+large	firstChoice	20	63	3.15	47642
 
 RUN 66
-small	hillClimbing	4	1	0.25	39639
-small	firstChoice	4	1	0.25	39639
-large	hillClimbing	9	42	4.666666666666667	58168
-large	firstChoice	23	71	3.0869565217391304	60030
+small	hillClimbing	4	1	0.25	35764
+small	firstChoice	3	1	0.3333333333333333	33380
+large	hillClimbing	9	34	3.7777777777777777	48933
+large	firstChoice	20	57	2.85	47642
 
 RUN 67
-small	hillClimbing	3	1	0.3333333333333333	40542
-small	firstChoice	2	1	0.5	37817
-large	hillClimbing	9	38	4.222222222222222	59831
-large	firstChoice	20	62	3.1	60030
+small	hillClimbing	6	2	0.3333333333333333	37742
+small	firstChoice	6	1	0.16666666666666666	34593
+large	hillClimbing	12	47	3.9166666666666665	48933
+large	firstChoice	25	72	2.88	46720
 
 RUN 68
-small	hillClimbing	4	2	0.5	51246
-small	firstChoice	4	1	0.25	50162
-large	hillClimbing	7	31	4.428571428571429	60102
-large	firstChoice	15	46	3.066666666666667	60030
+small	hillClimbing	8	2	0.25	39000
+small	firstChoice	8	2	0.25	39000
+large	hillClimbing	10	39	3.9	47764
+large	firstChoice	19	59	3.1052631578947367	47764
 
 RUN 69
-small	hillClimbing	2	1	0.5	38862
-small	firstChoice	2	0	0.0	38862
-large	hillClimbing	7	32	4.571428571428571	59603
-large	firstChoice	16	51	3.1875	59831
+small	hillClimbing	6	2	0.3333333333333333	42106
+small	firstChoice	6	1	0.16666666666666666	38453
+large	hillClimbing	8	31	3.875	48933
+large	firstChoice	16	57	3.5625	47764
 
 RUN 70
-small	hillClimbing	5	2	0.4	53805
-small	firstChoice	6	1	0.16666666666666666	44813
-large	hillClimbing	8	40	5.0	60102
-large	firstChoice	16	48	3.0	60030
+small	hillClimbing	9	2	0.2222222222222222	44618
+small	firstChoice	11	6	0.5454545454545454	44634
+large	hillClimbing	9	38	4.222222222222222	47642
+large	firstChoice	19	52	2.736842105263158	47642
 
 RUN 71
-small	hillClimbing	2	0	0.0	39719
-small	firstChoice	2	1	0.5	39719
-large	hillClimbing	10	41	4.1	60102
-large	firstChoice	19	60	3.1578947368421053	58282
+small	hillClimbing	5	1	0.2	42961
+small	firstChoice	5	1	0.2	42159
+large	hillClimbing	5	19	3.8	48131
+large	firstChoice	16	49	3.0625	47764
 
 RUN 72
-small	hillClimbing	3	1	0.3333333333333333	41139
-small	firstChoice	3	0	0.0	39246
-large	hillClimbing	10	44	4.4	60102
-large	firstChoice	23	78	3.391304347826087	60030
+small	hillClimbing	7	2	0.2857142857142857	41236
+small	firstChoice	5	1	0.2	33491
+large	hillClimbing	8	31	3.875	48131
+large	firstChoice	21	64	3.0476190476190474	47529
 
 RUN 73
-small	hillClimbing	4	1	0.25	39829
-small	firstChoice	4	1	0.25	38628
-large	hillClimbing	12	52	4.333333333333333	60030
-large	firstChoice	26	97	3.730769230769231	60030
+small	hillClimbing	6	1	0.16666666666666666	36331
+small	firstChoice	7	2	0.2857142857142857	35715
+large	hillClimbing	13	49	3.769230769230769	48933
+large	firstChoice	24	68	2.8333333333333335	46720
 
 RUN 74
-small	hillClimbing	3	1	0.3333333333333333	46866
-small	firstChoice	4	1	0.25	47485
-large	hillClimbing	9	38	4.222222222222222	60102
-large	firstChoice	15	48	3.2	60030
+small	hillClimbing	9	3	0.3333333333333333	44288
+small	firstChoice	10	2	0.2	41549
+large	hillClimbing	8	32	4.0	47764
+large	firstChoice	25	74	2.96	48126
 
 RUN 75
-small	hillClimbing	3	1	0.3333333333333333	48048
-small	firstChoice	2	1	0.5	43475
-large	hillClimbing	7	29	4.142857142857143	60030
-large	firstChoice	18	56	3.111111111111111	60030
+small	hillClimbing	8	3	0.375	43144
+small	firstChoice	8	1	0.125	43144
+large	hillClimbing	7	26	3.7142857142857144	47764
+large	firstChoice	16	48	3.0	47764
 
 RUN 76
-small	hillClimbing	5	2	0.4	48801
-small	firstChoice	3	0	0.0	41233
-large	hillClimbing	6	26	4.333333333333333	56362
-large	firstChoice	21	66	3.142857142857143	58282
+small	hillClimbing	5	1	0.2	41944
+small	firstChoice	5	2	0.4	41944
+large	hillClimbing	7	26	3.7142857142857144	48933
+large	firstChoice	19	58	3.0526315789473686	48126
 
 RUN 77
-small	hillClimbing	6	2	0.3333333333333333	54485
-small	firstChoice	6	1	0.16666666666666666	43052
-large	hillClimbing	8	38	4.75	60102
-large	firstChoice	20	65	3.25	58282
+small	hillClimbing	5	1	0.2	43630
+small	firstChoice	4	1	0.25	39502
+large	hillClimbing	7	26	3.7142857142857144	48933
+large	firstChoice	18	55	3.0555555555555554	47642
 
 RUN 78
-small	hillClimbing	2	1	0.5	41808
-small	firstChoice	2	0	0.0	39915
-large	hillClimbing	9	37	4.111111111111111	60030
-large	firstChoice	22	71	3.227272727272727	58282
+small	hillClimbing	4	1	0.25	38791
+small	firstChoice	7	2	0.2857142857142857	41782
+large	hillClimbing	10	39	3.9	48933
+large	firstChoice	18	53	2.9444444444444446	47529
 
 RUN 79
-small	hillClimbing	6	2	0.3333333333333333	53784
-small	firstChoice	7	2	0.2857142857142857	43341
-large	hillClimbing	7	34	4.857142857142857	60102
-large	firstChoice	18	62	3.4444444444444446	60030
+small	hillClimbing	4	1	0.25	39530
+small	firstChoice	3	1	0.3333333333333333	35998
+large	hillClimbing	7	26	3.7142857142857144	48933
+large	firstChoice	14	45	3.2142857142857144	48933
 
 RUN 80
-small	hillClimbing	4	1	0.25	38821
-small	firstChoice	3	1	0.3333333333333333	30392
-large	hillClimbing	10	42	4.2	60030
-large	firstChoice	27	82	3.037037037037037	58282
+small	hillClimbing	7	2	0.2857142857142857	38709
+small	firstChoice	4	1	0.25	29047
+large	hillClimbing	10	41	4.1	48933
+large	firstChoice	25	72	2.88	48126
 
 RUN 81
-small	hillClimbing	4	2	0.5	42761
-small	firstChoice	4	0	0.0	40465
-large	hillClimbing	8	35	4.375	58282
-large	firstChoice	25	78	3.12	58282
+small	hillClimbing	7	2	0.2857142857142857	40761
+small	firstChoice	6	2	0.3333333333333333	37229
+large	hillClimbing	10	38	3.8	48126
+large	firstChoice	23	70	3.0434782608695654	48126
 
 RUN 82
-small	hillClimbing	6	2	0.3333333333333333	54634
-small	firstChoice	9	2	0.2222222222222222	51367
-large	hillClimbing	6	27	4.5	60030
-large	firstChoice	16	49	3.0625	58282
+small	hillClimbing	8	2	0.25	46721
+small	firstChoice	6	1	0.16666666666666666	38640
+large	hillClimbing	7	28	4.0	48933
+large	firstChoice	15	45	3.0	47764
 
 RUN 83
-small	hillClimbing	7	2	0.2857142857142857	53835
-small	firstChoice	6	1	0.16666666666666666	43998
-large	hillClimbing	9	41	4.555555555555555	60102
-large	firstChoice	21	82	3.9047619047619047	58282
+small	hillClimbing	6	2	0.3333333333333333	41989
+small	firstChoice	6	1	0.16666666666666666	37877
+large	hillClimbing	9	36	4.0	48933
+large	firstChoice	19	58	3.0526315789473686	48933
 
 RUN 84
-small	hillClimbing	4	2	0.5	51549
-small	firstChoice	4	1	0.25	48444
-large	hillClimbing	8	35	4.375	60102
-large	firstChoice	13	39	3.0	58282
+small	hillClimbing	8	2	0.25	39305
+small	firstChoice	8	2	0.25	39305
+large	hillClimbing	7	33	4.714285714285714	47642
+large	firstChoice	18	51	2.8333333333333335	46720
 
 RUN 85
-small	hillClimbing	5	1	0.2	41072
-small	firstChoice	4	1	0.25	31913
-large	hillClimbing	11	46	4.181818181818182	60030
-large	firstChoice	27	81	3.0	58282
+small	hillClimbing	5	1	0.2	38884
+small	firstChoice	5	1	0.2	34190
+large	hillClimbing	10	39	3.9	48933
+large	firstChoice	18	56	3.111111111111111	46720
 
 RUN 86
-small	hillClimbing	7	3	0.42857142857142855	54795
-small	firstChoice	7	1	0.14285714285714285	50359
-large	hillClimbing	6	28	4.666666666666667	59405
-large	firstChoice	17	51	3.0	60102
+small	hillClimbing	5	1	0.2	36059
+small	firstChoice	7	2	0.2857142857142857	36325
+large	hillClimbing	10	39	3.9	47764
+large	firstChoice	21	65	3.0952380952380953	47764
 
 RUN 87
-small	hillClimbing	3	0	0.0	39714
-small	firstChoice	2	1	0.5	33131
-large	hillClimbing	9	40	4.444444444444445	58282
-large	firstChoice	26	78	3.0	58282
+small	hillClimbing	5	1	0.2	45197
+small	firstChoice	6	2	0.3333333333333333	43214
+large	hillClimbing	6	23	3.8333333333333335	48933
+large	firstChoice	13	39	3.0	46720
 
 RUN 88
-small	hillClimbing	2	1	0.5	42198
-small	firstChoice	3	1	0.3333333333333333	41135
-large	hillClimbing	8	34	4.25	60030
-large	firstChoice	18	55	3.0555555555555554	60030
+small	hillClimbing	10	3	0.3	46335
+small	firstChoice	7	2	0.2857142857142857	37841
+large	hillClimbing	6	23	3.8333333333333335	47355
+large	firstChoice	19	57	3.0	48126
 
 RUN 89
-small	hillClimbing	3	1	0.3333333333333333	45297
-small	firstChoice	2	0	0.0	38033
-large	hillClimbing	9	39	4.333333333333333	60102
-large	firstChoice	16	48	3.0	60030
+small	hillClimbing	9	2	0.2222222222222222	43186
+small	firstChoice	8	2	0.25	38441
+large	hillClimbing	7	27	3.857142857142857	48933
+large	firstChoice	26	83	3.1923076923076925	47764
 
 RUN 90
-small	hillClimbing	3	1	0.3333333333333333	51321
-small	firstChoice	4	1	0.25	48065
-large	hillClimbing	7	30	4.285714285714286	60102
-large	firstChoice	17	50	2.9411764705882355	59831
+small	hillClimbing	7	2	0.2857142857142857	36407
+small	firstChoice	12	3	0.25	39324
+large	hillClimbing	11	45	4.090909090909091	48933
+large	firstChoice	31	92	2.967741935483871	48126
 
 RUN 91
-small	hillClimbing	4	1	0.25	45181
-small	firstChoice	3	1	0.3333333333333333	40430
-large	hillClimbing	8	33	4.125	60030
-large	firstChoice	20	62	3.1	58282
+small	hillClimbing	7	2	0.2857142857142857	44820
+small	firstChoice	8	2	0.25	42193
+large	hillClimbing	8	32	4.0	48933
+large	firstChoice	19	54	2.8421052631578947	46599
 
 RUN 92
-small	hillClimbing	5	2	0.4	44172
-small	firstChoice	4	0	0.0	37503
-large	hillClimbing	11	46	4.181818181818182	60102
-large	firstChoice	22	67	3.0454545454545454	58282
+small	hillClimbing	5	2	0.4	35737
+small	firstChoice	5	1	0.2	35737
+large	hillClimbing	11	42	3.8181818181818183	48933
+large	firstChoice	21	61	2.9047619047619047	48126
 
 RUN 93
-small	hillClimbing	5	2	0.4	49150
-small	firstChoice	6	1	0.16666666666666666	47889
-large	hillClimbing	10	48	4.8	60102
-large	firstChoice	20	80	4.0	60030
+small	hillClimbing	6	2	0.3333333333333333	35237
+small	firstChoice	5	1	0.2	31145
+large	hillClimbing	11	46	4.181818181818182	48933
+large	firstChoice	24	73	3.0416666666666665	47642
 
 RUN 94
-small	hillClimbing	2	1	0.5	43753
-small	firstChoice	2	0	0.0	43753
-large	hillClimbing	10	47	4.7	60102
-large	firstChoice	15	64	4.266666666666667	57513
+small	hillClimbing	4	2	0.5	36696
+small	firstChoice	3	0	0.0	30376
+large	hillClimbing	9	39	4.333333333333333	48933
+large	firstChoice	19	55	2.8947368421052633	47764
 
 RUN 95
-small	hillClimbing	6	2	0.3333333333333333	51132
-small	firstChoice	7	2	0.2857142857142857	47876
-large	hillClimbing	9	63	7.0	60102
-large	firstChoice	21	71	3.380952380952381	60030
+small	hillClimbing	6	2	0.3333333333333333	44144
+small	firstChoice	6	1	0.16666666666666666	44144
+large	hillClimbing	8	30	3.75	46599
+large	firstChoice	17	51	3.0	46720
 
 RUN 96
-small	hillClimbing	5	2	0.4	49541
-small	firstChoice	4	1	0.25	41499
-large	hillClimbing	8	43	5.375	60102
-large	firstChoice	22	83	3.772727272727273	60030
+small	hillClimbing	4	2	0.5	34778
+small	firstChoice	4	0	0.0	31230
+large	hillClimbing	10	38	3.8	47642
+large	firstChoice	18	53	2.9444444444444446	47764
 
 RUN 97
-small	hillClimbing	1	0	0.0	36733
-small	firstChoice	1	0	0.0	36733
-large	hillClimbing	7	33	4.714285714285714	59603
-large	firstChoice	20	69	3.45	60030
+small	hillClimbing	8	2	0.25	44315
+small	firstChoice	10	3	0.3	43245
+large	hillClimbing	8	31	3.875	47642
+large	firstChoice	24	73	3.0416666666666665	48126
 
 RUN 98
-small	hillClimbing	4	2	0.5	44949
-small	firstChoice	4	2	0.5	40295
-large	hillClimbing	9	47	5.222222222222222	60102
-large	firstChoice	22	78	3.5454545454545454	60030
+small	hillClimbing	8	2	0.25	40565
+small	firstChoice	7	2	0.2857142857142857	34231
+large	hillClimbing	8	33	4.125	48126
+large	firstChoice	25	76	3.04	46720
 
 RUN 99
-small	hillClimbing	5	2	0.4	40799
-small	firstChoice	6	1	0.16666666666666666	39736
-large	hillClimbing	11	48	4.363636363636363	60102
-large	firstChoice	23	69	3.0	60030
+small	hillClimbing	5	2	0.4	35135
+small	firstChoice	5	1	0.2	30327
+large	hillClimbing	10	39	3.9	48933
+large	firstChoice	22	65	2.9545454545454546	47642
 
 RUN 100
-small	hillClimbing	5	2	0.4	43148
-small	firstChoice	4	1	0.25	37648
-large	hillClimbing	11	43	3.909090909090909	60102
-large	firstChoice	22	66	3.0	60030
+small	hillClimbing	6	2	0.3333333333333333	39927
+small	firstChoice	6	1	0.16666666666666666	36778
+large	hillClimbing	11	45	4.090909090909091	48933
+large	firstChoice	19	57	3.0	47764

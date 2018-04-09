@@ -2,7 +2,7 @@ from KnapsackProblem import KnapsackProblem, Item
 import time
 import random
 import pandas
-
+import matplotlib.pyplot as plt
 
 def current_milli_time():
     return int(round(time.time() * 1000))
@@ -91,5 +91,9 @@ if __name__ == '__main__':
                                   needed_time, knapsack.value_for_assignment(assignment))
     iterables = [[str(i+1) for i in range(runs)], ['small', 'large'], ['hillClimbing', 'firstChoice']]
     index = pandas.MultiIndex.from_product(iterables, names=['Run', 'Neighbourhood', 'Algorithm'])
-    frame = pandas.DataFrame(dict, index=index)
-    print(frame)
+    df = pandas.DataFrame(dict, index=index)
+    #print(df)
+    df.boxplot(by=['Neighbourhood', 'Algorithm'], showmeans=True)
+    #ax[0].set_ylim=([0, 50])
+    #ax[1].set_ylim=([0, 100])
+    plt.show()
