@@ -2,6 +2,7 @@ import random
 import time
 
 import matplotlib.pyplot as plt
+import pandas
 from KnapsackProblem import KnapsackProblem, Item
 
 
@@ -83,6 +84,10 @@ def plot_all(key, name):
         plt.show()
 
 
+def flattened_list(list):
+    return [j for i in list for j in i]
+
+
 if __name__ == '__main__':
     runs = 100
     # for plotting
@@ -110,3 +115,15 @@ if __name__ == '__main__':
     plot_all("time", "Time")
     plot_all("time_per_iter", "Time per Iteration")
     plot_all("value", "Values")
+
+    panda_dict = {"iter": flattened_list(dict["iter"]), "time": flattened_list(dict["time"]),
+                  "time_per_iter": flattened_list(dict["time_per_iter"]), "value": flattened_list(dict["value"])}
+    iterables = [[str(i + 1) for i in range(runs)], ['small', 'large'], ['hillClimbing', 'firstChoice']]
+    index = pandas.MultiIndex.from_product(iterables, names=['Run', 'Neighbourhood', 'Algorithm'])
+    df = pandas.DataFrame(panda_dict, index=index)
+
+    mean_df = df.groupby(['Neighbourhood', 'Algorithm']).mean()
+    print("")
+    print("Mean values after " + str(runs) + " runs:")
+    print(mean_df)
+    print("")
