@@ -74,6 +74,7 @@ def save_to_array(dict, needed_iterations, needed_time, achieved_value):
 
 
 def plot_all(key, name):
+    # Plot the values as boxplots according to the four settings for the given key with name as title
     for i, values in enumerate(dict[key]):
         plt.boxplot(values)
         neighbourhood_string = "large" if i > 1 else "small"
@@ -87,7 +88,7 @@ if __name__ == '__main__':
     # for plotting
     dict = {"iter": [[], [], [], []], "time": [[], [], [], []], "time_per_iter": [[], [], [], []],
             "value": [[], [], [], []]}
-    
+
     with open("./data/evaluation.csv", "w+") as file:
         knapsack = random_knapsack(10, 500, 5000)
         file.write("neighbourhood\talgorithm\titerations\ttime\ttimeperiteration\tvalue")
