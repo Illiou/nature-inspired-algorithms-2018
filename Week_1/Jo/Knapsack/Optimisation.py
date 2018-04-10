@@ -1,10 +1,8 @@
-import random
-import time
-
-import matplotlib.pyplot as plt
-import pandas
 from KnapsackProblem import KnapsackProblem, Item
-
+import time
+import random
+import pandas
+import matplotlib.pyplot as plt
 
 def current_milli_time():
     return int(round(time.time() * 1000))
@@ -65,37 +63,18 @@ def save_data_to_csv(use_large, use_first_choice, opened_file, needed_iterations
 
 
 def save_to_array(dict, needed_iterations, needed_time, achieved_value):
-    # index according to order [hillClimbing small, firstChoice small, hC large, fC large]
-    index = int(use_first_choice) + int(use_large) * 2
     time_per_iteration = needed_time / needed_iterations
-    dict["iter"][index].append(needed_iterations)
-    dict["time"][index].append(needed_time)
-    dict["time_per_iter"][index].append(time_per_iteration)
-    dict["value"][index].append(achieved_value)
-
-
-def plot_all(key, name):
-    # Plot the values as boxplots according to the four settings for the given key with name as title
-    for i, values in enumerate(dict[key]):
-        plt.boxplot(values)
-        neighbourhood_string = "large" if i > 1 else "small"
-        algorithm_string = "hillClimbing" if i % 2 == 0 else "firstChoice"
-        plt.title("{}: {}, {}".format(name, neighbourhood_string, algorithm_string))
-        plt.show()
-
-
-def flattened_list(list):
-    return [j for i in list for j in i]
+    dict["iter"].append(needed_iterations)
+    dict["time"].append(needed_time)
+    dict["time_per_iter"].append(time_per_iteration)
+    dict["value"].append(achieved_value)
 
 
 if __name__ == '__main__':
-    runs = 100
-    # for plotting
-    dict = {"iter": [[], [], [], []], "time": [[], [], [], []], "time_per_iter": [[], [], [], []],
-            "value": [[], [], [], []]}
-
+    runs = 1000
+    dict = {"iter": [], "time": [], "time_per_iter": [], "value": []}
     with open("./data/evaluation.csv", "w+") as file:
-        knapsack = random_knapsack(10, 500, 5000)
+        knapsack = random_knapsack(30, 500, 5000)
         file.write("neighbourhood\talgorithm\titerations\ttime\ttimeperiteration\tvalue")
         for i in range(runs):
             print("start iteration", i + 1)
@@ -110,20 +89,17 @@ if __name__ == '__main__':
                                      needed_time, knapsack.value_for_assignment(assignment))
                     save_to_array(dict, iteration,
                                   needed_time, knapsack.value_for_assignment(assignment))
-
-    plot_all("iter", "Iterations")
-    plot_all("time", "Time")
-    plot_all("time_per_iter", "Time per Iteration")
-    plot_all("value", "Values")
-
-    panda_dict = {"iter": flattened_list(dict["iter"]), "time": flattened_list(dict["time"]),
-                  "time_per_iter": flattened_list(dict["time_per_iter"]), "value": flattened_list(dict["value"])}
-    iterables = [[str(i + 1) for i in range(runs)], ['small', 'large'], ['hillClimbing', 'firstChoice']]
+    iterables = [[str(i+1) for i in range(runs)], ['small', 'large'], ['hillClimbing', 'firstChoice']]
     index = pandas.MultiIndex.from_product(iterables, names=['Run', 'Neighbourhood', 'Algorithm'])
-    df = pandas.DataFrame(panda_dict, index=index)
+    df = pandas.DataFrame(dict, index=index)
+    #print(df)
 
     mean_df = df.groupby(['Neighbourhood', 'Algorithm']).mean()
     print("")
     print("Mean values after " + str(runs) + " runs:")
     print(mean_df)
     print("")
+
+    # fig, ax = plt.subplots(2,2, sharey=False)
+    # df.boxplot(by=['Neighbourhood', 'Algorithm'], ax=ax)
+    # plt.show()
