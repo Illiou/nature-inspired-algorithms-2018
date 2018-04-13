@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn import linear_model
 
 
 class Individual:
@@ -64,8 +65,6 @@ class Population:
         mutation_probability = 0.005
 
         save_the_best = self.best_candidate()
-        # best_index = self.population.index(save_the_best)
-        # save_the_best = Individual(self.problem, save_the_best.chromosome)
         parent_generation = self.selection(number_selected, selection_type)
         children = self.recombine(number_of_children, parent_generation)
         next_generation = parent_generation + children
@@ -78,8 +77,13 @@ class Population:
         if not found:
             if next_generation[0].fitness < save_the_best.fitness:
                 next_generation[0] = save_the_best
-        # next_generation[best_index] = save_the_best
         self.population = next_generation
+
+        fit = []
+        for i in pop.population:
+            fit.append(i.fitness)
+
+        return self.best_candidate(), np.mean(fit)
 
     def selection(self, number_of_candidates, kind="roulette"):
         population_fitness = []
@@ -144,10 +148,10 @@ class Problem:
 
 if __name__ == '__main__':
     # PARAMETERS
-    runs = 1000
+    runs = 5000
     machines = 40
     job_count = 300
-    population_size = 10
+    population_size = 40
 
     p = Problem(machines, job_count, 1, 100)
     pop = Population(p, population_size)
@@ -157,27 +161,30 @@ if __name__ == '__main__':
     generation_mean = []
 
     while generations < runs:
-        pop.next_generation()
+        best_cand, mean_fit = pop.next_generation()
 
-        # Save best
-        best_cand = pop.best_candidate()
         best_candidates_fitness.append(best_cand.fitness)
-
-        # Save mean
-        fit = []
-        for i in pop.population:
-            fit.append(i.fitness)
-        generation_mean.append(np.mean(fit))
-
-        if generations % 80 == 0:
-            print()
-        print(".", end="")
+        generation_mean.append(mean_fit)
         generations += 1
+        if generations % 10 == 0:
+            print(".", end="")
+            if generations % 800 == 0:
+                print("\t", generations)
 
     x = range(generations)
     plt.xlabel('Generations')
     plt.ylabel('Fitness')
     plt.plot(x, best_candidates_fitness, label='Best candidate')
     plt.plot(x, generation_mean, label='Generation mean')
+    plt.plot(x,[1-1/machines]*len(x), linewidth=0.5)
+
+    X, y = np.array(x).reshape(-1, 1), np.array(generation_mean).reshape(-1, 1)
+    regression = linear_model.LinearRegression()
+    regression.fit(X, y)
+    line_points = [[0], [generations]]
+    line_prediction = regression.predict(line_points)
+    plt.plot(line_points, line_prediction, label="{:0.8f}".format(regression.coef_[0, 0]))
+    print("\n", regression.coef_[0,0])
+
     plt.legend(loc='lower center')
     plt.show()
