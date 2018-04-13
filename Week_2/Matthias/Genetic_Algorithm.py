@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Individual:
@@ -68,9 +69,15 @@ class Population:
         parent_generation = self.selection(number_selected, selection_type)
         children = self.recombine(number_of_children, parent_generation)
         next_generation = parent_generation + children
+        found = False
         for individual in next_generation:
-            if not individual == save_the_best:
+            if individual == save_the_best:
+                found = True
+            else:
                 individual.mutate(mutation_probability)
+        if not found:
+            if next_generation[0].fitness < save_the_best.fitness:
+                next_generation[0] = save_the_best
         # next_generation[best_index] = save_the_best
         self.population = next_generation
 
@@ -137,7 +144,7 @@ class Problem:
 
 if __name__ == '__main__':
     # PARAMETERS
-    runs = 100
+    runs = 1000
     machines = 40
     job_count = 300
     population_size = 10
@@ -151,14 +158,26 @@ if __name__ == '__main__':
 
     while generations < runs:
         pop.next_generation()
+
+        # Save best
         best_cand = pop.best_candidate()
         best_candidates_fitness.append(best_cand.fitness)
-        # print("{:0.4f}".format(best.fitness))
+
+        # Save mean
+        fit = []
+        for i in pop.population:
+            fit.append(i.fitness)
+        generation_mean.append(np.mean(fit))
+
         if generations % 80 == 0:
             print()
         print(".", end="")
         generations += 1
 
     x = range(generations)
-    plt.plot(x, best_candidates_fitness)
+    plt.xlabel('Generations')
+    plt.ylabel('Fitness')
+    plt.plot(x, best_candidates_fitness, label='Best candidate')
+    plt.plot(x, generation_mean, label='Generation mean')
+    plt.legend(loc='lower center')
     plt.show()
