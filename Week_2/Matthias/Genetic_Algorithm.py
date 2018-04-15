@@ -41,7 +41,8 @@ class Population:
         return population
 
     def random_individual(self):
-        chromosome = []
+        # chromosome = [0]*self.problem.job_count
+        # chromosome[0] = random.randrange(1, self.problem.machines)
         for gene in range(self.problem.job_count):
             chromosome.append(random.randrange(0, self.problem.machines))
         return Individual(self.problem, chromosome)
@@ -59,7 +60,7 @@ class Population:
 
     def next_generation(self):
         # PARAMETERS
-        number_selected = int((2 / 3) * len(self.population))
+        number_selected = int((1 / 3) * len(self.population))
         number_of_children = len(self.population) - number_selected
         selection_type = "roulette"
         mutation_probability = 0.005
@@ -148,7 +149,7 @@ class Problem:
 
 if __name__ == '__main__':
     # PARAMETERS
-    runs = 5000
+    runs = 50000
     machines = 40
     job_count = 300
     population_size = 40
