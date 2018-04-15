@@ -66,22 +66,24 @@ class AbstractRecombiner(abc.ABC):
 
 class AbstractMutator(abc.ABC):
     """Abstract interface for a Mutator yielding a method to mutate a single chromosome"""
-    def __init__(self, mutation_probability):
+    def __init__(self, mutation_probability, machine_count):
         """
         Initialize the Mutator
 
         Args:
             mutation_probability(float): probability for mutation
+            machine_count(int): number of machines
         """
         self.mutation_probability = mutation_probability
+        self.machine_count = machine_count
 
     @abc.abstractmethod
-    def mutate(self, assignment):
+    def mutate(self, chromosome):
         """
         Mutate a chromosome
 
         Args:
-            assignment(list): the assignment to mutate as list of gene-values
+            chromosome(list): the chromosome to mutate as list of gene-values
         Returns:
             list: the mutated chromosome
         """
