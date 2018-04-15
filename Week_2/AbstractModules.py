@@ -2,17 +2,15 @@ import abc
 
 
 class AbstractInitializer(abc.ABC):
-    """Abstract interface for an Initializer yielding a method to create a random assignment"""
-    def __init__(self, assignment_size, domain, population_size):
+    """Abstract interface for an Initializer yielding a method to create an initialized population"""
+    def __init__(self, problem, population_size):
         """Initialize the Initializer
 
         Args:
-            assignment_size(int): length of the initialized assignments
-            domain(list): a list of all allowed gene-values
+            problem(Problem): the according problem
             population_size(int): the population size
         """
-        self.assignment_size = assignment_size
-        self.domain = domain
+        self.problem = problem
         self.population_size = population_size
 
     @abc.abstractmethod
