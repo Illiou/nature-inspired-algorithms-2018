@@ -3,22 +3,24 @@ import abc
 
 class AbstractInitializer(abc.ABC):
     """Abstract interface for an Initializer yielding a method to create a random assignment"""
-    def __init__(self, assignment_size, domain):
+    def __init__(self, assignment_size, domain, population_size):
         """Initialize the Initializer
 
         Args:
             assignment_size(int): length of the initialized assignments
             domain(list): a list of all allowed gene-values
+            population_size(int): the population size
         """
         self.assignment_size = assignment_size
         self.domain = domain
+        self.population_size = population_size
 
     @abc.abstractmethod
-    def initialized_assignment(self):
-        """Creates an assignment according to the parameters given in __init__
+    def initialized_population(self):
+        """Creates a population according to the parameters given in __init__
 
         Returns:
-            list: The assignment as a list of gene-values
+            list: a population as list of individuals
         """
         ...
 
@@ -35,7 +37,7 @@ class AbstractSelector(abc.ABC):
         self.selection_size = selection_size
 
     @abc.abstractmethod
-    def select_assignments(self, population):
+    def select_chromosomes(self, population):
         """
         Select assignments from population according to self.selection_size
 
