@@ -24,7 +24,7 @@ class AbstractInitializer(abc.ABC):
 
 
 class AbstractSelector(abc.ABC):
-    """Abstract interface for a Selector yielding a method to select n assignments from the population"""
+    """Abstract interface for a Selector yielding a method to select n chromosomes from the population"""
     def __init__(self, selection_size):
         """
         Initialize the Selector
@@ -37,12 +37,12 @@ class AbstractSelector(abc.ABC):
     @abc.abstractmethod
     def select_chromosomes(self, population):
         """
-        Select assignments from population according to self.selection_size
+        Select chromosomes from population according to self.selection_size
 
         Args:
-            population(list): a list of all assignments in the population
+            population(list): a list of all chromosomes in the population
         Returns:
-            a list of the selected assignments
+            a list of the selected chromosomes
         """
         ...
 
