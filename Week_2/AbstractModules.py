@@ -35,7 +35,7 @@ class AbstractSelector(abc.ABC):
         self.selection_size = selection_size
 
     @abc.abstractmethod
-    def select_assignments(self, population):
+    def select_chromosomes(self, population):
         """
         Select assignments from population according to self.selection_size
 
