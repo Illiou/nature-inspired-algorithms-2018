@@ -2,23 +2,23 @@ import abc
 
 
 class AbstractInitializer(abc.ABC):
-    """Abstract interface for an Initializer yielding a method to create a random assignment"""
-    def __init__(self, assignment_size, domain):
+    """Abstract interface for an Initializer yielding a method to create an initialized population"""
+    def __init__(self, problem, population_size):
         """Initialize the Initializer
 
         Args:
-            assignment_size(int): length of the initialized assignments
-            domain(list): a list of all allowed gene-values
+            problem(Problem): the according problem
+            population_size(int): the population size
         """
-        self.assignment_size = assignment_size
-        self.domain = domain
+        self.problem = problem
+        self.population_size = population_size
 
     @abc.abstractmethod
-    def initialized_assignment(self):
-        """Creates an assignment according to the parameters given in __init__
+    def initialized_population(self):
+        """Creates a population according to the parameters given in __init__
 
         Returns:
-            list: The assignment as a list of gene-values
+            list: a population as list of individuals
         """
         ...
 
@@ -64,22 +64,24 @@ class AbstractRecombiner(abc.ABC):
 
 class AbstractMutator(abc.ABC):
     """Abstract interface for a Mutator yielding a method to mutate a single chromosome"""
-    def __init__(self, mutation_probability):
+    def __init__(self, mutation_probability, machine_count):
         """
         Initialize the Mutator
 
         Args:
             mutation_probability(float): probability for mutation
+            machine_count(int): number of machines
         """
         self.mutation_probability = mutation_probability
+        self.machine_count = machine_count
 
     @abc.abstractmethod
-    def mutate(self, assignment):
+    def mutate(self, chromosome):
         """
         Mutate a chromosome
 
         Args:
-            assignment(list): the assignment to mutate as list of gene-values
+            chromosome(list): the chromosome to mutate as list of gene-values
         Returns:
             list: the mutated chromosome
         """
