@@ -24,7 +24,7 @@ class AbstractInitializer(abc.ABC):
 
 
 class AbstractSelector(abc.ABC):
-    """Abstract interface for a Selector yielding a method to select n assignments from the population"""
+    """Abstract interface for a Selector yielding a method to select n chromosomes from the population"""
     def __init__(self, selection_size):
         """
         Initialize the Selector
@@ -37,18 +37,26 @@ class AbstractSelector(abc.ABC):
     @abc.abstractmethod
     def select_chromosomes(self, population):
         """
-        Select assignments from population according to self.selection_size
+        Select chromosomes from population according to self.selection_size
 
         Args:
-            population(list): a list of all assignments in the population
+            population(list): a list of all chromosomes in the population
         Returns:
-            a list of the selected assignments
+            a list of the selected chromosomes
         """
         ...
 
 
 class AbstractRecombiner(abc.ABC):
     """Abstract interface for a Recombiner yielding a method to recombine parent-chromosomes to new chromosomes"""
+    def __init__(self, parent_count):
+        """
+        Initialize the Recombiner
+        Args:
+            parent_count: the number of parents used in a recombination
+        """
+        self.parent_count = parent_count
+
     @abc.abstractmethod
     def recombine(self, parents):
         """

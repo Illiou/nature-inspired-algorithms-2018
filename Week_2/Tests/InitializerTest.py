@@ -1,6 +1,6 @@
 import unittest
 import Week_2.Initializer as Initializer
-from Week_2.Genetic_Algorithm import Problem
+from Week_2.Problem import Problem
 import random
 
 
