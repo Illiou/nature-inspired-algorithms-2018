@@ -1,4 +1,4 @@
-from AbstractModules import AbstractMutator
+from Week_2.AbstractModules import AbstractMutator
 import random
 
 

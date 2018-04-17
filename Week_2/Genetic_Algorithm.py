@@ -5,7 +5,11 @@ class Individual:
         self.fitness = self._calculate_fitness()
 
     def _calculate_fitness(self):
-        return 0    # TODO implement
+        machine_time = [0] * self.problem.machine_count
+        for gene, allele in enumerate(self.chromosome):
+            machine_time[allele] += self.problem.jobs[gene]
+        fitness = (sum(self.problem.jobs) - max(machine_time)) / sum(self.problem.jobs)
+        return fitness
 
     def mutate(self, mutator):
         self.chromosome = mutator.mutate(self.chromosome)

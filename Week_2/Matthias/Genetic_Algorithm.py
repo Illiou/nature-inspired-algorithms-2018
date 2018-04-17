@@ -43,6 +43,7 @@ class Population:
     def random_individual(self):
         # chromosome = [0]*self.problem.job_count
         # chromosome[0] = random.randrange(1, self.problem.machines)
+        chromosome = []
         for gene in range(self.problem.job_count):
             chromosome.append(random.randrange(0, self.problem.machines))
         return Individual(self.problem, chromosome)
