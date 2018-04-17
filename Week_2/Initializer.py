@@ -1,5 +1,5 @@
 from Week_2.AbstractModules import AbstractInitializer
-from Week_2.Genetic_Algorithm import Individual
+from Week_2.Problem import Individual
 import random
 
 
