@@ -45,3 +45,11 @@ class GeneticAlgorithm:
             for offspring_chromosome in offspring:
                 offspring_chromosome.mutate()
             population = self.replacer.replace(population)
+
+            highest_fitness = max(map(lambda individual: individual.fitness, population))
+            print("After {} generations the highest fitness is {}".format(i, highest_fitness))
+
+
+if __name__ == '__main__':
+    pass
+    # GeneticAlgorithm(ZeroInitializer(), , , BitFlipMutator(), ) TODO
