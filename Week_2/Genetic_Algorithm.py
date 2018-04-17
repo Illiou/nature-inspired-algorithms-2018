@@ -1,3 +1,6 @@
+import random
+
+
 class Individual:
     def __init__(self, problem, chromosome):
         self.problem = problem
@@ -52,4 +55,13 @@ class GeneticAlgorithm:
 
 if __name__ == '__main__':
     pass
+    jobs1 = [random.randint(10, 1000) for _ in range(200)]
+    jobs1 += [random.randint(100, 300) for _ in range(100)]
+    problem1 = Problem(jobs1, 20)
+    jobs2 = [random.randint(10, 1000) for _ in range(150)]
+    jobs2 += [random.randint(400, 700) for _ in range(150)]
+    problem2 = Problem(jobs2, 20)
+    jobs3 = [50] * 3
+    jobs3 += [int(i/2) for i in range(51*2, 100*2)]
+    problem3 = Problem(jobs3, 50)
     # GeneticAlgorithm(ZeroInitializer(), , , BitFlipMutator(), ) TODO
