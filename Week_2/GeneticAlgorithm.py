@@ -48,7 +48,6 @@ class GeneticAlgorithm:
 
 
 if __name__ == '__main__':
-    pass
     jobs1 = [random.randint(10, 1000) for _ in range(200)]
     jobs1 += [random.randint(100, 300) for _ in range(100)]
     problem1 = Problem(jobs1, 20)
