@@ -1,8 +1,15 @@
 class Individual:
-    def __init__(self, problem, chromosome):
+    def __init__(self, problem, chromosome, fitness=None):
         self.problem = problem
         self.chromosome = chromosome
-        self.fitness = self._calculate_fitness()
+        if fitness is None:
+            self.fitness = self._calculate_fitness()
+        else:
+            self.fitness = fitness
+
+    def __deepcopy__(self, memodict={}):
+        # to improve performance by not recalculating fitness each time a deepcopy gets made
+        return Individual(self.problem, self.chromosome.copy(), self.fitness)
 
     def _calculate_fitness(self):
         machine_time = [0] * self.problem.machine_count
