@@ -17,6 +17,8 @@ class RouletteSelector(AbstractSelector):
         """
 
         fitness = [individual.fitness for individual in population]
+        if sum(fitness) == 0:
+            fitness = None
         return random.choices(population, weights=fitness, k=self.selection_size)
 
 
