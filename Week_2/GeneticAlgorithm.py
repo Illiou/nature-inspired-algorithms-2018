@@ -26,6 +26,8 @@ class GeneticAlgorithm:
 
             parent_count = self.recombiner.parent_count
             all_parents = [mating_pool[i:i+parent_count] for i in range(0, len(mating_pool), parent_count)]
+            if len(all_parents[-1]) != self.recombiner.parent_count:
+                all_parents = all_parents[:-1]
             offspring = []
             for parents in all_parents:
                 offspring += self.recombiner.recombine(parents)

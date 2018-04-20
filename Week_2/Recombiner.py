@@ -10,7 +10,9 @@ class OnePointCrossoverRecombiner(AbstractRecombiner):
         super().__init__(parent_count)
 
     def recombine(self, parents):
-        point = random.randint(1, len(parents) - 1)
+        if len(parents) != self.parent_count:
+            raise AssertionError("wrong number of parents")
+        point = random.randint(1, len(parents[0].chromosome) - 1)
         child1 = parents[0].chromosome[:point]
         child1.extend(parents[1].chromosome[point:])
         child2 = parents[1].chromosome[:point]
