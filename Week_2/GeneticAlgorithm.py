@@ -1,4 +1,5 @@
 import random
+from operator import attrgetter
 import matplotlib.pyplot as plt
 import Week_2.Initializer as Initializer
 import Week_2.Selector as Selector
@@ -9,7 +10,7 @@ from Week_2.Problem import Problem
 
 
 class GeneticAlgorithm:
-    def __init__(self, initializer, selector, recombiner, mutator, replacer, generation_count=5000):
+    def __init__(self, initializer, selector, recombiner, mutator, replacer, generation_count=200):
         self.initializer = initializer
         self.selector = selector
         self.recombiner = recombiner
@@ -35,9 +36,9 @@ class GeneticAlgorithm:
                 offspring_chromosome.mutate(self.mutator)
             population = self.replacer.replace(population, offspring)
 
-            highest_fitness = max(map(lambda individual: individual.fitness, population))
+            highest_fitness = max(population, key=attrgetter("fitness")).fitness
             highest_fitness_list.append(highest_fitness)
-            if i % 100 == 0:
+            if i % 10 == 0:
                 print("After {} generations the highest fitness is {}".format(i, highest_fitness))
 
         x = range(self.generation_count)
@@ -61,13 +62,14 @@ if __name__ == '__main__':
     problem3 = Problem(jobs3, 50)
 
     population_count = 40
-    selection_size = 5
     recombination_parent_count = 2
+    selection_size = population_count
     mutation_probability = 0.1
 
     algorithm1 = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
                                   Selector.RouletteSelector(selection_size),
                                   Recombiner.OnePointCrossoverRecombiner(recombination_parent_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
-                                  Replacer.PseudoReplacer())
+                                  Replacer.DeleteAllReplacer())
+
     algorithm1.run()
