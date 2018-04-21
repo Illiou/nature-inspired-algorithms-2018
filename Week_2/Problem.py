@@ -7,7 +7,7 @@ class Individual:
         else:
             self.fitness = fitness
 
-    def __deepcopy__(self, memodict={}):
+    def __copy__(self):
         # to improve performance by not recalculating fitness each time a deepcopy gets made
         return Individual(self.problem, self.chromosome.copy(), self.fitness)
 

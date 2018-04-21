@@ -1,7 +1,8 @@
 from Week_2.AbstractModules import AbstractSelector
 import random
 from operator import attrgetter
-from copy import deepcopy
+from copy import copy
+
 
 class RouletteSelector(AbstractSelector):
     def select_chromosomes(self, population):
@@ -23,7 +24,7 @@ class RouletteSelector(AbstractSelector):
         # deepcopy keeps track of already copied objects within one call but we want each object to be a new one,
         # also the ones which got selected multiple times by random.choice,
         # therefore we need to call it on each object independently
-        return [deepcopy(i) for i in selected]
+        return [copy(i) for i in selected]
 
 
 class TournamentSelector(AbstractSelector):
@@ -54,5 +55,5 @@ class TournamentSelector(AbstractSelector):
         pool = []
         for _ in range(self.selection_size):
             candidates = random.sample(population, self.s)
-            pool.append(deepcopy(max(candidates, key=attrgetter("fitness"))))
+            pool.append(copy(max(candidates, key=attrgetter("fitness"))))
         return pool

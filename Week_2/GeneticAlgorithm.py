@@ -1,12 +1,14 @@
 import random
 from operator import attrgetter
-from statistics import mean, median
+from statistics import median
+
 import matplotlib.pyplot as plt
+
 import Week_2.Initializer as Initializer
-import Week_2.Selector as Selector
-import Week_2.Recombiner as Recombiner
 import Week_2.Mutator as Mutator
+import Week_2.Recombiner as Recombiner
 import Week_2.Replacer as Replacer
+import Week_2.Selector as Selector
 from Week_2.Problem import Problem
 
 
@@ -75,26 +77,38 @@ if __name__ == '__main__':
 
     algorithm1 = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
                                   Selector.RouletteSelector(selection_size),
-                                  Recombiner.OnePointCrossoverRecombiner(recombination_parent_count, crossover_probability),
+                                  Recombiner.OnePointCrossoverRecombiner(recombination_parent_count,
+                                                                         crossover_probability),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm2 = GeneticAlgorithm(Initializer.ZeroInitializer(problem2, population_count),
                                   Selector.RouletteSelector(selection_size),
-                                  Recombiner.OnePointCrossoverRecombiner(recombination_parent_count, crossover_probability),
+                                  Recombiner.OnePointCrossoverRecombiner(recombination_parent_count,
+                                                                         crossover_probability),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm3 = GeneticAlgorithm(Initializer.ZeroInitializer(problem3, population_count),
                                   Selector.RouletteSelector(selection_size),
-                                  Recombiner.OnePointCrossoverRecombiner(recombination_parent_count, crossover_probability),
+                                  Recombiner.OnePointCrossoverRecombiner(recombination_parent_count,
+                                                                         crossover_probability),
+                                  Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                  Replacer.DeleteAllReplacer())
+
+    algorithm4 = GeneticAlgorithm(Initializer.ZeroInitializer(problem3, population_count),
+                                  Selector.TournamentSelector(selection_size),
+                                  Recombiner.OnePointCrossoverRecombiner(recombination_parent_count,
+                                                                         crossover_probability),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm1.run()
     algorithm2.run()
     algorithm3.run()
+    algorithm4.run()
     algorithm1.plot_result()
     algorithm2.plot_result()
     algorithm3.plot_result()
+    algorithm4.plot_result()
     plt.show()
