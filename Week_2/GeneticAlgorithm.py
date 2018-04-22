@@ -1,6 +1,7 @@
 import random
 from operator import attrgetter
 from statistics import median
+from copy import copy
 
 import matplotlib.pyplot as plt
 
@@ -31,8 +32,8 @@ class GeneticAlgorithm:
 
             parent_count = self.recombiner.parent_count
             all_parents = [mating_pool[i:i+parent_count] for i in range(0, len(mating_pool), parent_count)]
-            if len(all_parents[-1]) != self.recombiner.parent_count:
-                all_parents.pop()
+            while len(all_parents[-1]) < self.recombiner.parent_count:
+                all_parents[-1].append(copy(all_parents[-1][0]))
             offspring = []
             for parents in all_parents:
                 offspring += self.recombiner.recombine(parents)
@@ -48,12 +49,13 @@ class GeneticAlgorithm:
 
     def plot_result(self, position):
         highest_fitness, generation_median = zip(*self.generation_results)
+        print("highest fit {}, \ngenerat Median {}".format(highest_fitness, generation_median))
         x = range(self.generation_count)
         plt.xlabel('Generations')
         plt.ylabel('Fitness')
-        plt.plot(x, highest_fitness, label='Best candidate')
-        plt.plot(x, generation_median, label='Generation mean')
         plt.subplot(2, 2, position)
+        plt.plot(x, highest_fitness, label='Best candidate {}'.format(position))
+        plt.plot(x, generation_median, label='Generation mean {}'.format(position))
         # plt.plot(x, [1 - 1 / machines] * len(x), linewidth=0.5)
 
 
@@ -71,7 +73,7 @@ if __name__ == '__main__':
     problem3 = Problem(jobs3, 50)
 
     population_count = 50
-    recombination_parent_count = 2
+    recombination_parent_count = 3
     crossover_point_count = 2
     selection_size = population_count
     crossover_probability = 0.6
@@ -104,12 +106,13 @@ if __name__ == '__main__':
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
-    # algorithm1.run()
-    # algorithm2.run()
-    # algorithm3.run()
+    algorithm1.run()
+    algorithm2.run()
+    algorithm3.run()
     algorithm4.run()
-    # algorithm1.plot_result(1)
-    # algorithm2.plot_result(2)
-    # algorithm3.plot_result(3)
+    algorithm1.plot_result(1)
+    algorithm2.plot_result(2)
+    algorithm3.plot_result(3)
     algorithm4.plot_result(4)
+    plt.legend()
     plt.show()
