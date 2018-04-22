@@ -13,14 +13,13 @@ class KPointCrossover(AbstractRecombiner):
         chromosome_length = len(parents[0].chromosome)
         crossover_points = [0] + [random.randint(1, chromosome_length) for _ in range(self.k)] + [chromosome_length]
         crossover_points.sort()
-        print(crossover_points)
 
         children = []
         for i in range(len(parents)):
             new_child = []
             for j in range(self.k + 1):
                 parent = parents[(i + j) % len(parents)]
-                new_child.extend(parent[crossover_points[j]:crossover_points[j + 1]])
+                new_child.extend(parent.chromosome[crossover_points[j]:crossover_points[j + 1]])
             children.append(Individual(parents[0].problem, new_child))
 
         return children
