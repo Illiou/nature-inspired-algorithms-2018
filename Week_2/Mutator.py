@@ -5,17 +5,17 @@ import random
 class BitFlipMutator(AbstractMutator):
 
     def mutate(self, chromosome):
-        for index, _gene in enumerate(chromosome):
+        for gene in range(len(chromosome)):
             if random.random() < self.mutation_probability:
-                chromosome[index] = random.randrange(0, self.machine_count)
+                chromosome[gene] = random.randrange(0, self.machine_count)
         return chromosome
 
 
 class SwapMutator(AbstractMutator):
 
     def mutate(self, chromosome):
-        for index, allele in enumerate(chromosome):
+        for gene in range(len(chromosome)):
             if random.random() < self.mutation_probability:
-                chromosome[index] = chromosome[(index + 1) % len(chromosome)]
-                chromosome[(index + 1) % len(chromosome)] = allele
+                next_gene = (gene + 1) % len(chromosome)
+                chromosome[gene], chromosome[next_gene] = chromosome[next_gene], chromosome[gene]
         return chromosome

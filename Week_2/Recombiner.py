@@ -1,5 +1,6 @@
 from AbstractModules import AbstractRecombiner
 import random
+from copy import deepcopy
 
 class KPointCrossover(AbstractRecombiner):
 
