@@ -46,13 +46,14 @@ class GeneticAlgorithm:
             if i % 10 == 0:
                 print("After {} generations the highest fitness is {}".format(i, highest_fitness))
 
-    def plot_result(self):
+    def plot_result(self, position):
         highest_fitness, generation_median = zip(*self.generation_results)
         x = range(self.generation_count)
         plt.xlabel('Generations')
         plt.ylabel('Fitness')
         plt.plot(x, highest_fitness, label='Best candidate')
         plt.plot(x, generation_median, label='Generation mean')
+        plt.subplot(2, 2, position)
         # plt.plot(x, [1 - 1 / machines] * len(x), linewidth=0.5)
 
 
@@ -78,38 +79,37 @@ if __name__ == '__main__':
 
     algorithm1 = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
                                   Selector.RouletteSelector(selection_size),
-                                  Recombiner.KPointCrossover(crossover_point_count,
-                                                             recombination_parent_count),
+                                  Recombiner.KPointCrossover(recombination_parent_count,
+                                                             crossover_point_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm2 = GeneticAlgorithm(Initializer.ZeroInitializer(problem2, population_count),
                                   Selector.RouletteSelector(selection_size),
-                                  Recombiner.KPointCrossover(crossover_point_count,
-                                                             recombination_parent_count),
+                                  Recombiner.KPointCrossover(recombination_parent_count,
+                                                             crossover_point_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm3 = GeneticAlgorithm(Initializer.ZeroInitializer(problem3, population_count),
                                   Selector.RouletteSelector(selection_size),
-                                  Recombiner.KPointCrossover(crossover_point_count,
-                                                             recombination_parent_count),
+                                  Recombiner.KPointCrossover(recombination_parent_count,
+                                                             crossover_point_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm4 = GeneticAlgorithm(Initializer.ZeroInitializer(problem3, population_count),
                                   Selector.TournamentSelector(selection_size),
-                                  Recombiner.KPointCrossover(crossover_point_count,
-                                                             recombination_parent_count),
+                                  Recombiner.UniformScanCrossover(recombination_parent_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
-    algorithm1.run()
-    algorithm2.run()
-    algorithm3.run()
+    # algorithm1.run()
+    # algorithm2.run()
+    # algorithm3.run()
     algorithm4.run()
-    algorithm1.plot_result()
-    algorithm2.plot_result()
-    algorithm3.plot_result()
-    algorithm4.plot_result()
+    # algorithm1.plot_result(1)
+    # algorithm2.plot_result(2)
+    # algorithm3.plot_result(3)
+    algorithm4.plot_result(4)
     plt.show()
