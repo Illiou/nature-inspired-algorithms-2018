@@ -2,6 +2,8 @@ import random
 from operator import attrgetter
 from statistics import median
 from copy import copy
+import time
+from numpy import mean, argmax
 
 import matplotlib.pyplot as plt
 
@@ -13,8 +15,12 @@ import Week_2.Selector as Selector
 from Week_2.Problem import Problem
 
 
+def current_milli_time():
+    return int(round(time.time() * 1000))
+
+
 class GeneticAlgorithm:
-    def __init__(self, initializer, selector, recombiner, mutator, replacer, generation_count=100):
+    def __init__(self, initializer, selector, recombiner, mutator, replacer, generation_count=200):
         self.initializer = initializer
         self.selector = selector
         self.recombiner = recombiner
@@ -27,7 +33,10 @@ class GeneticAlgorithm:
         population = self.initializer.initialized_population()
 
         self.generation_results = []
+        convergence_counter = 0
         for i in range(self.generation_count):
+            start_time = current_milli_time()
+
             mating_pool = self.selector.select_chromosomes(population)
 
             parent_count = self.recombiner.parent_count
@@ -41,22 +50,37 @@ class GeneticAlgorithm:
                 offspring_chromosome.mutate(self.mutator)
             population = self.replacer.replace(population, offspring)
 
-            highest_fitness = max(population, key=attrgetter("fitness")).fitness
+            max1 = max(population, key=attrgetter("fitness"))
+            highest_fitness = max1.fitness
             generation_median = median(i.fitness for i in population)
-            self.generation_results.append((highest_fitness, generation_median))
+            current_time = current_milli_time()
+            needed_time = current_time - start_time
+            gain_ratio = highest_fitness**2 / (i + 1) * 10
+            if i > 0 and self.generation_results[i-1][0] == highest_fitness:
+                convergence_counter += 1
+            self.generation_results.append((highest_fitness, generation_median, needed_time, gain_ratio))
             if i % 10 == 0:
                 print("After {} generations the highest fitness is {}".format(i, highest_fitness))
+            if convergence_counter == 20:
+                return
 
-    def plot_result(self, position):
-        highest_fitness, generation_median = zip(*self.generation_results)
-        print("highest fit {}, \ngenerat Median {}".format(highest_fitness, generation_median))
-        x = range(self.generation_count)
+    def plot_result(self, position, title):
+        highest_fitness, generation_median, needed_time, gain_ratio = zip(*self.generation_results)
+        x = range(len(self.generation_results))
         plt.xlabel('Generations')
         plt.ylabel('Fitness')
         plt.subplot(2, 2, position)
-        plt.plot(x, highest_fitness, label='Best candidate {}'.format(position))
-        plt.plot(x, generation_median, label='Generation mean {}'.format(position))
+        plt.title(title)
+        plt.plot(x, highest_fitness, label='Best candidate')
+        plt.plot(x, generation_median, label='Generation mean')
+        # plt.plot(x, gain_ratio, label='gain ratio')
+        plt.legend()
+        print("nedded_time_mean for {} is: {}".format(position, mean(needed_time)))
+        print("you should stop after {} generations".format(argmax(gain_ratio)))
         # plt.plot(x, [1 - 1 / machines] * len(x), linewidth=0.5)
+
+    def __str__(self):
+        return type(self.initializer).__name__
 
 
 if __name__ == '__main__':
@@ -100,9 +124,9 @@ if __name__ == '__main__':
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
-    algorithm4 = GeneticAlgorithm(Initializer.ZeroInitializer(problem3, population_count),
+    algorithm4 = GeneticAlgorithm(Initializer.RandomInitializer(problem3, population_count),
                                   Selector.TournamentSelector(selection_size),
-                                  Recombiner.UniformScanCrossover(recombination_parent_count),
+                                  Recombiner.UniformScanCrossover(30),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
@@ -110,9 +134,8 @@ if __name__ == '__main__':
     algorithm2.run()
     algorithm3.run()
     algorithm4.run()
-    algorithm1.plot_result(1)
-    algorithm2.plot_result(2)
-    algorithm3.plot_result(3)
-    algorithm4.plot_result(4)
-    plt.legend()
+    algorithm1.plot_result(1, str(algorithm1))
+    algorithm2.plot_result(2, str(algorithm2))
+    algorithm3.plot_result(3, str(algorithm3))
+    algorithm4.plot_result(4, str(algorithm4))
     plt.show()
