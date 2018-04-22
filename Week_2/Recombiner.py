@@ -1,30 +1,27 @@
-from AbstractModules import AbstractRecombiner
 import random
-from copy import deepcopy
+from Week_2.Problem import Individual
+
+from Week_2.AbstractModules import AbstractRecombiner
+
 
 class KPointCrossover(AbstractRecombiner):
+    def __init__(self, crossover_point_count, parent_count):
+        super().__init__(parent_count)
+        self.k = crossover_point_count
 
     def recombine(self, parents):
-
-        k = 2
-        crossover_points = [0]
-        for points in range(k):
-            crossover_points.extend([random.randint(1, len(parents[0])-1)])
+        chromosome_length = len(parents[0].chromosome)
+        crossover_points = [0] + [random.randint(1, chromosome_length) for _ in range(self.k)] + [chromosome_length]
         crossover_points.sort()
-        crossover_points.extend([len(parents[0])])
-        #crossover_points = [0,2,5,len(parents[0])]
-        #crossover_points = [0,2,len(parents[0])]
         print(crossover_points)
 
         children = []
         for i in range(len(parents)):
             new_child = []
-            for j in range(k+1):
-                parent = parents[(i+j)%len(parents)]
-                #print(parent[crossover_points[j]:crossover_points[j+1]])
-                #print(crossover_points[j], crossover_points[j+1])
-                new_child.extend(parent[crossover_points[j]:crossover_points[j+1]])
-            children.append(new_child)
+            for j in range(self.k + 1):
+                parent = parents[(i + j) % len(parents)]
+                new_child.extend(parent[crossover_points[j]:crossover_points[j + 1]])
+            children.append(Individual(parents[0].problem, new_child))
 
         return children
 
@@ -32,36 +29,13 @@ class KPointCrossover(AbstractRecombiner):
 class UniformScanCrossover(AbstractRecombiner):
 
     def recombine(self, parents):
-
-        possibilites = [*zip(*parents)]
-        #print(possibilites)
+        chromosomes = [parent.chromosome for parent in parents]
+        possibilities = [*zip(*chromosomes)]
+        print(possibilities)
 
         children = []
         for i in range(len(parents)):
-            children.append([random.choice(possible) for possible in possibilites])
+            new_child = [random.choice(possible) for possible in possibilities]
+            children.append(Individual(parents[0].problem, new_child))
 
         return children
-
-
-# from Week_2.AbstractModules import AbstractRecombiner
-# from Week_2.Problem import Individual
-# import random
-#
-#
-# class OnePointCrossoverRecombiner(AbstractRecombiner):
-#     def __init__(self, parent_count):
-#         if parent_count != 2:
-#             raise AssertionError("Parent_count in OnePointCrossover must be 2")
-#         super().__init__(parent_count)
-#
-#     def recombine(self, parents):
-#         point = random.randint(1, len(parents) - 1)
-#         child1 = parents[0].chromosome[:point]
-#         child1.extend(parents[1].chromosome[point:])
-#         child2 = parents[1].chromosome[:point]
-#         child2.extend(parents[0].chromosome[point:])
-#         return [Individual(parents[0].problem, child1), Individual(parents[0].problem, child2)]
-#
-#
-#
-# >>>>>>> d6322a11bf03453c031811da1400ef1babe91c2e
