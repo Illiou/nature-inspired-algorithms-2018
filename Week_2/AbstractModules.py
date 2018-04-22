@@ -49,13 +49,15 @@ class AbstractSelector(abc.ABC):
 
 class AbstractRecombiner(abc.ABC):
     """Abstract interface for a Recombiner yielding a method to recombine parent-chromosomes to new chromosomes"""
-    def __init__(self, parent_count):
+    def __init__(self, parent_count, crossover_probability):
         """
         Initialize the Recombiner
         Args:
-            parent_count: the number of parents used in a recombination
+            parent_count(int): the number of parents used in a recombination
+            crossover_probability(float): the probability to really recombine
         """
         self.parent_count = parent_count
+        self.crossover_probability = crossover_probability
 
     @abc.abstractmethod
     def recombine(self, parents):

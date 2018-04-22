@@ -29,44 +29,50 @@ class GeneticAlgorithm:
         self.generation_count = generation_count
         self.generation_results = []
 
-    def run(self):
-        population = self.initializer.initialized_population()
-
+    def run(self, iterations=100):
         self.generation_results = []
-        convergence_counter = 0
-        for i in range(self.generation_count):
-            start_time = current_milli_time()
+        for i in range(iterations):
+            self.generation_results.append([])
+            population = self.initializer.initialized_population()
 
-            mating_pool = self.selector.select_chromosomes(population)
+            # convergence_counter = 0
+            for j in range(self.generation_count):
+                start_time = current_milli_time()
 
-            parent_count = self.recombiner.parent_count
-            all_parents = [mating_pool[i:i+parent_count] for i in range(0, len(mating_pool), parent_count)]
-            while len(all_parents[-1]) < self.recombiner.parent_count:
-                all_parents[-1].append(copy(all_parents[-1][0]))
-            offspring = []
-            for parents in all_parents:
-                offspring += self.recombiner.recombine(parents)
-            for offspring_chromosome in offspring:
-                offspring_chromosome.mutate(self.mutator)
-            population = self.replacer.replace(population, offspring)
+                mating_pool = self.selector.select_chromosomes(population)
 
-            max1 = max(population, key=attrgetter("fitness"))
-            highest_fitness = max1.fitness
-            generation_median = median(i.fitness for i in population)
-            current_time = current_milli_time()
-            needed_time = current_time - start_time
-            gain_ratio = highest_fitness**2 / (i + 1) * 10
-            if i > 0 and self.generation_results[i-1][0] == highest_fitness:
-                convergence_counter += 1
-            self.generation_results.append((highest_fitness, generation_median, needed_time, gain_ratio))
-            if i % 10 == 0:
-                print("After {} generations the highest fitness is {}".format(i, highest_fitness))
-            if convergence_counter == 20:
-                return
+                parent_count = self.recombiner.parent_count
+                all_parents = [mating_pool[i:i+parent_count] for i in range(0, len(mating_pool), parent_count)]
+                while len(all_parents[-1]) < self.recombiner.parent_count:
+                    all_parents[-1].append(copy(all_parents[-1][0]))
+                offspring = []
+                for parents in all_parents:
+                    offspring += self.recombiner.recombine(parents)
+                for offspring_chromosome in offspring:
+                    offspring_chromosome.mutate(self.mutator)
+                population = self.replacer.replace(population, offspring)
+
+                max1 = max(population, key=attrgetter("fitness"))
+                highest_fitness = max1.fitness
+                generation_median = median(i.fitness for i in population)
+                current_time = current_milli_time()
+                needed_time = current_time - start_time
+                gain_ratio = highest_fitness**2 / (j + 1) * 10
+                # if j > 0 and self.generation_results[j-1][0] == highest_fitness:
+                #     convergence_counter += 1
+                # else:
+                #     convergence_counter = 0
+                self.generation_results[i].append((highest_fitness, generation_median, needed_time, gain_ratio))
+                if j % 10 == 0:
+                    print("In the {} iteration after {} generations the highest fitness is {}".format(i, j, highest_fitness))
+                # if convergence_counter == 40:
+                #     break
 
     def plot_result(self, position, title):
-        highest_fitness, generation_median, needed_time, gain_ratio = zip(*self.generation_results)
-        x = range(len(self.generation_results))
+        # calculate the mean of all iterations for every generation_step for highest_fitness, generation median and time
+        # np.transpose(T) instead of zip
+        highest_fitness, generation_median, needed_time, gain_ratio = mean(self.generation_results, 0).T
+        x = range(len(self.generation_results[0]))
         plt.xlabel('Generations')
         plt.ylabel('Fitness')
         plt.subplot(2, 2, position)
