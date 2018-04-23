@@ -1,11 +1,11 @@
 import random
+import time
+from copy import copy
 from operator import attrgetter
 from statistics import median
-from copy import copy
-import time
-from numpy import mean, argmax
 
 import matplotlib.pyplot as plt
+from numpy import mean
 
 import Week_2.Initializer as Initializer
 import Week_2.Mutator as Mutator
@@ -29,13 +29,12 @@ class GeneticAlgorithm:
         self.generation_count = generation_count
         self.generation_results = []
 
-    def run(self, iterations=100):
+    def run(self, iterations=10):
         self.generation_results = []
         for i in range(iterations):
             self.generation_results.append([])
             population = self.initializer.initialized_population()
 
-            # convergence_counter = 0
             for j in range(self.generation_count):
                 start_time = current_milli_time()
 
@@ -57,36 +56,25 @@ class GeneticAlgorithm:
                 generation_median = median(i.fitness for i in population)
                 current_time = current_milli_time()
                 needed_time = current_time - start_time
-                gain_ratio = highest_fitness**2 / (j + 1) * 10
-                # if j > 0 and self.generation_results[j-1][0] == highest_fitness:
-                #     convergence_counter += 1
-                # else:
-                #     convergence_counter = 0
-                self.generation_results[i].append((highest_fitness, generation_median, needed_time, gain_ratio))
-                if j % 10 == 0:
-                    print("In the {} iteration after {} generations the highest fitness is {}".format(i, j, highest_fitness))
-                # if convergence_counter == 40:
-                #     break
+                self.generation_results[i].append([highest_fitness, generation_median, needed_time])
+                if (j + 1) % 10 == 0:
+                    print("In the {} iteration after {} generations the highest fitness is {}".format(i+1, j+1,
+                                                                                                      highest_fitness))
 
-    def plot_result(self, position, title):
+    def plot_result(self, position=None, rows=2, columns=2):
         # calculate the mean of all iterations for every generation_step for highest_fitness, generation median and time
         # np.transpose(T) instead of zip
-        highest_fitness, generation_median, needed_time, gain_ratio = mean(self.generation_results, 0).T
+        highest_fitness, generation_median, needed_time = mean(self.generation_results, 0).T
         x = range(len(self.generation_results[0]))
         plt.xlabel('Generations')
         plt.ylabel('Fitness')
-        plt.subplot(2, 2, position)
-        plt.title(title)
+        if position is not None:
+            plt.subplot(rows, columns, position)
         plt.plot(x, highest_fitness, label='Best candidate')
         plt.plot(x, generation_median, label='Generation mean')
-        # plt.plot(x, gain_ratio, label='gain ratio')
         plt.legend()
         print("nedded_time_mean for {} is: {}".format(position, mean(needed_time)))
-        print("you should stop after {} generations".format(argmax(gain_ratio)))
         # plt.plot(x, [1 - 1 / machines] * len(x), linewidth=0.5)
-
-    def __str__(self):
-        return type(self.initializer).__name__
 
 
 if __name__ == '__main__':
@@ -143,8 +131,8 @@ if __name__ == '__main__':
     # algorithm2.run()
     # algorithm3.run()
     # algorithm4.run()
-    algorithm1.plot_result(1, str(algorithm1))
-    # algorithm2.plot_result(2, str(algorithm2))
-    # algorithm3.plot_result(3, str(algorithm3))
-    # algorithm4.plot_result(4, str(algorithm4))
+    algorithm1.plot_result()
+    # algorithm2.plot_result(2)
+    # algorithm3.plot_result(3)
+    # algorithm4.plot_result(4)
     plt.show()
