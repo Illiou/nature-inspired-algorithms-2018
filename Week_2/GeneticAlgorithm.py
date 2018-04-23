@@ -80,7 +80,6 @@ class GeneticAlgorithm:
             (axis): the axis of the subplot if position is not None
         """
         # calculate the mean of all iterations for every generation_step for highest_fitness, generation median and time
-        # np.transpose(T) instead of zip
         highest_fitness, generation_median, needed_time = mean(self.generation_results, 0).T
         x = range(len(self.generation_results[0]))
         plt.xlabel('Generations')
@@ -107,6 +106,7 @@ if __name__ == '__main__':
     jobs3 += [int(i / 2) for i in range(51 * 2, 100 * 2)]
     problem3 = Problem(jobs3, 50)
 
+    problem_to_compute = problem1
     population_count = 50
     recombination_parent_count = 2
     crossover_point_count = 1
@@ -115,61 +115,61 @@ if __name__ == '__main__':
     mutation_probability = 0.1
 
     # a benchmark algorithm for comparing the slightly changed algorithms
-    benchmark_algorithm = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+    benchmark_algorithm = GeneticAlgorithm(Initializer.ZeroInitializer(problem_to_compute, population_count),
                                            Selector.RouletteSelector(selection_size),
                                            Recombiner.KPointCrossover(recombination_parent_count,
                                                                       crossover_probability,
                                                                       crossover_point_count),
-                                           Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                           Mutator.BitFlipMutator(mutation_probability, problem_to_compute.machine_count),
                                            Replacer.DeleteAllReplacer())
 
-    algorithms = [GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+    algorithms = [GeneticAlgorithm(Initializer.ZeroInitializer(problem_to_compute, population_count),
                                    Selector.TournamentSelector(selection_size),
                                    Recombiner.KPointCrossover(recombination_parent_count,
                                                               crossover_probability,
                                                               crossover_point_count),
-                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem_to_compute.machine_count),
                                    Replacer.DeleteAllReplacer()),
-                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem_to_compute, population_count),
                                    Selector.RouletteSelector(selection_size),
                                    Recombiner.KPointCrossover(10,
                                                               crossover_probability,
                                                               10),
-                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem_to_compute.machine_count),
                                    Replacer.DeleteAllReplacer()),
-                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem_to_compute, population_count),
                                    Selector.RouletteSelector(selection_size),
                                    Recombiner.UniformScanCrossover(recombination_parent_count,
                                                                    crossover_probability),
-                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem_to_compute.machine_count),
                                    Replacer.DeleteAllReplacer()),
-                  GeneticAlgorithm(Initializer.RandomInitializer(problem1, population_count),
+                  GeneticAlgorithm(Initializer.RandomInitializer(problem_to_compute, population_count),
                                    Selector.RouletteSelector(selection_size),
                                    Recombiner.KPointCrossover(recombination_parent_count,
                                                               crossover_probability,
                                                               crossover_point_count),
-                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem_to_compute.machine_count),
                                    Replacer.DeleteAllReplacer()),
-                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem_to_compute, population_count),
                                    Selector.RouletteSelector(selection_size),
                                    Recombiner.KPointCrossover(recombination_parent_count,
                                                               crossover_probability,
                                                               crossover_point_count),
-                                   Mutator.SwapMutator(mutation_probability, problem1.machine_count),
+                                   Mutator.SwapMutator(mutation_probability, problem_to_compute.machine_count),
                                    Replacer.DeleteAllReplacer()),
-                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem_to_compute, population_count),
                                    Selector.RouletteSelector(selection_size),
                                    Recombiner.KPointCrossover(recombination_parent_count,
                                                               crossover_probability,
                                                               crossover_point_count),
-                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem_to_compute.machine_count),
                                    Replacer.SteadyStateReplacer(10)),
-                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem_to_compute, population_count),
                                    Selector.RouletteSelector(selection_size),
                                    Recombiner.KPointCrossover(recombination_parent_count,
                                                               crossover_probability,
                                                               crossover_point_count),
-                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem_to_compute.machine_count),
                                    Replacer.SteadyStateReplacer(10, True))
                   ]
 
