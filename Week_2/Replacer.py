@@ -5,6 +5,7 @@ from operator import attrgetter
 
 class DeleteAllReplacer(AbstractReplacer):
     def replace(self, current_population, offspring):
+        """Replaces the current_population with an equal number of the offspring chromosomes keeping only the best"""
         if len(offspring) < len(current_population):
             raise ValueError("Offspring needs to be at least as large as current population.")
         best_performing_individual = max(current_population, key=attrgetter("fitness"))
@@ -22,6 +23,7 @@ class SteadyStateReplacer(AbstractReplacer):
         self.replace_worst = replace_worst
 
     def replace(self, current_population, offspring):
+        """Replaces only a random number of the current-population`s individuals with some of the offspring"""
         if len(offspring) < self.n:
             raise ValueError("Offspring needs to be at least as large as the chosen n.")
         best_performing_individual = max(current_population, key=attrgetter("fitness"))

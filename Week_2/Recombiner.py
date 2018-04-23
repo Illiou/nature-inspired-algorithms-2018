@@ -7,10 +7,15 @@ from Week_2.AbstractModules import AbstractRecombiner
 
 class KPointCrossover(AbstractRecombiner):
     def __init__(self, parent_count, crossover_probability, crossover_point_count):
+        """
+        Args:
+            crossover_point_count: the number of crossover-points
+        """
         super().__init__(parent_count, crossover_probability)
         self.k = crossover_point_count
 
     def recombine(self, parents):
+        """Recombines the given parents to get offspring using the k-crossover method"""
         if random.random() > self.crossover_probability:
             return [copy(parent) for parent in parents]
         chromosome_length = len(parents[0].chromosome)
@@ -31,6 +36,7 @@ class KPointCrossover(AbstractRecombiner):
 class UniformScanCrossover(AbstractRecombiner):
 
     def recombine(self, parents):
+        """Recombines the given parents to get offspring sing the Uniform-scan-crossover method"""
         if random.random() > self.crossover_probability:
             return [copy(parent) for parent in parents]
         chromosomes = [parent.chromosome for parent in parents]

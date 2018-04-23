@@ -4,6 +4,7 @@ import random
 
 
 class InitializerTest(unittest.TestCase):
+    """Test for testing the mutators"""
     def setUp(self):
         self.mutation_probability = 0.5
         self.machine_count = 5

@@ -3,8 +3,8 @@ import random
 
 
 class BitFlipMutator(AbstractMutator):
-
     def mutate(self, chromosome):
+        """Mutates the given chromosome by flipping a random allele"""
         for gene in range(len(chromosome)):
             if random.random() < self.mutation_probability:
                 chromosome[gene] = random.randrange(0, self.machine_count)
@@ -12,8 +12,8 @@ class BitFlipMutator(AbstractMutator):
 
 
 class SwapMutator(AbstractMutator):
-
     def mutate(self, chromosome):
+        """Mutates the given chromosome by swapping random genes"""
         for gene in range(len(chromosome)):
             if random.random() < self.mutation_probability:
                 next_gene = (gene + 1) % len(chromosome)

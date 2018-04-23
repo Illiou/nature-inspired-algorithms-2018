@@ -5,6 +5,7 @@ import random
 
 
 class InitializerTest(unittest.TestCase):
+    """Test for testing the initializers"""
     def setUp(self):
         jobs = [10, 20, 13, 15, 10, 23, 14]
         self.problem = Problem(jobs, 5)

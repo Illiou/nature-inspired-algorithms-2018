@@ -4,8 +4,8 @@ import random
 
 
 class ZeroInitializer(AbstractInitializer):
-
     def initialized_population(self):
+        """Initializes the population with zeros only"""
         chromosome_size = len(self.problem.jobs)
         return [Individual(self.problem, [0] * chromosome_size) for _ in range(self.population_size)]
 
@@ -13,6 +13,7 @@ class ZeroInitializer(AbstractInitializer):
 class RandomInitializer(AbstractInitializer):
 
     def initialized_population(self):
+        """Initializes the population randomly"""
         population = []
         chromosome_size = len(self.problem.jobs)
         for i in range(self.population_size):

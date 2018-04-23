@@ -21,6 +21,7 @@ def current_milli_time():
 
 class GeneticAlgorithm:
     def __init__(self, initializer, selector, recombiner, mutator, replacer, generation_count=100):
+        """A Genetic Algorithm with the given modules"""
         self.initializer = initializer
         self.selector = selector
         self.recombiner = recombiner
@@ -30,6 +31,11 @@ class GeneticAlgorithm:
         self.generation_results = []
 
     def run(self, iterations=100):
+        """
+        Runs the algorithm multiple times and save the results
+        Args:
+            iterations: the number of iterations
+        """
         self.generation_results = []
         for i in range(iterations):
             self.generation_results.append([])
@@ -62,6 +68,13 @@ class GeneticAlgorithm:
                                                                                                       highest_fitness))
 
     def plot_result(self, position=None, rows=2, columns=2):
+        """
+        Plots the development of best individual and the population mean
+        Args:
+            position(int): the given position in a subplot if not None
+            rows(int): the number of rows in the subplot
+            columns(int): the number of columns in the subplot
+        """
         # calculate the mean of all iterations for every generation_step for highest_fitness, generation median and time
         # np.transpose(T) instead of zip
         highest_fitness, generation_median, needed_time = mean(self.generation_results, 0).T
@@ -96,6 +109,7 @@ if __name__ == '__main__':
     crossover_probability = 0.6
     mutation_probability = 0.1
 
+    # a benchmark algorithm for comparing the slightly changed algorithms
     benchmark_algorithm = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
                                            Selector.RouletteSelector(selection_size),
                                            Recombiner.KPointCrossover(recombination_parent_count,
