@@ -20,7 +20,7 @@ def current_milli_time():
 
 
 class GeneticAlgorithm:
-    def __init__(self, initializer, selector, recombiner, mutator, replacer, generation_count=200):
+    def __init__(self, initializer, selector, recombiner, mutator, replacer, generation_count=100):
         self.initializer = initializer
         self.selector = selector
         self.recombiner = recombiner
@@ -112,36 +112,39 @@ if __name__ == '__main__':
     algorithm1 = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
                                   Selector.RouletteSelector(selection_size),
                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                             crossover_probability,
                                                              crossover_point_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
-    algorithm2 = GeneticAlgorithm(Initializer.ZeroInitializer(problem2, population_count),
+    algorithm2 = GeneticAlgorithm(Initializer.RandomInitializer(problem2, population_count),
                                   Selector.RouletteSelector(selection_size),
                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                             crossover_probability,
                                                              crossover_point_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
-    algorithm3 = GeneticAlgorithm(Initializer.ZeroInitializer(problem3, population_count),
+    algorithm3 = GeneticAlgorithm(Initializer.RandomInitializer(problem3, population_count),
                                   Selector.RouletteSelector(selection_size),
                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                             crossover_probability,
                                                              crossover_point_count),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm4 = GeneticAlgorithm(Initializer.RandomInitializer(problem3, population_count),
                                   Selector.TournamentSelector(selection_size),
-                                  Recombiner.UniformScanCrossover(30),
+                                  Recombiner.UniformScanCrossover(30, crossover_probability),
                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
                                   Replacer.DeleteAllReplacer())
 
     algorithm1.run()
-    algorithm2.run()
-    algorithm3.run()
-    algorithm4.run()
+    # algorithm2.run()
+    # algorithm3.run()
+    # algorithm4.run()
     algorithm1.plot_result(1, str(algorithm1))
-    algorithm2.plot_result(2, str(algorithm2))
-    algorithm3.plot_result(3, str(algorithm3))
-    algorithm4.plot_result(4, str(algorithm4))
+    # algorithm2.plot_result(2, str(algorithm2))
+    # algorithm3.plot_result(3, str(algorithm3))
+    # algorithm4.plot_result(4, str(algorithm4))
     plt.show()
