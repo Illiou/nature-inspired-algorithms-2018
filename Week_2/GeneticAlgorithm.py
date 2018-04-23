@@ -84,9 +84,9 @@ class GeneticAlgorithm:
         if position is not None:
             plt.subplot(rows, columns, position)
         plt.plot(x, highest_fitness, label='Best candidate')
-        plt.plot(x, generation_median, label='Generation mean')
+        plt.plot(x, generation_median, label='Generation median')
         plt.legend()
-        print("nedded_time_mean is: {}".format(position, mean(needed_time)))
+        print("nedded_time_mean is: {}".format(mean(needed_time)))
 
 
 if __name__ == '__main__':
