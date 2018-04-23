@@ -67,13 +67,17 @@ class GeneticAlgorithm:
                     print("In the {} iteration after {} generations the highest fitness is {}".format(i + 1, j + 1,
                                                                                                       highest_fitness))
 
-    def plot_result(self, position=None, rows=2, columns=2):
+    def plot_result(self, position=None, rows=2, columns=2, axis=None):
         """
         Plots the development of best individual and the population mean
         Args:
             position(int): the given position in a subplot if not None
             rows(int): the number of rows in the subplot
             columns(int): the number of columns in the subplot
+            axis(axis): the axis to use in a subplot
+
+        Returns:
+            (axis): the axis of the subplot if position is not None
         """
         # calculate the mean of all iterations for every generation_step for highest_fitness, generation median and time
         # np.transpose(T) instead of zip
@@ -82,11 +86,12 @@ class GeneticAlgorithm:
         plt.xlabel('Generations')
         plt.ylabel('Fitness')
         if position is not None:
-            plt.subplot(rows, columns, position)
+            axis = plt.subplot(rows, columns, position, sharey=axis)
         plt.plot(x, highest_fitness, label='Best candidate')
         plt.plot(x, generation_median, label='Generation mean')
         plt.legend()
         print("nedded_time_mean is: {}".format(position, mean(needed_time)))
+        return axis
 
 
 if __name__ == '__main__':
@@ -177,7 +182,7 @@ if __name__ == '__main__':
     plt.show()
     for i, algorithm in enumerate(algorithms):
         print("benchmark: ")
-        benchmark_algorithm.plot_result(1, 1, 2)
+        axis = benchmark_algorithm.plot_result(1, 1, 2)
         print("algorithm", i)
-        algorithm.plot_result(2, 1, 2)
+        algorithm.plot_result(2, 1, 2, axis=axis)
         plt.show()
