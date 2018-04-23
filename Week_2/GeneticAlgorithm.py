@@ -29,7 +29,7 @@ class GeneticAlgorithm:
         self.generation_count = generation_count
         self.generation_results = []
 
-    def run(self, iterations=10):
+    def run(self, iterations=100):
         self.generation_results = []
         for i in range(iterations):
             self.generation_results.append([])
@@ -41,7 +41,7 @@ class GeneticAlgorithm:
                 mating_pool = self.selector.select_chromosomes(population)
 
                 parent_count = self.recombiner.parent_count
-                all_parents = [mating_pool[i:i+parent_count] for i in range(0, len(mating_pool), parent_count)]
+                all_parents = [mating_pool[i:i + parent_count] for i in range(0, len(mating_pool), parent_count)]
                 while len(all_parents[-1]) < self.recombiner.parent_count:
                     all_parents[-1].append(copy(all_parents[-1][0]))
                 offspring = []
@@ -58,7 +58,7 @@ class GeneticAlgorithm:
                 needed_time = current_time - start_time
                 self.generation_results[i].append([highest_fitness, generation_median, needed_time])
                 if (j + 1) % 10 == 0:
-                    print("In the {} iteration after {} generations the highest fitness is {}".format(i+1, j+1,
+                    print("In the {} iteration after {} generations the highest fitness is {}".format(i + 1, j + 1,
                                                                                                       highest_fitness))
 
     def plot_result(self, position=None, rows=2, columns=2):
@@ -73,8 +73,7 @@ class GeneticAlgorithm:
         plt.plot(x, highest_fitness, label='Best candidate')
         plt.plot(x, generation_median, label='Generation mean')
         plt.legend()
-        print("nedded_time_mean for {} is: {}".format(position, mean(needed_time)))
-        # plt.plot(x, [1 - 1 / machines] * len(x), linewidth=0.5)
+        print("nedded_time_mean is: {}".format(position, mean(needed_time)))
 
 
 if __name__ == '__main__':
@@ -87,52 +86,84 @@ if __name__ == '__main__':
     problem2 = Problem(jobs2, 20)
 
     jobs3 = [50] * 3
-    jobs3 += [int(i/2) for i in range(51*2, 100*2)]
+    jobs3 += [int(i / 2) for i in range(51 * 2, 100 * 2)]
     problem3 = Problem(jobs3, 50)
 
     population_count = 50
-    recombination_parent_count = 3
-    crossover_point_count = 2
+    recombination_parent_count = 2
+    crossover_point_count = 1
     selection_size = population_count
     crossover_probability = 0.6
     mutation_probability = 0.1
 
-    algorithm1 = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
-                                  Selector.RouletteSelector(selection_size),
-                                  Recombiner.KPointCrossover(recombination_parent_count,
-                                                             crossover_probability,
-                                                             crossover_point_count),
-                                  Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
-                                  Replacer.DeleteAllReplacer())
+    benchmark_algorithm = GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                                           Selector.RouletteSelector(selection_size),
+                                           Recombiner.KPointCrossover(recombination_parent_count,
+                                                                      crossover_probability,
+                                                                      crossover_point_count),
+                                           Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                           Replacer.DeleteAllReplacer())
 
-    algorithm2 = GeneticAlgorithm(Initializer.RandomInitializer(problem2, population_count),
-                                  Selector.RouletteSelector(selection_size),
-                                  Recombiner.KPointCrossover(recombination_parent_count,
-                                                             crossover_probability,
-                                                             crossover_point_count),
-                                  Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
-                                  Replacer.DeleteAllReplacer())
+    algorithms = [GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                                   Selector.TournamentSelector(selection_size),
+                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                              crossover_probability,
+                                                              crossover_point_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Replacer.DeleteAllReplacer()),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                                   Selector.RouletteSelector(selection_size),
+                                   Recombiner.KPointCrossover(10,
+                                                              crossover_probability,
+                                                              10),
+                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Replacer.DeleteAllReplacer()),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                                   Selector.RouletteSelector(selection_size),
+                                   Recombiner.UniformScanCrossover(recombination_parent_count,
+                                                                   crossover_probability),
+                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Replacer.DeleteAllReplacer()),
+                  GeneticAlgorithm(Initializer.RandomInitializer(problem1, population_count),
+                                   Selector.RouletteSelector(selection_size),
+                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                              crossover_probability,
+                                                              crossover_point_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Replacer.DeleteAllReplacer()),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                                   Selector.RouletteSelector(selection_size),
+                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                              crossover_probability,
+                                                              crossover_point_count),
+                                   Mutator.SwapMutator(mutation_probability, problem1.machine_count),
+                                   Replacer.DeleteAllReplacer()),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                                   Selector.RouletteSelector(selection_size),
+                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                              crossover_probability,
+                                                              crossover_point_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Replacer.SteadyStateReplacer(10)),
+                  GeneticAlgorithm(Initializer.ZeroInitializer(problem1, population_count),
+                                   Selector.RouletteSelector(selection_size),
+                                   Recombiner.KPointCrossover(recombination_parent_count,
+                                                              crossover_probability,
+                                                              crossover_point_count),
+                                   Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
+                                   Replacer.SteadyStateReplacer(10, True))
+                  ]
 
-    algorithm3 = GeneticAlgorithm(Initializer.RandomInitializer(problem3, population_count),
-                                  Selector.RouletteSelector(selection_size),
-                                  Recombiner.KPointCrossover(recombination_parent_count,
-                                                             crossover_probability,
-                                                             crossover_point_count),
-                                  Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
-                                  Replacer.DeleteAllReplacer())
+    benchmark_algorithm.run()
+    for algorithm in algorithms:
+        algorithm.run()
 
-    algorithm4 = GeneticAlgorithm(Initializer.RandomInitializer(problem3, population_count),
-                                  Selector.TournamentSelector(selection_size),
-                                  Recombiner.UniformScanCrossover(30, crossover_probability),
-                                  Mutator.BitFlipMutator(mutation_probability, problem1.machine_count),
-                                  Replacer.DeleteAllReplacer())
-
-    algorithm1.run()
-    # algorithm2.run()
-    # algorithm3.run()
-    # algorithm4.run()
-    algorithm1.plot_result()
-    # algorithm2.plot_result(2)
-    # algorithm3.plot_result(3)
-    # algorithm4.plot_result(4)
+    print("benchmark: ")
+    benchmark_algorithm.plot_result()
     plt.show()
+    for i, algorithm in enumerate(algorithms):
+        print("benchmark: ")
+        benchmark_algorithm.plot_result(1, 1, 2)
+        print("algorithm", i)
+        algorithm.plot_result(2, 1, 2)
+        plt.show()
