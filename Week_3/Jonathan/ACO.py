@@ -11,8 +11,8 @@ class TSPACO:
         """
         self.pheromone_info = None
         self.city_distances = city_distances
-        for i in range(len(city_distances)):
-            self.city_distances[i][i] = -1
+        self.heuristics = np.divide(1, self.city_distances,
+                                    out=np.zeros_like(self.city_distances), where=self.city_distances!=0)
         self.current_solutions = None
         self.current_best_solution = None
         self.current_shortest_distance = None
@@ -31,10 +31,8 @@ class TSPACO:
             solution = [current_position]
             while len(selectable_cities) > 0:
                 is_selectable_mask = np.array([city in selectable_cities for city in range(city_count)])
-                heuristics = 1 / self.city_distances[current_position]
-                heuristics[current_position] = 0
                 probabilities = np.power(self.pheromone_info[current_position], pheromone_influence) \
-                                * np.power(heuristics, heuristic_influence) \
+                                * np.power(self.heuristics[current_position], heuristic_influence) \
                                 * is_selectable_mask
                 # divide by the total sum of each row to get real probabilities
                 probabilities = probabilities / np.sum(probabilities)
@@ -76,20 +74,22 @@ if __name__ == '__main__':
     tsp_aco.initialize(1)
 
     iteration_count = 1
-    step_count = 200
+    step_count = 300
 
-    for evaporation_factor in np.linspace(0, 1, 20):
+    for evaporation_factor in [0.01, 0.05, 0.1, 0.5, 1]:
         best_values = np.zeros((iteration_count, step_count))
         for i in range(iteration_count):
+            tsp_aco = TSPACO(city_differences)
+            tsp_aco.initialize(1)
             for j in range(step_count):
-                tsp_aco.construct_solutions(10)
+                tsp_aco.construct_solutions(15)
                 tsp_aco.evaporate(evaporation_factor)
                 tsp_aco.intensify(1)
                 best_values[i][j] = tsp_aco.current_shortest_distance
                 print("step:", j+1)
             print("done iterations:", i+1)
         plt.plot(np.mean(best_values, axis=0), label="evap-factor: {}".format(evaporation_factor))
-        print("done evaporation_factor:", evaporation_factor<y)
+        print("done evaporation_factor:", evaporation_factor)
     plt.legend()
     plt.show()
 
