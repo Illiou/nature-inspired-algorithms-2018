@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from Week_3.Emanuel.TSPACO import TSPACO
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
+import matplotlib
 
 
 if __name__ == '__main__':
@@ -17,8 +18,8 @@ if __name__ == '__main__':
 
 
     num = 5
-    lower = 0
-    upper = 5
+    lower = 0.5
+    upper = 2
 
     evaporation_tests = [0.01, 0.05, 0.1, 0.5, 1]
     aco = TSPACO(distance_matrix, initial_pheromone_value, 0, intensification_value, alpha=1, beta=1, ant_number=25)
@@ -28,19 +29,25 @@ if __name__ == '__main__':
         for b, beta in enumerate(np.linspace(lower, upper, num)):
             aco.alpha = alpha
             aco.beta = beta
-            for evaporation_rate in evaporation_tests:
+            evaporation_results = np.zeros(len(evaporation_tests))
+            for index, evaporation_rate in enumerate(evaporation_tests):
                 print(f"Calculating for evaporation rate {evaporation_rate}")
                 aco.evaporation_rate = evaporation_rate
-                best_solution_distances = np.zeros((repetitions, iterations))
-                for repetition in range(repetitions):
-                    print(f"Repetition {repetition}")
-                    aco.initialize()
-                    best_solution_distances[repetition] = aco.run(iterations)
+                aco.initialize()
+                evaporation_results[index] = aco.run(iterations)[-1]
+                # best_solution_distances = np.zeros((repetitions, iterations))
+                # for repetition in range(repetitions):
+                #     print(f"Repetition {repetition}")
+                #     aco.initialize()
+                #     best_solution_distances[repetition] = aco.run(iterations)
                 #plt.plot(np.mean(best_solution_distances, axis=0), label=f"Evaporation rate: {evaporation_rate}")
-                alpha_beta_matrix[a, b] = np.mean(best_solution_distances)
-                evaporation_matrix[a, b] = evaporation_tests[np.argmax()]
-                print("Done alpha: {} \t beta: {}".format(alpha, beta))
-                print(alpha_beta_matrix)
+
+            alpha_beta_matrix[a, b] = np.min(evaporation_results)
+            evaporation_matrix[a, b] = evaporation_tests[np.argmin(evaporation_results)]
+            print("Done alpha: {} \t beta: {}".format(alpha, beta))
+            print(alpha_beta_matrix)
+            print("Evaporation Matrix:")
+            print(evaporation_matrix)
 
     # plt.legend()
     # plt.show()
@@ -49,7 +56,8 @@ if __name__ == '__main__':
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    ax.plot_surface(X, Y, alpha_beta_matrix, facecolor=cm.inferno)
+    norm = matplotlib.colors.Normalize(vmin=.0, vmax=1.)
+    ax.plot_surface(X, Y, alpha_beta_matrix, facecolor=cm.inferno(norm(evaporation_matrix)), shade=False)
 
     ax.set_xlabel('beta')
     ax.set_ylabel('alpha')
