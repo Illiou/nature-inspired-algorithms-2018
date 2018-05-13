@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import random
 import bisect
 
+
 class TSPACO:
     def __init__(self, distance_matrix, initialization_value, evaporation_rate, intensification_value, alpha=1., beta=1.,
                  ant_number=100, n_best_to_intensify=1):
@@ -56,7 +57,7 @@ class TSPACO:
             for cnt in range(1, self.cities):
                 cities_left[:, i] = 0
                 cum_sum = np.cumsum(cities_left[i])
-                i = bisect.bisect(cum_sum, random.uniform(0, cum_sum[-1]))
+                i = bisect.bisect_left(cum_sum, random.uniform(0, cum_sum[-1]))
                 paths[k, cnt] = i
         return paths
 
