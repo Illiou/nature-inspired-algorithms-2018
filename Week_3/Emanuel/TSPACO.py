@@ -28,7 +28,7 @@ class TSPACO:
     def run(self, iterations=1):
         best_solution_distances = np.zeros(iterations)
         for i in range(iterations):
-            print(f"Iteration {i}")
+            # print(f"Iteration {i}")
             paths = self.construct_solutions()
             self.evaporate()
             path_qualities = np.argsort([self.objective_function(path) for path in paths])
