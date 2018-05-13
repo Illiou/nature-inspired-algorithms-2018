@@ -22,7 +22,7 @@ class RouletteSelector(AbstractSelector):
             fitness = None
         selected = random.choices(population, weights=fitness, k=self.selection_size)
         # deepcopy keeps track of already copied objects within one call but we want each object to be a new one,
-        # also the ones which got selected multiple times by random.choice,
+        # also the ones which got selected multiple times by random.choices,
         # therefore we need to call it on each object independently
         return [copy(i) for i in selected]
 

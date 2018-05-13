@@ -68,7 +68,7 @@ def load_tsp(filename):
 
 
 if __name__ == '__main__':
-    city_differences = load_tsp("TSP_Problems/problem_01.tsp")
+    city_differences = load_tsp("../TSP_Problems/problem_01.tsp")
     assert(city_differences[4][10] == city_differences[10][4])
     tsp_aco = TSPACO(city_differences)
     tsp_aco.initialize(1)
