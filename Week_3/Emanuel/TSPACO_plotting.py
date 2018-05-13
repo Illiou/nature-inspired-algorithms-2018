@@ -18,7 +18,7 @@ if __name__ == '__main__':
     initial_pheromone_value = 1
     # evaporation_rate = 0.1
     intensification_value = 1
-    iterations = 2
+    iterations = 500
     repetitions = 1
 
     distance_matrix = np.loadtxt(distances_file)
