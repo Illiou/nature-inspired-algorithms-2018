@@ -5,21 +5,28 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import matplotlib
 
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cbook
+from matplotlib import cm
+from matplotlib.colors import LightSource
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 if __name__ == '__main__':
     distances_file = "../TSP_Problems/problem_01.tsp"
     initial_pheromone_value = 1
     # evaporation_rate = 0.1
     intensification_value = 1
-    iterations = 100
+    iterations = 2
     repetitions = 1
 
     distance_matrix = np.loadtxt(distances_file)
 
 
-    num = 5
-    lower = 0.5
-    upper = 2
+    num = 10
+    lower = 0
+    upper = 5
 
     evaporation_tests = [0.01, 0.05, 0.1, 0.5, 1]
     aco = TSPACO(distance_matrix, initial_pheromone_value, 0, intensification_value, alpha=1, beta=1, ant_number=25)
@@ -49,6 +56,9 @@ if __name__ == '__main__':
             print("Evaporation Matrix:")
             print(evaporation_matrix)
 
+    np.savetxt("alpha_beta_matrix.csv", alpha_beta_matrix, delimiter=",")
+    np.savetxt("evaporation_matrix.csv", evaporation_matrix, delimiter=",")
+
     # plt.legend()
     # plt.show()
     X, Y = np.meshgrid(np.linspace(lower, upper, num), np.linspace(lower, upper, num))
@@ -56,8 +66,21 @@ if __name__ == '__main__':
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    norm = matplotlib.colors.Normalize(vmin=.0, vmax=1.)
-    ax.plot_surface(X, Y, alpha_beta_matrix, facecolor=cm.inferno(norm(evaporation_matrix)), shade=False)
+    # norm = matplotlib.colors.Normalize(vmin=.0, vmax=1.)
+    # ax.plot_surface(X, Y, alpha_beta_matrix, facecolor=cm.inferno, shade=False)
+
+    #ls = LightSource(270, 45)
+    # To use a custom hillshading mode, override the built-in shading and pass
+    # in the rgb colors of the shaded surface calculated from "shade".
+    #rgb = ls.shade(evaporation_matrix, cmap=cm.bone, vert_exag=0.1, blend_mode='soft', vmin=0., vmax =0.1)
+    #surf = ax.plot_surface(X, Y, alpha_beta_matrix, rstride=1, cstride=1, facecolors=rgb,
+    #                       linewidth=0, antialiased=False, shade=False, vmin=0., vmax =0.01)
+
+
+    ax.plot_surface(X, Y, alpha_beta_matrix, facecolors=cm.inferno(evaporation_matrix))
+    m = cm.ScalarMappable(cmap=cm.inferno)
+    m.set_array(evaporation_matrix)
+    plt.colorbar(m)
 
     ax.set_xlabel('beta')
     ax.set_ylabel('alpha')
