@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from Week_3.Emanuel.TSPACO import TSPACO
+from TSPACO import TSPACO
 from matplotlib import cm
 
 from mpl_toolkits.mplot3d import Axes3D
