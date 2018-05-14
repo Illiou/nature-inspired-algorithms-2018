@@ -9,7 +9,7 @@ distances_file = f"../TSP_Problems/problem_0{problem}.tsp"
 distance_matrix = np.loadtxt(distances_file)
 
 # default values
-initial_pheromone_value = 1
+initialization_value = 1
 evaporation_rate = 0.05
 intensification_value = 1
 iterations = 500
@@ -19,7 +19,7 @@ beta = 1
 ant_number = 30
 n_best_to_intensify = 1
 
-aco = TSPACO(distance_matrix, initial_pheromone_value, evaporation_rate, intensification_value,
+aco = TSPACO(distance_matrix, initialization_value, evaporation_rate, intensification_value,
              alpha=alpha, beta=beta, ant_number=ant_number, n_best_to_intensify=n_best_to_intensify)
 
 tests = {"initialization_value": [0.1, 1, 10, 30],
@@ -30,8 +30,8 @@ tests = {"initialization_value": [0.1, 1, 10, 30],
          "ant_number": [1, 5, 15, 30, 100],
          "n_best_to_intensify": [1, 5, 10]}
 
-nicos_hc = [6376, 4315, 4508]
-nicos_aco = [3632, 2878, 2617]
+nicos_hc = [0, 6376, 4315, 4508]
+nicos_aco = [0, 3632, 2878, 2617]
 figures = []
 
 for test_name, test_values in tests.items():
@@ -51,7 +51,7 @@ for test_name, test_values in tests.items():
     setattr(aco, test_name, value_before_test)
     curr_ax.axhline(nicos_hc[problem], linestyle="dashed", label="HC Benchmark")
     curr_ax.axhline(nicos_aco[problem], linestyle="dotted", label="ACO Benchmark")
-    curr_ax.set(title=f"Problem {problem}", xlabel="Generations", ylabel="Best path distance")
+    curr_ax.set(title=f"Problem {problem}", xlabel="Generations", ylabel="Best path length")
     curr_ax.legend()
 
 for fig in figures:

@@ -16,7 +16,7 @@ if __name__ == '__main__':
     distance_matrix = np.loadtxt(distances_file)
 
     # default values
-    initial_pheromone_value = 1
+    initialization_value = 1
     evaporation_rate = 0.05
     intensification_value = 1
     iterations = 10
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     ant_number = 30
     n_best_to_intensify = 1
 
-    aco = TSPACO(distance_matrix, initial_pheromone_value, evaporation_rate, intensification_value,
+    aco = TSPACO(distance_matrix, initialization_value, evaporation_rate, intensification_value,
                  alpha=alpha, beta=beta, ant_number=ant_number, n_best_to_intensify=n_best_to_intensify)
 
     num = 10
