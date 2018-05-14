@@ -1,35 +1,39 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from Week_3.Emanuel.TSPACO import TSPACO
-from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
-import matplotlib
 
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib
 from matplotlib import cbook
-from matplotlib import cm
 from matplotlib.colors import LightSource
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 if __name__ == '__main__':
-    distances_file = "../TSP_Problems/problem_01.tsp"
-    initial_pheromone_value = 1
-    # evaporation_rate = 0.1
-    intensification_value = 1
-    iterations = 500
-    repetitions = 1
-
+    # loading problem
+    problem = 1
+    distances_file = f"../TSP_Problems/problem_0{problem}.tsp"
     distance_matrix = np.loadtxt(distances_file)
 
+    # default values
+    initial_pheromone_value = 1
+    evaporation_rate = 0.05
+    intensification_value = 1
+    iterations = 10
+    repetitions = 1
+    alpha = 1
+    beta = 1
+    ant_number = 30
+    n_best_to_intensify = 1
+
+    aco = TSPACO(distance_matrix, initial_pheromone_value, evaporation_rate, intensification_value,
+                 alpha=alpha, beta=beta, ant_number=ant_number, n_best_to_intensify=n_best_to_intensify)
 
     num = 10
     lower = 0
     upper = 5
 
     evaporation_tests = [0.01, 0.05, 0.1, 0.5, 1]
-    aco = TSPACO(distance_matrix, initial_pheromone_value, 0, intensification_value, alpha=1, beta=1, ant_number=25)
     alpha_beta_matrix = np.zeros((num, num))
     evaporation_matrix = np.zeros((num,num))
     for a, alpha in enumerate(np.linspace(lower, upper, num)):
