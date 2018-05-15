@@ -10,13 +10,13 @@ distance_matrix = np.loadtxt(distances_file)
 
 # default values
 initialization_value = 5
-evaporation_rate = 0.05
-intensification_value = 0.5
-iterations = 800
+evaporation_rate = 0.02
+intensification_value = 0.6
+iterations = 1200
 repetitions = 1
 alpha = 1
-beta = 4
-ant_number = 50
+beta = 6
+ant_number = 150
 n_best_to_intensify = 3
 
 aco = TSPACO(distance_matrix, initialization_value, evaporation_rate, intensification_value,
