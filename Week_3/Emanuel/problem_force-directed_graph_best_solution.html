@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .links line {
+      /*stroke: #999;*/
+      stroke-opacity: 1;
+    }
+
+</style>
+<svg id="canvas"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+    var best_path = [4, 129, 91, 37, 107, 108, 14, 77, 49, 80, 118, 50, 121, 112, 32, 124, 95, 144, 81, 131, 103, 51,
+                     135, 70, 7, 2, 85, 11, 116, 66, 136, 145, 1, 57, 24, 92, 110, 19, 149, 148, 106, 146, 119, 26, 17,
+                     53, 93, 30, 79, 117, 45, 98, 15, 44, 6, 122, 126, 143, 104, 0, 52, 48, 73, 35, 10, 8, 147, 61, 75,
+                     18, 76, 142, 86, 56, 71, 29, 94, 130, 58, 109, 128, 141, 90, 127, 64, 55, 39, 125, 105, 54, 23, 31,
+                     78, 123, 27, 132, 40, 47, 38, 74, 87, 139, 68, 84, 138, 67, 65, 97, 134, 36, 72, 12, 59, 13, 42,
+                     62, 115, 99, 100, 113, 43, 63, 102, 21, 89, 88, 69, 111, 101, 137, 22, 120, 133, 83, 20, 5, 60, 33,
+                     140, 96, 114, 16, 25, 82, 28, 46, 9, 41, 3, 34];
+
+    var svg = d3.select("svg"),
+        width = document.documentElement.clientWidth;
+        height = document.documentElement.clientHeight;
+        //width = +svg.attr("width"),
+        //height = +svg.attr("height");
+        document.getElementById("canvas").setAttribute("style","width:"+width+"px;height:"+height+"px");
+
+    var color = d3.scaleSequential(d3.interpolatePlasma);
+
+    var simulation = d3.forceSimulation()
+                       .force("link", d3.forceLink().id(function(d) { return d.id; })
+                       .distance(function(d) { return d.value; })
+                       .iterations(5))
+                       //.force("charge", d3.forceManyBody().theta(0.4))
+                       .force("center", d3.forceCenter(width / 2, height / 2));
+
+    var part_of_path = function(source, target) {
+        let i = best_path.indexOf(source);
+        let j = best_path.indexOf(target);
+        return ((i + 1) % best_path.length == j || (j + 1) % best_path.length == i);
+    };
+
+    d3.json("force_data.json", function(error, graph) {
+      if (error) throw error;
+
+      var link = svg.append("g")
+                    .attr("class", "links")
+                    .selectAll("line")
+                    .data(graph.links)
+                    .enter().append("line")
+                    .attr("stroke", function(d) { return part_of_path(d.source, d.target) ? "#F00000" : ""; })
+                    //.attr("opacity", function(d) { return part_of_path(d.source, d.target) ? 0.6 : 0.2; })
+                    .attr("stroke-width", function(d) { return 2; });
+
+      var node = svg.append("g")
+                    .attr("class", "nodes")
+                    .selectAll("circle")
+                    .data(graph.nodes)
+                    .enter().append("circle")
+                    .attr("r", 5)
+                    .attr("fill", function(d) { return color(d.group); })
+                    .call(d3.drag()
+                            .on("start", dragstarted)
+                            .on("drag", dragged)
+                            .on("end", dragended));
+
+      node.append("title").text(function(d) { return d.id; });
+
+      simulation.nodes(graph.nodes).on("tick", ticked);
+
+      simulation.force("link").links(graph.links);
+
+      function ticked() {
+        link
+            .attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
+        node
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+      }
+    });
+
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+      if (!d3.event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+
+</script>
