@@ -76,7 +76,7 @@ class TSPACO:
                 # set "probability" to go from any city to current city to 0 since it can't go back there
                 cities_left[:, i] = 0
                 # to get a random number considering weights we calculate the cumulative sum of the weights, which
-                # basically means we get ascending numbers, but the step size/difference to the lest entry differs,
+                # basically means we get ascending numbers, but the step size/difference to the last entry differs,
                 # corresponding to how likely this particular entry should be.
                 # We then multiply a random number in [0, 1) by the upper limit of the cumulative sum and
                 # find the point/index at which this number would be inserted to keep the cumulative sum ordered
