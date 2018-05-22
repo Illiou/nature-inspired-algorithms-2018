@@ -24,9 +24,8 @@ class DifferentialEvolution(ABC):
     def objective_function(self):
         pass
 
-    @abstractmethod
     def initialize(self):
-        pass
+        self.population = self.lower_bounds + (self.upper_bounds - self.lower_bounds) * np.random.rand(self.population_size)
 
     def mutate(self):
         pass
