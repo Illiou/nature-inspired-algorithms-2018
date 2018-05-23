@@ -4,7 +4,7 @@ import random
 
 
 class DifferentialEvolution(ABC):
-    def __init__(self, population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds):
+    def __init__(self, population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds,problem):
 
         if len(lower_bounds) != len(upper_bounds):
             raise ValueError("lower and upper bounds arrays need to have the same length")
@@ -15,6 +15,7 @@ class DifferentialEvolution(ABC):
         self.lower_bounds = np.asarray(lower_bounds)
         self.upper_bounds = np.asarray(upper_bounds)
         self.chromosome_size = len(lower_bounds)
+        self.problem = problem
 
         self.population = None
         self.initialize()
@@ -23,12 +24,13 @@ class DifferentialEvolution(ABC):
     def objective_function(self, solution):
         pass
 
-    def run(self, generations=1):
+    def run(self, generations=5):
         self.initialize()
         for g in range(generations):
             donors = self.mutate()
             trials = self.crossover(donors)
             self.select(trials)
+
 
     def initialize(self):
         rand_arr = np.random.rand(self.population_size, self.chromosome_size)
@@ -59,4 +61,5 @@ class DifferentialEvolution(ABC):
     def select(self, trials):
         trial_obj = np.apply_along_axis(self.objective_function, 1, trials)
         pop_obj = np.apply_along_axis(self.objective_function, 1, self.population)
+        print(np.max(pop_obj))
         self.population = np.where((trial_obj <= pop_obj)[:, np.newaxis], trials, self.population)

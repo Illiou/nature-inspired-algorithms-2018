@@ -24,7 +24,7 @@ class DifferentialEvolution(ABC):
     def objective_function(self, solution):
         pass
 
-    def run(self, generations=100):
+    def run(self, generations=5):
         self.initialize()
         for g in range(generations):
             donors = self.mutate()
