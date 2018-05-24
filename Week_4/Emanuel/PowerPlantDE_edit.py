@@ -1,5 +1,5 @@
 import numpy as np
-from Week_4.Emanuel.DifferentialEvolution import DifferentialEvolution
+from Week_4.Emanuel.DifferentialEvolution_edit import DifferentialEvolution
 
 
 class PowerPlantDE(DifferentialEvolution):
