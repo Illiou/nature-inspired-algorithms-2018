@@ -17,6 +17,7 @@ class DifferentialEvolution(ABC):
         self.chromosome_size = len(lower_bounds)
 
         self.population = None
+        self.pop_objfn_values = None
         self.initialize()
 
     @abstractmethod
@@ -24,17 +25,18 @@ class DifferentialEvolution(ABC):
         pass
 
     def run(self, generations=1):
-        best_objective_fs = np.zeros(generations)
+        best_objfn_values = np.zeros(generations)
         for g in range(generations):
             donors = self.mutate()
             trials = self.crossover(donors)
             self.select(trials)
-            best_objective_fs[g] = np.apply_along_axis(self.objective_function, 1, self.population).min()
-        return best_objective_fs
+            best_objfn_values[g] = self.pop_objfn_values.min()
+        return best_objfn_values
 
     def initialize(self):
         rand_arr = np.random.rand(self.population_size, self.chromosome_size)
         self.population = self.lower_bounds + (self.upper_bounds - self.lower_bounds) * rand_arr
+        self.pop_objfn_values = np.apply_along_axis(self.objective_function, 1, self.population)
 
     def mutate(self):
         def unique_rands(upper, k, exclude):
@@ -45,8 +47,7 @@ class DifferentialEvolution(ABC):
                     if r not in rands:
                         break
                 rands.append(r)
-            bla = rands[len(exclude):]
-            return bla
+            return rands[len(exclude):]
 
         donors = np.zeros_like(self.population)
         for i in range(self.population_size):
@@ -61,6 +62,7 @@ class DifferentialEvolution(ABC):
         return np.where(to_crossover, donors, self.population)
 
     def select(self, trials):
-        trial_obj = np.apply_along_axis(self.objective_function, 1, trials)
-        pop_obj = np.apply_along_axis(self.objective_function, 1, self.population)
-        self.population = np.where((trial_obj <= pop_obj)[:, np.newaxis], trials, self.population)
+        trial_objfn_values = np.apply_along_axis(self.objective_function, 1, trials)
+        to_select = trial_objfn_values <= self.pop_objfn_values
+        self.population = np.where(to_select[:, np.newaxis], trials, self.population)
+        self.pop_objfn_values = np.where(to_select, trial_objfn_values, self.pop_objfn_values)
