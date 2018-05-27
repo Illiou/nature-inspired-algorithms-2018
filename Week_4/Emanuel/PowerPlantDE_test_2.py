@@ -1,0 +1,86 @@
+from PowerPlantDE import PowerPlantDE
+import numpy as np
+import matplotlib.pyplot as plt
+from itertools import product
+
+problem_1 = {"c": [10000, 80000, 400000],
+             "p": [0.45, 0.25, 0.2],
+             "d": [2000000, 30000000, 20000000],
+             "k": [50000, 600000, 4000000],
+             "m": [100, 50, 3],
+             "cost price": 0.6,
+             "benchmark": 1514312}
+
+problem_2 = {"c": [10000, 80000, 400000],
+             "p": [0.45, 0.25, 0.2],
+             "d": [2000000, 30000000, 20000000],
+             "k": [50000, 600000, 4000000],
+             "m": [100, 50, 3],
+             "cost price": 0.1,
+             "benchmark": 1818406}
+
+problem_3 = {"c": [10000, 80000, 400000],
+             "p": [0.5, 0.3, 0.1],
+             "d": [1000000, 5000000, 5000000],
+             "k": [50000, 600000, 4000000],
+             "m": [100, 50, 3],
+             "cost price": 0.6,
+             "benchmark": 404041}
+
+# Parameters
+problems = [problem_1, problem_2, problem_3]
+population_sizes = [10, 25, 50, 100, 200]
+scale_factors = np.linspace(0.4, 1.0, 13)
+crossover_rates = [0, 0.1, 0.2, 0.9, 1]
+lower_bounds = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+generations = 500
+problem_solutions = np.zeros((3,4))
+
+# Find the best parameters for each problem
+for i, problem in enumerate(problems):
+    best_solutions = np.zeros((325,4))
+
+    for combi, (population_size, scale_factor, crossover_rate) in enumerate(product(population_sizes, scale_factors, crossover_rates)):
+        energy_up = min([problem["k"][j] * problem["m"][j] for j in range(len(problem["k"]))])
+        sold_up = max(problem["d"])
+        price_up = max(problem["p"])
+        upper_bounds = [energy_up, energy_up, energy_up, sold_up, sold_up, sold_up, price_up, price_up, price_up]
+        plants = list(zip(problem["k"], problem["c"], problem["m"]))
+        markets = list(zip(problem["p"], problem["d"]))
+        purchase_price = problem["cost price"]
+
+        pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds,
+                             plants, markets, purchase_price)
+
+        profits = - pp_de.run(generations)
+        best_solutions[combi,:] = [profits.max(), population_size, scale_factor, crossover_rate]
+
+    problem_solutions[i] = best_solutions[np.argmax(best_solutions[:, 0])]
+
+# Plot the run with the best parameters for each problem
+for i in range(len(problems)):
+    problem = problems[i]
+    population_size = int(problem_solutions[i,1])
+    scale_factor = problem_solutions[i,2]
+    crossover_rate = problem_solutions[i,3]
+    print(population_size, scale_factor, crossover_rate)
+
+    energy_up = min([problem["k"][j] * problem["m"][j] for j in range(len(problem["k"]))])
+    sold_up = max(problem["d"])
+    price_up = max(problem["p"])
+    upper_bounds = [energy_up, energy_up, energy_up, sold_up, sold_up, sold_up, price_up, price_up, price_up]
+    plants = list(zip(problem["k"], problem["c"], problem["m"]))
+    markets = list(zip(problem["p"], problem["d"]))
+    purchase_price = problem["cost price"]
+
+    pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds,
+                         plants, markets, purchase_price)
+    best_profits = - pp_de.run(generations)
+
+    curr_fig, curr_ax = plt.subplots()
+    curr_ax.plot(best_profits, label="Best objective function")
+    curr_ax.axhline(problem["benchmark"], linestyle="dashed", label="Benchmark")
+    curr_ax.set(title="Problem {}".format(i+1), xlabel="Generations", ylabel="Best objective function")
+    curr_ax.legend()
+    plt.show()
