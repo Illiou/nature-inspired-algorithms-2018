@@ -31,17 +31,12 @@ problem = problem_1
 population_size = 50
 scale_factor = 0.5
 crossover_rate = 0.6
-lower_bounds = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-energy_up = min(problem["k"][i] * problem["m"][i] for i in range(len(problem["k"])))
-sold_up = max(problem["d"])
-price_up = max(problem["p"])
-upper_bounds = [energy_up, energy_up, energy_up, sold_up, sold_up, sold_up, price_up, price_up, price_up]
+
 plants = list(zip(problem["k"], problem["c"], problem["m"]))
 markets = list(zip(problem["p"], problem["d"]))
 purchase_price = problem["cost price"]
 
-pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds,
-                     plants, markets, purchase_price)
+pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, plants, markets, purchase_price)
 
 generations = 500
 

@@ -36,7 +36,7 @@ class DifferentialEvolution(ABC):
     def initialize(self):
         rand_arr = np.random.rand(self.population_size, self.chromosome_size)
         self.population = self.lower_bounds + (self.upper_bounds - self.lower_bounds) * rand_arr
-        self.pop_objfn_values = np.apply_along_axis(self.objective_function, 1, self.population)
+        self.pop_objfn_values = self.objective_function(self.population)
 
     def mutate(self):
         def unique_rands(upper, k, exclude):
@@ -62,7 +62,7 @@ class DifferentialEvolution(ABC):
         return np.where(to_crossover, donors, self.population)
 
     def select(self, trials):
-        trial_objfn_values = np.apply_along_axis(self.objective_function, 1, trials)
+        trial_objfn_values = self.objective_function(trials)
         to_select = trial_objfn_values <= self.pop_objfn_values
         self.population = np.where(to_select[:, np.newaxis], trials, self.population)
         self.pop_objfn_values = np.where(to_select, trial_objfn_values, self.pop_objfn_values)
