@@ -73,10 +73,10 @@ if __name__ == '__main__':
     tsp_aco = TSPACO(city_differences)
     tsp_aco.initialize(1)
 
-    iteration_count = 1
+    iteration_count = 10
     step_count = 300
 
-    for evaporation_factor in [0.01, 0.05, 0.1, 0.5, 1]:
+    for evaporation_factor in [0.05]:  # [0.01, 0.05, 0.1, 0.5, 1]:
         best_values = np.zeros((iteration_count, step_count))
         for i in range(iteration_count):
             tsp_aco = TSPACO(city_differences)
@@ -84,7 +84,7 @@ if __name__ == '__main__':
             for j in range(step_count):
                 tsp_aco.construct_solutions(15)
                 tsp_aco.evaporate(evaporation_factor)
-                tsp_aco.intensify(1)
+                tsp_aco.intensify(0.1)
                 best_values[i][j] = tsp_aco.current_shortest_distance
                 print("step:", j+1)
             print("done iterations:", i+1)

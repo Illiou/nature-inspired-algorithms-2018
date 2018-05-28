@@ -1,6 +1,6 @@
 from Week_4.Emanuel.PowerPlantDE import PowerPlantDE
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 problem_1 = {"c": [10000, 80000, 400000],
              "p": [0.45, 0.25, 0.2],

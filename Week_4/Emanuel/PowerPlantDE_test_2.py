@@ -1,4 +1,4 @@
-from PowerPlantDE import PowerPlantDE
+from Week_4.Emanuel.PowerPlantDE import PowerPlantDE
 import numpy as np
 import matplotlib.pyplot as plt
 from itertools import product
@@ -32,7 +32,6 @@ problems = [problem_1, problem_2, problem_3]
 population_sizes = [10, 25, 50, 100, 200]
 scale_factors = np.linspace(0.4, 1.0, 13)
 crossover_rates = [0, 0.1, 0.2, 0.9, 1]
-lower_bounds = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 generations = 500
 
@@ -49,7 +48,7 @@ for i, problem in enumerate(problems):
     best_solutions = np.zeros((325,4))
     for combi, (population_size, scale_factor, crossover_rate) in enumerate(product(population_sizes, scale_factors, crossover_rates)):
 
-        pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds,
+        pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, upper_bounds,
                              plants, markets, purchase_price)
 
         profits = - pp_de.run(generations)
@@ -62,7 +61,7 @@ for i, problem in enumerate(problems):
     print(population_size, scale_factor, crossover_rate)
 
     # Run with the best parameters and plot
-    pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds,
+    pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, upper_bounds,
                          plants, markets, purchase_price)
     best_profits = - pp_de.run(generations)
 

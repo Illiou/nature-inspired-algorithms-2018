@@ -3,11 +3,12 @@ import math
 
 
 class PowerPlantDE(DifferentialEvolution):
-    def __init__(self, population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds,
+    def __init__(self, population_size, scale_factor, crossover_rate, upper_bounds,
                  plants, markets, purchase_price):
         self.plants = plants
         self.markets = markets
         self.purchase_price = purchase_price
+        lower_bounds = [0] * len(upper_bounds)
         super().__init__(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds)
 
     def objective_function(self, solution):
