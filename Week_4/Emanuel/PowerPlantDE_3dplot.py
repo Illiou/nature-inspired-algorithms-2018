@@ -1,5 +1,6 @@
 from Week_4.Emanuel.PowerPlantDE import PowerPlantDE
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 problems = [{}, # placeholder for 0
@@ -31,22 +32,37 @@ problems = [{}, # placeholder for 0
 problem_num = 1
 problem = problems[problem_num]
 population_size = 50
-scale_factor = 0.5
-crossover_rate = 0.6
+generations = 500
+
+scale_upper, scale_lower, scale_num = 0.3, 1, 11
+crossover_upper, crossover_lower, crossover_num = 0, 1, 11
+
+scale_factors = np.linspace(scale_upper, scale_lower, scale_num)
+crossover_rates = np.linspace(crossover_upper, crossover_lower, crossover_num)
 
 plants = list(zip(problem["k"], problem["c"], problem["m"]))
 markets = list(zip(problem["p"], problem["d"]))
 purchase_price = problem["cost price"]
 
-pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, plants, markets, purchase_price)
+pp_de = PowerPlantDE(population_size, 0, 0, plants, markets, purchase_price)
 
-generations = 500
 
-best_profits = pp_de.run(generations)
+result_matrix = np.zeros((scale_num, crossover_num))
+for x, scale_factor in enumerate(scale_factors):
+    for y, crossover_rate in enumerate(crossover_rates):
+        pp_de.scale_factor = scale_factor
+        pp_de.crossover_rate = crossover_rate
+        pp_de.initialize()
+        result_matrix[x, y] = pp_de.run(generations).max()
+        print(x, y)
 
-curr_fig, curr_ax = plt.subplots()
-curr_ax.plot(best_profits, label="Best objective function")
-curr_ax.axhline(problem["benchmark"], linestyle="dashed", label="Benchmark")
-curr_ax.set(title="Problem 1", xlabel="Generations", ylabel="Best objective function")
-curr_ax.legend()
-curr_fig.show()
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+x, y = np.meshgrid(scale_factors, crossover_rates)
+ax.plot_surface(x, y, result_matrix)
+
+ax.set(title=f"Problem {problem_num}", xlabel="Scale factor", ylabel="Crossover rate", zlabel="Profit of best solution")
+
+fig.show()

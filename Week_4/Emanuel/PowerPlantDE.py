@@ -20,6 +20,10 @@ class PowerPlantDE(DifferentialEvolution):
                             [price_upper] * len(self.markets))
         super().__init__(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds)
 
+    def run(self, generations=1):
+        # turn negative objective function into profit again
+        return - super().run(generations)
+
     def objective_function(self, solution):
         def cost_per_plant(kwh, kwh_per_plant, cost_per_plant, max_plants):
             res = np.ceil(kwh / kwh_per_plant) * cost_per_plant
