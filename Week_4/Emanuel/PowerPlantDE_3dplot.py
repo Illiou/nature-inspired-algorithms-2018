@@ -32,10 +32,10 @@ problems = [{}, # placeholder for 0
 problem_num = 1
 problem = problems[problem_num]
 population_size = 50
-generations = 500
-repetitions = 10
+generations = 1000
+repetitions = 20
 
-scale_upper, scale_lower, scale_num = 0.3, 1, 15
+scale_upper, scale_lower, scale_num = 0.4, 1, 13
 crossover_upper, crossover_lower, crossover_num = 0, 1, 21
 
 scale_factors = np.linspace(scale_upper, scale_lower, scale_num)

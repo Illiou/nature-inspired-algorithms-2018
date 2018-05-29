@@ -4,7 +4,7 @@ import random
 
 
 class DifferentialEvolution(ABC):
-    def __init__(self, population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds):
+    def __init__(self, population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds, dist_to_bounds=0.1):
 
         if len(lower_bounds) != len(upper_bounds):
             raise ValueError("lower and upper bounds arrays need to have the same length")
@@ -15,6 +15,9 @@ class DifferentialEvolution(ABC):
         self.lower_bounds = np.asarray(lower_bounds)
         self.upper_bounds = np.asarray(upper_bounds)
         self.chromosome_size = len(lower_bounds)
+        # initialising with values close to the bounds leads to bad results
+        # this defines a distance percentage for the initialisation
+        self.dist_to_bounds = dist_to_bounds
 
         self.population = None
         self.pop_objfn_values = None
@@ -35,7 +38,8 @@ class DifferentialEvolution(ABC):
 
     def initialize(self):
         rand_arr = np.random.rand(self.population_size, self.chromosome_size)
-        self.population = self.lower_bounds + (self.upper_bounds - self.lower_bounds) * rand_arr
+        self.population = (self.lower_bounds + (self.upper_bounds * self.dist_to_bounds)
+                           + (self.upper_bounds * (1 - self.dist_to_bounds) - self.lower_bounds) * rand_arr)
         self.pop_objfn_values = self.objective_function(self.population)
 
     def mutate(self):

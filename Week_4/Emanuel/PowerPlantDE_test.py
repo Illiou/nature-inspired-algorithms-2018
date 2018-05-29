@@ -30,17 +30,16 @@ problems = [{}, # placeholder for 0
 # Parameters
 problem_num = 1
 problem = problems[problem_num]
-population_size = 50
+population_size = 100
 scale_factor = 0.5
-crossover_rate = 0.6
+crossover_rate = 0.2
+generations = 5000
 
 plants = list(zip(problem["k"], problem["c"], problem["m"]))
 markets = list(zip(problem["p"], problem["d"]))
 purchase_price = problem["cost price"]
 
 pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, plants, markets, purchase_price)
-
-generations = 500
 
 best_profits = pp_de.run(generations)
 

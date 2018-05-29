@@ -33,8 +33,8 @@ problem = problems[problem_num]
 population_size = 50
 scale_factor = 0.5
 crossover_rate = 0.6
-generations = 800
-repetitions = 10
+generations = 1000
+repetitions = 50
 
 plants = list(zip(problem["k"], problem["c"], problem["m"]))
 markets = list(zip(problem["p"], problem["d"]))
@@ -43,7 +43,7 @@ purchase_price = problem["cost price"]
 pp_de = PowerPlantDE(population_size, scale_factor, crossover_rate, plants, markets, purchase_price)
 
 
-tests = {"population_size": [10, 50, 70, 100],
+tests = {"population_size": [10, 30, 50, 100, 200],
          "scale_factor": [0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
          "crossover_rate": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]}
 

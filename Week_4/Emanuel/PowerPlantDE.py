@@ -5,7 +5,7 @@ import math
 
 class PowerPlantDE(DifferentialEvolution):
     def __init__(self, population_size, scale_factor, crossover_rate, plants, markets, purchase_price,
-                 lower_bounds=None, upper_bounds=None):
+                 lower_bounds=None, upper_bounds=None, dist_to_bounds=0.1):
         self.plants = plants
         self.markets = markets
         self.purchase_price = purchase_price
@@ -18,7 +18,7 @@ class PowerPlantDE(DifferentialEvolution):
             upper_bounds = ([energy_upper] * len(self.plants) +
                             [sold_upper] * len(self.markets) +
                             [price_upper] * len(self.markets))
-        super().__init__(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds)
+        super().__init__(population_size, scale_factor, crossover_rate, lower_bounds, upper_bounds, dist_to_bounds)
 
     def run(self, generations=1):
         # turn negative objective function into profit again
