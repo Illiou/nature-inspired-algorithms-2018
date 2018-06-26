@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 class ArtificialBeeColony(ABC):
-    def __init__(self, bee_count, abandoned_limit, lower_bounds, upper_bounds, minimization=False):
+    def __init__(self, bee_count, abandoned_limit, lower_bounds, upper_bounds, minimization=False, store_best=True):
         if len(lower_bounds) != len(upper_bounds):
             raise ValueError("lower and upper bounds arrays need to have the same length")
 
@@ -14,6 +14,7 @@ class ArtificialBeeColony(ABC):
         self.abandoned_limit = abandoned_limit
         self.dimensions = self.lower_bounds.shape[0]
         self.minimization = minimization
+        self.store_best = store_best
 
         self.solutions = None
         self.not_changed_count = np.zeros(self.bee_count)
@@ -24,12 +25,13 @@ class ArtificialBeeColony(ABC):
     def objective_function(self, solutions):
         """
         Args:
-            solutions(array(array(float))):  the solutions
+            solutions(ndarray(ndarray(float))):  the solutions
         Returns:
-            (array(float)): the nectar values for the solutions
+            (ndarray(float)): the nectar values for the solutions
         """
         pass
 
+    # noinspection PyTypeChecker
     def max_or_minimizing_objective_function(self, solutions):
         values = self.objective_function(solutions)
         if self.minimization:
@@ -54,6 +56,13 @@ class ArtificialBeeColony(ABC):
         self.not_changed_count = (self.not_changed_count + no_change_int) * no_change_int
 
     def generate_neighbours(self, solutions):
+        """
+        Generates a neighbour for every solution in solutions
+        Args:
+            solutions(ndarray): 2-d array of solutions
+        Returns:
+            (ndarray): the neighbours in same shape as solutions
+        """
         ks = np.random.choice(self.bee_count - 1, self.bee_count)
         indices = np.arange(self.bee_count)
         ks = ks + (ks >= indices).astype(int)  # prevent from having k==i
@@ -90,26 +99,31 @@ class ArtificialBeeColony(ABC):
                 self.nectar[choice] = neighbours_nectar[best_for_choice]
                 self.not_changed_count[choice] = 0
 
-    def scout_phase(self):
+    def scout_phase(self, best_index=None):
         limit_exceeded = self.not_changed_count >= self.abandoned_limit
         if any(limit_exceeded):
             for i, exceeded in enumerate(limit_exceeded):
-                if exceeded:
+                if exceeded and best_index != i:
                     new_solutions = self.random_solutions(1)
                     self.solutions[i] = new_solutions[0]
                     self.nectar[i] = self.max_or_minimizing_objective_function(new_solutions)[0]
 
     def run(self, iterations=100):
         best_nectar = np.zeros(iterations)
+        best_index = -1
         for i in range(iterations):
             if i % 10 == 0:
                 print("step", i)
             self.employed_phase()
             self.onlooker_phase()
-            self.scout_phase()
+            if self.store_best:
+                self.scout_phase(best_index)
+            else:
+                self.scout_phase()
             # to not have the transformed nectar in minimization
-            best_nectar[i] = self.objective_function(np.reshape(self.solutions[np.argmax(self.nectar)], (1, -1)))[0]
-        return best_nectar
+            best_index = np.argmax(self.nectar)
+            best_nectar[i] = self.objective_function(np.reshape(self.solutions[best_index], (1, -1)))[0]
+        return best_nectar, self.solutions[best_index]
 
 
 class ABCTest(ArtificialBeeColony):
@@ -124,7 +138,7 @@ if __name__ == '__main__':
     iterations = 1000
     limit = 20
 
-    best_nectar = ABCTest(bee_count, limit, [-15]*dims, [15]*dims, minimization=True).run(iterations)
+    best_nectar, best_solution = ABCTest(bee_count, limit, [-15]*dims, [15]*dims, minimization=True).run(iterations)
 
     curr_fig, curr_ax = plt.subplots()
     curr_ax.plot(best_nectar, label="Best nectar")

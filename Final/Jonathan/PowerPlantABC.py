@@ -54,22 +54,24 @@ class PowerPlantABC(ArtificialBeeColony):
         return -(revenue - cost)
 
     def run(self, iterations=100):
-        return -super().run(iterations)
+        result = super().run(iterations)
+        return -result[0], result[1]
 
 
 if __name__ == '__main__':
     problem_num = 1
     problem = problems[problem_num]
-    bee_count = 500
-    iterations = 3000
-    limit = 5
+    bee_count = 70
+    iterations = 10000
+    limit = 100
 
     plants = list(zip(problem["k"], problem["c"], problem["m"]))
     markets = list(zip(problem["p"], problem["d"]))
     purchase_price = problem["cost price"]
     benchmark = problem["benchmark"]
-    best_nectar = PowerPlantABC(bee_count, limit, plants, markets, purchase_price).run(iterations)
+    best_nectar, best_solution = PowerPlantABC(bee_count, limit, plants, markets, purchase_price).run(iterations)
     print(best_nectar)
+    print(best_solution)
 
     curr_fig, curr_ax = plt.subplots()
     curr_ax.plot(best_nectar, label="Best nectar")

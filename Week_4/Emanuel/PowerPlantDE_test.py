@@ -28,7 +28,7 @@ problems = [{}, # placeholder for 0
              "benchmark": 404041}]
 
 # Parameters
-problem_num = 1
+problem_num = 3
 problem = problems[problem_num]
 population_size = 100
 scale_factor = 0.5
@@ -48,4 +48,5 @@ curr_ax.plot(best_profits, label="Best objective function")
 curr_ax.axhline(problem["benchmark"], linestyle="dashed", label="Benchmark")
 curr_ax.set(title=f"Problem {problem_num}", xlabel="Generations", ylabel="Best objective function")
 curr_ax.legend()
-curr_fig.show()
+# curr_fig.show()
+plt.show()
