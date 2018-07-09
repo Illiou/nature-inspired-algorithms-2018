@@ -1,4 +1,7 @@
 import numpy as np
+import scipy.spatial.distance as ssd
+import scipy.optimize as optimize
+import math
 
 
 class Cluster:
@@ -43,8 +46,10 @@ class HierarchicalClustering:
         Args:
             distances(ndarray): distance matrix
         """
+        self.customer_count = distances.shape[0]
         self.distances = distances
         self.demands = demands
+        print(distances)
 
     def _initial_clusters(self):
         clusters = []
@@ -55,10 +60,44 @@ class HierarchicalClustering:
     def cluster(self):
         clusters = self._initial_clusters()
         cluster_distances = np.array(self.distances)
+        # convert the redundant n*n square matrix form into a condensed nC2 array
+        # flattened_distances[{n choose 2}-{n-i choose 2} + (j-i-1)] is the distance between points i and j
+        flattened_distances = ssd.squareform(cluster_distances)
         while len(clusters) > 1:
-            argmin = np.argmin(cluster_distances)
-            print(argmin)
+            nearest_cluster_index = np.argmin(flattened_distances)
+            cluster1_index, cluster2_index = self._flattened_index_to_two_d(nearest_cluster_index)
             break
+
+    def _calculate_start_index_of_row(self, row):
+        return row * self.customer_count - (row * (row + 1)) / 2
+
+    def _flattened_index_to_two_d(self, index):
+        very_small = 0.000000001  # to prevent strange rounding
+        row = math.floor(optimize.fsolve(lambda x: self._calculate_start_index_of_row(x) - index, np.array([0]))[0]
+                         + very_small)
+        column = math.floor(index - self._calculate_start_index_of_row(row) + row + 1 + very_small)
+        return row, column
+
+    def _two_d_to_flattened_index(self, row, column):
+        if row >= column:
+            raise AttributeError("column must be greater than row for upper triangle in matrix")
+        return self._calculate_start_index_of_row(row) + column - row
+
+
+def symmetric_distance_matrix(distances):
+    symmetric = np.copy(distances)
+    n = distances.shape[0]
+    if distances.shape[1] != n:
+        raise AttributeError("Not quadratic")
+    for x in range(n):
+        for y in range(n):
+            first = distances[x, y]
+            second = distances[y, x]
+            if first != second:
+                mean = np.mean([first, second])
+                symmetric[x, y] = mean
+                symmetric[y, x] = mean
+    return symmetric
 
 
 if __name__ == '__main__':
@@ -68,10 +107,11 @@ if __name__ == '__main__':
     print(cluster1, cluster2, cluster3)
     path = "../Vehicle_Routing_Problems/VRP1/"
     distances = np.loadtxt(path + "distance.txt")
+    distances = symmetric_distance_matrix(distances)
     demands = np.loadtxt(path + "demand.txt", dtype=int)
-    print(distances.shape, sep=" ")
-    HC = HierarchicalClustering(distances[0:3, 0:3], demands[0:3])
+    test_city_count = 7
+    HC = HierarchicalClustering(distances[0:test_city_count, 0:test_city_count], demands[0:test_city_count])
     HC.cluster()
-    print(np.arange(20).reshape(5, 4))
-    print(np.indices((2,3)))
+    # from scipy.special import comb
+    # print([[comb(4, 2)-comb(4-i,2)+j-i for j in range(4)] for i in range(4)])
 
