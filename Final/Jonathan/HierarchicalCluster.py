@@ -41,6 +41,7 @@ class Cluster:
             if index is not None and demand is not None:
                 self.cluster_indices = [index]
                 self.demand = demand
+                self.subcluster = None
             else:
                 raise AttributeError("Two cluster or demand and index must be given as arguments")
         else:
@@ -50,6 +51,17 @@ class Cluster:
 
     def __repr__(self):
         return "Cluster: {}, demand: {}".format(self.cluster_indices, self.demand)
+
+    def as_tree(self, layer=0, margin_steps=None):
+        if not margin_steps:
+            margin_steps = int(len(self.cluster_indices) / 1.5)
+        margin = "\t" * margin_steps * layer
+        tree_string = margin + str(self.cluster_indices)
+        if not self.subcluster:
+            return tree_string
+        tree_string = self.subcluster[0].as_tree(layer+1, margin_steps) + "\n" + tree_string + "\n"
+        tree_string += self.subcluster[1].as_tree(layer+1, margin_steps)
+        return tree_string
 
 
 class HierarchicalClustering:
@@ -99,7 +111,7 @@ class HierarchicalClustering:
             clusters = clusters[:second_cluster_index] + clusters[second_cluster_index+1:]
             print(clusters)
             print(cluster_distances)
-        return clusters
+        return clusters[0]
 
 
 if __name__ == '__main__':
