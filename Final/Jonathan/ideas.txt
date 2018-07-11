@@ -1,0 +1,8 @@
+Clustering
+    1. go through cluster, if vehicle which can serve whole cluster c1 => relate
+    2. if capacity left for this one: nearest customer from c1(look at distances between c1's points and all other
+    3. new clustering for left customers
+
+    1. as above
+    2. don't fill perfectly
+    3. use the same clustering for left vehicles
