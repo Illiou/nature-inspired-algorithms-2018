@@ -115,14 +115,10 @@ class HierarchicalClustering:
 
 
 if __name__ == '__main__':
-    cluster1 = Cluster(index=0, demand=20)
-    cluster2 = Cluster(index=5, demand=4)
-    cluster3 = Cluster(cluster1=cluster1, cluster2=cluster2)
-    print(cluster1, cluster2, cluster3)
     path = "../Vehicle_Routing_Problems/VRP1/"
     distances = np.loadtxt(path + "distance.txt")
     demands = np.loadtxt(path + "demand.txt", dtype=int)
-    test_city_count = 9
+    test_city_count = 100
     HC = HierarchicalClustering(distances[0:test_city_count, 0:test_city_count], demands[0:test_city_count])
     HC.cluster()
     HC.cluster(dist_func=d_min)
