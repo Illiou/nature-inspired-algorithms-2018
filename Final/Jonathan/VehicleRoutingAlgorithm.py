@@ -37,6 +37,10 @@ class VRPAlgorithm:
         self.problem = problem
 
     def run(self):
+        customer_per_vehicle = self.calculate_customer_per_vehicle()
+        print(customer_per_vehicle)
+
+    def calculate_customer_per_vehicle(self):
         cluster = [HierarchicalClustering(self.problem.distances, self.problem.demands).cluster()]
         vehicles = np.copy(self.problem.vehicles)
         customer_per_vehicle = np.zeros([self.problem.vehicles.shape[0], self.problem.customer_count])
@@ -54,6 +58,7 @@ class VRPAlgorithm:
                     new_cluster.extend(cl.subcluster)
 
             cluster = new_cluster
+        return customer_per_vehicle
 
     @staticmethod
     def _vehicle_for_cluster(cluster, vehicles):
