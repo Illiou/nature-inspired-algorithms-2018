@@ -6,10 +6,10 @@ class Solution:
         """
 
         Args:
-            transportation_costs: 1D ndArray of costs per vehicle
-            vehicle_assignment: 2D ndArray of assignments of vehicles to customers
-            tsp_solutions: 2D List of customer permutation per vehicle. Empty list if no customer is visited
-            solution_lengths: 1D ndArray of path length per vehicle in tsp solution. 0 if no customer visited
+            transportation_costs: 1D ndArray of costs per vehicle (eg. [12, 32, 34, 5, 45])
+            vehicle_assignment: 2D ndArray of assignments of vehicles to customers [[0. 0. 0. 0. 0.], [1. 0. 0. 0. 1.],...]]
+            tsp_solutions: 2D List of customer permutation per vehicle. Empty list if no customer is visited (eg. [[1,4,20,5,2], [3,6,0], [7,9], [], []])
+            solution_lengths: 1D ndArray of path length per vehicle in tsp solution. 0 if no customer visited (eg. [123, 23, 4, 0, 0])
         """
 
         self.transportation_costs = transportation_costs
