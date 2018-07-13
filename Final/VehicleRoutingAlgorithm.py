@@ -1,5 +1,5 @@
 import numpy as np
-from Final.Jonathan.HierarchicalCluster import HierarchicalClustering, Cluster
+from Final.HierarchicalCluster import HierarchicalClustering, Cluster
 
 
 class Problem:
@@ -8,14 +8,14 @@ class Problem:
         A VehicleRoutingProblem
         Args:
             vehicles(ndarray): list of vehicles(capacity and cost)
-            distances(ndarray): n*n matrix of distances between customers
+            distances(ndarray): n*n matrix of distances between customers and depot
             demands(ndarray): list of demands
         """
         self.vehicles = vehicles
-        self.distances = distances[:100, :100]  # TODO
+        self.distances = distances
         self.demands = demands
         self.customer_count = len(demands)
-        if self.distances.shape != (self.customer_count, self.customer_count):
+        if self.distances.shape != (self.customer_count + 1, self.customer_count + 1):
             raise AttributeError("One demand per customer must be given and distance must be quadratic")
 
 
@@ -41,7 +41,7 @@ class VRPAlgorithm:
         print(customer_per_vehicle)
 
     def calculate_customer_per_vehicle(self):
-        cluster = [HierarchicalClustering(self.problem.distances, self.problem.demands).cluster()]
+        cluster = [HierarchicalClustering(self.problem.distances[1:, 1:], self.problem.demands).cluster()]
         vehicles = np.copy(self.problem.vehicles)
         customer_per_vehicle = np.zeros([self.problem.vehicles.shape[0], self.problem.customer_count])
         served_customers = 0
@@ -80,7 +80,7 @@ class VRPAlgorithm:
 
 
 if __name__ == '__main__':
-    path = "../Vehicle_Routing_Problems/VRP1/"
+    path = "./Vehicle_Routing_Problems/VRP1/"
     problem = problem_from_files(path + "capacity.txt", path + "transportation_cost.txt",
                                  path + "demand.txt", path + "distance.txt")
     VRPAlgorithm(problem).run()

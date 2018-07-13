@@ -115,7 +115,7 @@ class HierarchicalClustering:
 
 
 if __name__ == '__main__':
-    path = "../Vehicle_Routing_Problems/VRP1/"
+    path = "./Vehicle_Routing_Problems/VRP1/"
     distances = np.loadtxt(path + "distance.txt")
     demands = np.loadtxt(path + "demand.txt", dtype=int)
     test_city_count = 100

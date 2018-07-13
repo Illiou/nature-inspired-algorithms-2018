@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from Final.Jonathan.HierarchicalCluster import HierarchicalClustering, d_max, d_min, d_mean
+from Final.HierarchicalCluster import HierarchicalClustering, d_max, d_min
 
 
 class HierarchicalClusteringTest(unittest.TestCase):
@@ -26,3 +26,8 @@ class HierarchicalClusteringTest(unittest.TestCase):
         subclu1, subclu2 = cluster.subcluster
         self.assertEqual([0, 1, 2], subclu1.cluster_indices)
         self.assertEqual([3, 4], subclu2.cluster_indices)
+
+
+if __name__ == '__main__':
+    unittest.main()
+

@@ -1,4 +1,4 @@
-from Final.Jonathan.ArtificialBeeAlgorithm import ArtificialBeeColony
+from Final.ArtificialBeeAlgorithm import ArtificialBeeColony
 import numpy as np
 import math
 import matplotlib.pyplot as plt
