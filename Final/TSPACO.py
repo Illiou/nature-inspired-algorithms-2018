@@ -30,16 +30,18 @@ class TSPACO:
     def run(self, iterations=1):
         """ Runs the algorithm for the given number of iterations """
         best_paths_lengths = np.zeros(iterations)
+        best_paths = np.zeros((iterations, self.cities))
         for i in range(iterations):
             # print(f"Iteration {i}")
             paths = self.construct_solutions()
             self.evaporate()
             # calculate indices for best paths, then take N and intensify them
             path_qualities = np.argsort([self.objective_function(path) for path in paths])
-            best_paths = paths[path_qualities[:self.n_best_to_intensify]]
-            self.intensify(best_paths)
-            best_paths_lengths[i] = self.objective_function(best_paths[0])
-        return best_paths_lengths
+            cur_best_paths = paths[path_qualities[:self.n_best_to_intensify]]
+            self.intensify(cur_best_paths)
+            best_paths[i] = cur_best_paths[0]
+            best_paths_lengths[i] = self.objective_function(cur_best_paths[0])
+        return best_paths, best_paths_lengths
 
     def objective_function(self, solution):
         """ Returns the length of the given solution """

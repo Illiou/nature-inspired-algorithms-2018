@@ -1,5 +1,16 @@
 import numpy as np
 from Final.HierarchicalCluster import HierarchicalClustering, Cluster
+from Final.TSPACO import TSPACO
+
+# ant parameters TODO
+INITIALIZATION_VALUE = 5
+EVAPORATION_RATE = 0.02
+INTENSIFICATION_VALUE = 0.6
+ITERATIONS = 5# 1200
+ALPHA = 1
+BETA = 6
+ANT_NUMBER = 150
+N_BEST_TO_INTENSIFY = 3
 
 
 class Problem:
@@ -35,10 +46,29 @@ def problem_from_files(capacity_file, transportation_cost_file, demands_file, di
 class VRPAlgorithm:
     def __init__(self, problem):
         self.problem = problem
+        self.customer_per_vehicle = None
 
     def run(self):
-        customer_per_vehicle = self.calculate_customer_per_vehicle()
-        print(customer_per_vehicle)
+        self.customer_per_vehicle = self.calculate_customer_per_vehicle()
+        print(self.customer_per_vehicle)
+        permutation_for_vehicles = self.calculate_permutation_for_vehicles()
+        print(permutation_for_vehicles)
+
+    def calculate_permutation_for_vehicles(self):  # TODO test 1 customer in vehicle
+        customer_count_per_vehicle = np.sum(self.customer_per_vehicle, axis=1)
+        vehicle_count = self.problem.vehicles.shape[0]
+        permutation_per_vehicle = [[]] * vehicle_count
+        # every vehicle visits depot
+        vehicle_visits_at_least_one = customer_count_per_vehicle > 1
+        for i, vehicle_customers in enumerate(self.customer_per_vehicle[vehicle_visits_at_least_one]):
+            nonzero_indices = vehicle_customers.nonzero()[0]
+            distances = self.problem.distances[np.ix_(nonzero_indices, nonzero_indices)]
+            aco = TSPACO(distances, INITIALIZATION_VALUE, EVAPORATION_RATE, INTENSIFICATION_VALUE, ALPHA, BETA,
+                            ANT_NUMBER, N_BEST_TO_INTENSIFY)
+            best_paths, best_paths_lengths = aco.run(ITERATIONS)
+            vehicle_index = np.arange(vehicle_count)[vehicle_visits_at_least_one][i]
+            permutation_per_vehicle[vehicle_index] = (best_paths[-1], best_paths_lengths[-1])
+        return permutation_per_vehicle
 
     def calculate_customer_per_vehicle(self):
         cluster = [HierarchicalClustering(self.problem.distances[1:, 1:], self.problem.demands).cluster()]
@@ -58,6 +88,7 @@ class VRPAlgorithm:
                     new_cluster.extend(cl.subcluster)
 
             cluster = new_cluster
+        customer_per_vehicle = np.concatenate((np.ones((customer_per_vehicle.shape[0], 1)), customer_per_vehicle), axis=1)
         return customer_per_vehicle
 
     @staticmethod
