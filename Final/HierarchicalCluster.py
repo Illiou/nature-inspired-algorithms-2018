@@ -93,7 +93,6 @@ class HierarchicalClustering:
             nearest_cluster_index = np.unravel_index(np.argmin(np.where(cluster_distances != 0,
                                                                         cluster_distances, self.max_distance+1)),
                                                      cluster_distances.shape)
-            print(nearest_cluster_index)
             first_cluster_index = int(nearest_cluster_index[0])
             first_cluster = clusters[first_cluster_index]
             second_cluster_index = int(nearest_cluster_index[1])
@@ -109,8 +108,6 @@ class HierarchicalClustering:
             cluster_distances = cluster_distances[:, mask_second_out]
             clusters[first_cluster_index] = Cluster(cluster1=first_cluster, cluster2=second_cluster)
             clusters = clusters[:second_cluster_index] + clusters[second_cluster_index+1:]
-            print(clusters)
-            print(cluster_distances)
         return clusters[0]
 
 

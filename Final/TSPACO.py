@@ -32,7 +32,8 @@ class TSPACO:
         best_paths_lengths = np.zeros(iterations)
         best_paths = np.zeros((iterations, self.cities))
         for i in range(iterations):
-            # print(f"Iteration {i}")
+            if i % 100 == 0:
+                print(f"Iteration {i}")
             paths = self.construct_solutions()
             self.evaporate()
             # calculate indices for best paths, then take N and intensify them
