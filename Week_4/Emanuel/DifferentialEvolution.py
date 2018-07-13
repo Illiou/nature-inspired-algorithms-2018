@@ -22,6 +22,7 @@ class DifferentialEvolution(ABC):
         self.population = None
         self.pop_objfn_values = None
         self.initialize()
+        self.fitness = [self.objective_function(chromosome) for chromosome in self.population]
 
     @abstractmethod
     def objective_function(self, solution):

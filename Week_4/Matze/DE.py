@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def initialize(pop_size, bounds, max_gen=1):
+    # Integer oder continuous values?
     return np.array([np.random.randint(bounds[0, i], bounds[1, i], pop_size) for i in range(len(bounds[0]))]).T
 
 
