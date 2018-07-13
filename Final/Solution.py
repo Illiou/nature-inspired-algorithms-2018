@@ -13,7 +13,7 @@ class Solution:
         """
 
         self.transportation_costs = transportation_costs
-        self.vehicle_assignment = vehicle_assignment
+        #self.vehicle_assignment = vehicle_assignment necessary?
         self.tsp_solutions = tsp_solutions
         self.solution_lengths = solution_lengths
         self.cost = self.objective_function()
@@ -25,5 +25,5 @@ class Solution:
         customer_per_vehicle = [len(x) for x in self.tsp_solutions]
         string = ""
         for i, vehicle in enumerate(customer_per_vehicle):
-            string += f"V{i}:\t{vehicle}"
-        return string + f"Solution cost:{self.cost}"
+            string += "V{}:\t{}".format(i, vehicle)
+        return string + "Solution cost:{}".format(self.cost)
