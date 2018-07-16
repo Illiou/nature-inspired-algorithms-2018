@@ -7,7 +7,7 @@ from Final.TSPACO import TSPACO
 INITIALIZATION_VALUE = 5
 EVAPORATION_RATE = 0.02
 INTENSIFICATION_VALUE = 0.6
-ITERATIONS = 500
+ITERATIONS = 1200
 ALPHA = 1
 BETA = 6
 ANT_NUMBER = 100
@@ -52,7 +52,7 @@ class VRPAlgorithm:
         self.customer_per_vehicle = None
 
     def run(self):
-        self.customer_per_vehicle = self.calculate_customer_per_vehicle()
+        self.customer_per_vehicle = self.calculate_customer_per_vehicle(inner_distance_bound=120)
         print(self.customer_per_vehicle)
         permutation_for_vehicles = self.calculate_permutation_for_vehicles()
         print(permutation_for_vehicles)
@@ -76,7 +76,7 @@ class VRPAlgorithm:
             permutation_per_vehicle[vehicle_index] = (best_paths[-1], best_paths_lengths[-1])
         return permutation_per_vehicle
 
-    def calculate_customer_per_vehicle(self):
+    def calculate_customer_per_vehicle(self, inner_distance_bound=None):
         cluster = [HierarchicalClustering(self.problem.distances[1:, 1:], self.problem.demands).cluster()]
         vehicles = np.copy(self.problem.vehicles)
         customer_per_vehicle = np.zeros([self.problem.vehicles.shape[0], self.problem.customer_count])
@@ -85,12 +85,18 @@ class VRPAlgorithm:
         while served_customers < self.problem.customer_count:
             new_cluster = []
             for cl in cluster:
+                if inner_distance_bound and cl.inner_distance(self.problem.distances[1:, 1:]) > inner_distance_bound:
+                    new_cluster.extend(cl.subcluster)
+                    continue
                 v_index = self._vehicle_for_cluster(cl, vehicles)
                 if v_index:
                     served_customers += len(cl.cluster_indices)
                     customer_per_vehicle[v_index][cl.cluster_indices] = True
                     vehicles[v_index][0] -= cl.demand
                 else:
+                    if not cl.subcluster:
+                        raise ValueError(f"No solution found. The inner_distance_bound "
+                                         f"{inner_distance_bound} might be too low")
                     new_cluster.extend(cl.subcluster)
 
             cluster = new_cluster

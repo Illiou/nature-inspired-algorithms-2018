@@ -49,6 +49,18 @@ class Cluster:
             self.demand = cluster1.demand + cluster2.demand
             self.cluster_indices = cluster1.cluster_indices + cluster2.cluster_indices
 
+    def inner_distance(self, distances):
+        """
+        Calculates the inner distance (the average distance between points in the cluster)
+        Args:
+            distances(ndarray): the distance matrix containing all distances of the current space
+        Returns:
+            (number): the average inner distance
+        """
+        cluster_distances = distances[np.ix_(self.cluster_indices, self.cluster_indices)]
+        number_of_connections = np.power(cluster_distances.shape[0] - 1, 2)
+        return np.sum(cluster_distances) // number_of_connections if number_of_connections > 0 else 0
+
     def __repr__(self):
         return "Cluster: {}, demand: {}".format(self.cluster_indices, self.demand)
 
@@ -119,5 +131,5 @@ if __name__ == '__main__':
     HC = HierarchicalClustering(distances[0:test_city_count, 0:test_city_count], demands[0:test_city_count])
     HC.cluster()
     HC.cluster(dist_func=d_min)
-    HC.cluster(dist_func=d_max)
-
+    cluster = HC.cluster(dist_func=d_max)
+    print(cluster.subcluster[1].inner_distance(distances[0:test_city_count, 0:test_city_count]))
