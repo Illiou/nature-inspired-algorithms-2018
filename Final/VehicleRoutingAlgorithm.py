@@ -52,7 +52,7 @@ class VRPAlgorithm:
         self.customer_per_vehicle = None
 
     def run(self):
-        self.customer_per_vehicle = self.calculate_customer_per_vehicle(inner_distance_bound=120)
+        self.customer_per_vehicle = self.calculate_customer_per_vehicle(inner_distance_ratio_bound=0.55)
         print(self.customer_per_vehicle)
         permutation_for_vehicles = self.calculate_permutation_for_vehicles()
         print(permutation_for_vehicles)
@@ -70,22 +70,24 @@ class VRPAlgorithm:
             nonzero_indices = vehicle_customers.nonzero()[0]
             distances = self.problem.distances[np.ix_(nonzero_indices, nonzero_indices)]
             aco = TSPACO(distances, INITIALIZATION_VALUE, EVAPORATION_RATE, INTENSIFICATION_VALUE, ALPHA, BETA,
-                            ANT_NUMBER, N_BEST_TO_INTENSIFY)
+                         ANT_NUMBER, N_BEST_TO_INTENSIFY)
             best_paths, best_paths_lengths = aco.run(ITERATIONS)
             vehicle_index = np.arange(vehicle_count)[vehicle_visits_at_least_one][i]
             permutation_per_vehicle[vehicle_index] = (best_paths[-1], best_paths_lengths[-1])
         return permutation_per_vehicle
 
-    def calculate_customer_per_vehicle(self, inner_distance_bound=None):
+    def calculate_customer_per_vehicle(self, inner_distance_ratio_bound=None):
         cluster = [HierarchicalClustering(self.problem.distances[1:, 1:], self.problem.demands).cluster()]
         vehicles = np.copy(self.problem.vehicles)
         customer_per_vehicle = np.zeros([self.problem.vehicles.shape[0], self.problem.customer_count])
         served_customers = 0
-        print(customer_per_vehicle.shape)
+        inner_distance_bound = np.mean([np.mean(self.problem.distances[0]), np.mean(self.problem.distances[:, 0])]) \
+                               * inner_distance_ratio_bound if inner_distance_ratio_bound else None
         while served_customers < self.problem.customer_count:
             new_cluster = []
             for cl in cluster:
-                if inner_distance_bound and cl.inner_distance(self.problem.distances[1:, 1:]) > inner_distance_bound:
+                if inner_distance_ratio_bound \
+                        and cl.inner_distance(self.problem.distances[1:, 1:]) > inner_distance_bound:
                     new_cluster.extend(cl.subcluster)
                     continue
                 v_index = self._vehicle_for_cluster(cl, vehicles)
@@ -96,11 +98,12 @@ class VRPAlgorithm:
                 else:
                     if not cl.subcluster:
                         raise ValueError(f"No solution found. The inner_distance_bound "
-                                         f"{inner_distance_bound} might be too low")
+                                         f"{inner_distance_ratio_bound} might be too low")
                     new_cluster.extend(cl.subcluster)
 
             cluster = new_cluster
-        customer_per_vehicle = np.concatenate((np.ones((customer_per_vehicle.shape[0], 1)), customer_per_vehicle), axis=1)
+        customer_per_vehicle = np.concatenate((np.ones((customer_per_vehicle.shape[0], 1)), customer_per_vehicle),
+                                              axis=1)
         return customer_per_vehicle
 
     @staticmethod
@@ -134,4 +137,3 @@ if __name__ == '__main__':
     print(solution)
     print(solution.cost)
     print(solution.solution_lengths)
-
