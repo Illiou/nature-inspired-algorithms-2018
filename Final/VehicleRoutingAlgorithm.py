@@ -52,7 +52,7 @@ class VRPAlgorithm:
         self.customer_per_vehicle = None
 
     def run(self):
-        self.customer_per_vehicle = self.calculate_customer_per_vehicle(inner_distance_ratio_bound=0.55)
+        self.customer_per_vehicle = self.calculate_customer_per_vehicle(inner_distance_ratio_bound=0.57)
         print(self.customer_per_vehicle)
         permutation_for_vehicles = self.calculate_permutation_for_vehicles()
         print(permutation_for_vehicles)
@@ -81,7 +81,7 @@ class VRPAlgorithm:
         vehicles = np.copy(self.problem.vehicles)
         customer_per_vehicle = np.zeros([self.problem.vehicles.shape[0], self.problem.customer_count])
         served_customers = 0
-        inner_distance_bound = np.mean([np.mean(self.problem.distances[0]), np.mean(self.problem.distances[:, 0])]) \
+        inner_distance_bound = np.mean(self.problem.distances) \
                                * inner_distance_ratio_bound if inner_distance_ratio_bound else None
         while served_customers < self.problem.customer_count:
             new_cluster = []
