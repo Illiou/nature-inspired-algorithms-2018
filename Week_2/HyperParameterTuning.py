@@ -1,4 +1,4 @@
-import Week_2.GeneticAlgorithm as GeneticAlgorithm
+import nia.Week_2.GeneticAlgorithm as GeneticAlgorithm
 
 
 # import matplotlib as plt

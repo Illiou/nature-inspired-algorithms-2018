@@ -1,4 +1,4 @@
-from Week_2.AbstractModules import AbstractReplacer
+from nia.Week_2.AbstractModules import AbstractReplacer
 import random
 from operator import attrgetter
 

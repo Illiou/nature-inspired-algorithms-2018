@@ -1,4 +1,4 @@
-from Week_2.AbstractModules import AbstractMutator
+from nia.Week_2.AbstractModules import AbstractMutator
 import random
 
 
@@ -7,7 +7,7 @@ class BitFlipMutator(AbstractMutator):
         """Mutates the given chromosome by flipping a random allele"""
         for gene in range(len(chromosome)):
             if random.random() < self.mutation_probability:
-                chromosome[gene] = random.randrange(0, self.machine_count)
+                chromosome[gene] = random.randrange(0, self.allele_count)
         return chromosome
 
 

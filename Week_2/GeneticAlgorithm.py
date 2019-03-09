@@ -7,12 +7,12 @@ from statistics import median
 import matplotlib.pyplot as plt
 from numpy import mean
 
-import Week_2.Initializer as Initializer
-import Week_2.Mutator as Mutator
-import Week_2.Recombiner as Recombiner
-import Week_2.Replacer as Replacer
-import Week_2.Selector as Selector
-from Week_2.Problem import Problem
+import nia.Week_2.Initializer as Initializer
+import nia.Week_2.Mutator as Mutator
+import nia.Week_2.Recombiner as Recombiner
+import nia.Week_2.Replacer as Replacer
+import nia.Week_2.Selector as Selector
+from nia.Week_2.Problem import Problem
 
 
 def current_milli_time():

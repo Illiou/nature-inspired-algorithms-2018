@@ -1,13 +1,88 @@
 import abc
 
 
+class AbstractProblem(abc.ABC):
+    """Abstract interface for a problem"""
+    @abc.abstractmethod
+    def chromosome_size(self):
+        """ The chromosome size of the problem
+
+        Returns:
+            int: the chromosome size
+        """
+        ...
+
+    @abc.abstractmethod
+    def allele_count(self):
+        """ The number of alleles
+
+        Returns:
+            int: the allele count
+        """
+        ...
+
+    @abc.abstractmethod
+    def create_individual(self, chromosome, fitness=None):
+        """
+        Creates an object of a subclass of AbstractIndividual
+        Args:
+            chromosome(array(list)): the chromosome of the individual
+            fitness(float): already calculated fitness
+        Returns:
+            AbstractIndividual: the new individual
+        """
+        ...
+
+
+class AbstractIndividual(abc.ABC):
+    """Abstract interface for an Individual"""
+    def __init__(self, problem, chromosome, fitness=None):
+        """
+        An individual of the population
+
+        Args:
+            problem(AbstractProblem): The according problem
+            chromosome(list): the chromosome of the individual
+            fitness(float): a already computed fitness value, which will be newly computed if None
+        """
+        self.problem = problem
+        self.chromosome = chromosome
+        if fitness is None:
+            self.fitness = self._calculate_fitness()
+        else:
+            self.fitness = fitness
+
+    @abc.abstractmethod
+    def _calculate_fitness(self):
+        """
+        Calculate the fitness of the given chromosome
+
+        Returns:
+            int: the fitness
+        """
+        ...
+
+    def mutate(self, mutator):
+        """
+        Mutates the individuals`s chromosome by using the given mutator
+        Args:
+            mutator: the mutator used for mutation
+        """
+        self.chromosome = mutator.mutate(self.chromosome)
+        self.fitness = self._calculate_fitness()
+
+    def __copy__(self):
+        # to improve performance by not recalculating fitness each time a deepcopy gets made
+        return self.problem.create_individual(self.chromosome.copy(), self.fitness)
+
+
 class AbstractInitializer(abc.ABC):
     """Abstract interface for an Initializer yielding a method to create an initialized population"""
     def __init__(self, problem, population_size):
         """Initialize the Initializer
 
         Args:
-            problem(Problem): the according problem
+            problem(AbstractProblem): the according problem
             population_size(int): the population size
         """
         self.problem = problem
@@ -74,16 +149,16 @@ class AbstractRecombiner(abc.ABC):
 
 class AbstractMutator(abc.ABC):
     """Abstract interface for a Mutator yielding a method to mutate a single chromosome"""
-    def __init__(self, mutation_probability, machine_count):
+    def __init__(self, mutation_probability, allele_count):
         """
         Initialize the Mutator
 
         Args:
             mutation_probability(float): probability for mutation
-            machine_count(int): number of machines
+            allele_count(int): number of machines
         """
         self.mutation_probability = mutation_probability
-        self.machine_count = machine_count
+        self.allele_count = allele_count
 
     @abc.abstractmethod
     def mutate(self, chromosome):

@@ -1,4 +1,4 @@
-from Week_2.AbstractModules import AbstractSelector
+from nia.Week_2.AbstractModules import AbstractSelector
 import random
 from operator import attrgetter
 from copy import copy

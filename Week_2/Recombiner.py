@@ -1,8 +1,6 @@
 import random
 from copy import copy
-from Week_2.Problem import Individual
-
-from Week_2.AbstractModules import AbstractRecombiner
+from nia.Week_2.AbstractModules import AbstractRecombiner
 
 
 class KPointCrossover(AbstractRecombiner):
@@ -28,7 +26,8 @@ class KPointCrossover(AbstractRecombiner):
             for j in range(self.k + 1):
                 parent = parents[(i + j) % len(parents)]
                 new_child.extend(parent.chromosome[crossover_points[j]:crossover_points[j + 1]])
-            children.append(Individual(parents[0].problem, new_child))
+            problem = parents[0].problem
+            children.append(problem.create_individual(new_child))
 
         return children
 
@@ -45,6 +44,7 @@ class UniformScanCrossover(AbstractRecombiner):
         children = []
         for i in range(len(parents)):
             new_child = [random.choice(possible) for possible in possibilities]
-            children.append(Individual(parents[0].problem, new_child))
+            problem = parents[0].problem
+            children.append(problem.create_individual(new_child))
 
         return children
