@@ -1,6 +1,5 @@
 from abc import *
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class ArtificialBeeColony(ABC):
@@ -31,7 +30,6 @@ class ArtificialBeeColony(ABC):
         """
         pass
 
-    # noinspection PyTypeChecker
     def max_or_minimizing_objective_function(self, solutions):
         values = self.objective_function(solutions)
         if self.minimization:
@@ -50,10 +48,11 @@ class ArtificialBeeColony(ABC):
     def employed_phase(self):
         new_solutions, new_nectar = self.generate_neighbours(self.solutions)
         should_change = self.nectar < new_nectar
-        self.solutions = np.where(np.reshape(should_change, (-1, 1)), new_solutions, self.solutions)
+        expand_to_sol_dim = (slice(None),) + (np.newaxis,) * (self.solutions.ndim - 1) # for n-dimensional solutions
+        self.solutions = np.where(should_change[expand_to_sol_dim], new_solutions, self.solutions)
         self.nectar = np.where(should_change, new_nectar, self.nectar)
-        no_change_int = 1 - should_change.astype(int)
-        self.not_changed_count = (self.not_changed_count + no_change_int) * no_change_int
+        no_change = ~ should_change
+        self.not_changed_count = (self.not_changed_count + no_change) * no_change
 
     def generate_neighbours(self, solutions):
         """
@@ -91,28 +90,27 @@ class ArtificialBeeColony(ABC):
         probabilities = self.nectar / np.sum(self.nectar)
         solution_choices = np.random.choice(self.bee_count, self.bee_count, p=probabilities)
         neighbours, neighbours_nectar = self.generate_neighbours(self.solutions[solution_choices])
-        choices_unique = list(set(solution_choices))
-        for choice in choices_unique:
-            best_for_choice = np.argmax(np.hstack((np.where(solution_choices == choice, neighbours_nectar, 0), self.nectar[choice])))
-            if best_for_choice != self.bee_count:  # the old solution was the best one
-                self.solutions[choice] = neighbours[best_for_choice]
-                self.nectar[choice] = neighbours_nectar[best_for_choice]
+        for choice in set(solution_choices):
+            choice_indices = np.where(choice == solution_choices)[0]
+            best_choice = choice_indices[np.argmax(neighbours_nectar[choice_indices])]
+            if neighbours_nectar[best_choice] >= self.nectar[choice]:
+                self.solutions[choice] = neighbours[best_choice]
+                self.nectar[choice] = neighbours_nectar[best_choice]
                 self.not_changed_count[choice] = 0
 
     def scout_phase(self, best_index=None):
         limit_exceeded = self.not_changed_count >= self.abandoned_limit
-        if any(limit_exceeded):
-            for i, exceeded in enumerate(limit_exceeded):
-                if exceeded and best_index != i:
-                    new_solutions = self.random_solutions(1)
-                    self.solutions[i] = new_solutions[0]
-                    self.nectar[i] = self.max_or_minimizing_objective_function(new_solutions)[0]
+        if best_index is not None:
+            limit_exceeded[best_index] = False
+        new_solutions = self.random_solutions(np.count_nonzero(limit_exceeded))
+        self.solutions[limit_exceeded] = new_solutions
+        self.nectar[limit_exceeded] = self.max_or_minimizing_objective_function(new_solutions)
 
     def run(self, iterations=100):
-        best_nectar = np.zeros(iterations)
+        best_nectars = np.zeros(iterations)
         best_index = -1
         for i in range(iterations):
-            if i % 10 == 0:
+            if i % 100 == 0:
                 print("step", i)
             self.employed_phase()
             self.onlooker_phase()
@@ -122,8 +120,8 @@ class ArtificialBeeColony(ABC):
                 self.scout_phase()
             # to not have the transformed nectar in minimization
             best_index = np.argmax(self.nectar)
-            best_nectar[i] = self.objective_function(np.reshape(self.solutions[best_index], (1, -1)))[0]
-        return best_nectar, self.solutions[best_index]
+            best_nectars[i] = self.objective_function(self.solutions[best_index])[0]
+        return best_nectars, self.solutions[best_index]
 
 
 class ABCTest(ArtificialBeeColony):
@@ -139,6 +137,8 @@ if __name__ == '__main__':
     limit = 20
 
     best_nectar, best_solution = ABCTest(bee_count, limit, [-15]*dims, [15]*dims, minimization=True).run(iterations)
+
+    import matplotlib.pyplot as plt
 
     curr_fig, curr_ax = plt.subplots()
     curr_ax.plot(best_nectar, label="Best nectar")

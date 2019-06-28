@@ -63,7 +63,7 @@ class VRPAlgorithm:
     def calculate_permutation_for_vehicles(self):  # TODO test 1 customer in vehicle
         customer_count_per_vehicle = np.sum(self.customer_per_vehicle, axis=1)
         vehicle_count = self.problem.vehicles.shape[0]
-        permutation_per_vehicle = [([0], 0)] * vehicle_count
+        permutation_per_vehicle = [([0], 0) for _ in range(vehicle_count)]
         # every vehicle visits depot
         vehicle_visits_at_least_one = customer_count_per_vehicle > 1
         for i, vehicle_customers in enumerate(self.customer_per_vehicle[vehicle_visits_at_least_one]):
@@ -133,7 +133,10 @@ if __name__ == '__main__':
     problem = problem_from_files(path + "capacity.txt", path + "transportation_cost.txt",
                                  path + "demand.txt", path + "distance.txt",
                                  path + "should_be_better_than_value.txt")
-    solution = VRPAlgorithm(problem).run()
+
+    VRPA = VRPAlgorithm(problem)
+    solution = VRPA.run()
+
     print(solution)
     print(solution.cost)
     print(solution.solution_lengths)

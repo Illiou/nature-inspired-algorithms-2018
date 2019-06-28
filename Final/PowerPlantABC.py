@@ -35,6 +35,9 @@ class PowerPlantABC(ArtificialBeeColony):
             res[price > max_price] = 0
             return res
 
+        if solutions.ndim == 1:
+            solutions = solutions[np.newaxis, ...]
+
         energy_by_plant = solutions[:, :len(self.plants)]
         energy_by_market = solutions[:, len(self.plants):-len(self.markets)]
         price_by_market = solutions[:, -len(self.markets):]
@@ -59,7 +62,7 @@ class PowerPlantABC(ArtificialBeeColony):
 
 
 if __name__ == '__main__':
-    problem_num = 1
+    problem_num = 3
     problem = problems[problem_num]
     bee_count = 70
     iterations = 10000

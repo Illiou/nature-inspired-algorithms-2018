@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .links line {
+      /*stroke: #999;*/
+      stroke-opacity: 1;
+    }
+
+</style>
+<svg id="canvas"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+    var trucks = [
+        [71, 0, 48, 44, 29, 59, 4, 51, 99, 75, 33, 85, 68, 12, 73, 3, 96],
+        [81, 95, 53, 94, 9, 58, 0, 55, 13, 76, 91, 7, 15, 10, 1, 39, 100, 38, 19, 43, 87, 37, 25, 14, 20, 52, 80, 34, 90, 65, 92, 30, 11, 77, 93, 5, 23, 63, 16, 74, 24, 35, 40, 31, 54],
+        [6, 57, 47, 60, 49, 88, 50, 42, 97, 72, 84, 89, 61, 86, 8, 22, 28, 41, 67, 26, 0, 62, 2, 66, 36, 64, 27, 46, 69, 78, 17, 98, 83, 21, 45, 79, 56, 32, 82, 70, 18]
+    ];
+
+    var svg = d3.select("svg"),
+        width = document.documentElement.clientWidth;
+        height = document.documentElement.clientHeight;
+        //width = +svg.attr("width"),
+        //height = +svg.attr("height");
+        document.getElementById("canvas").setAttribute("style","width:"+width+"px;height:"+height+"px");
+
+    var color = d3.scaleSequential(d3.interpolatePlasma);
+
+    var simulation = d3.forceSimulation()
+                       .force("link", d3.forceLink().id(function(d) { return d.id; })
+                       .distance(function(d) { return d.value; })
+                       .iterations(5))
+                       //.force("charge", d3.forceManyBody().theta(0.4))
+                       .force("center", d3.forceCenter(width / 2, height / 2));
+
+    var color_of_path = function(source, target) {
+        colors = ["#db000b", "#00FF00", "#363cff", "#e5a706", "#b018b9", "#00a8ce", "#575757"];
+        for (let truck = 0; truck < trucks.length; truck++) {
+            let i = trucks[truck].indexOf(source);
+            let j = trucks[truck].indexOf(target);
+            if (i === -1 || j === -1) {
+                continue
+            }
+            if ((i + 1) % trucks[truck].length === j || (j + 1) % trucks[truck].length === i) {
+                return colors[truck];
+            }
+
+        }
+        return "";
+    };
+
+    d3.json("force_data.json", function(error, graph) {
+      if (error) throw error;
+
+      var link = svg.append("g")
+                    .attr("class", "links")
+                    .selectAll("line")
+                    .data(graph.links)
+                    .enter().append("line")
+                    .attr("stroke", function(d) { return color_of_path(d.source, d.target); })
+                    //.attr("opacity", function(d) { return part_of_path(d.source, d.target) ? 0.6 : 0.2; })
+                    .attr("stroke-width", function(d) { return 2; });
+
+      var node = svg.append("g")
+                    .attr("class", "nodes")
+                    .selectAll("circle")
+                    .data(graph.nodes)
+                    .enter().append("circle")
+                    .attr("r", 5)
+                    .attr("fill", function(d) { return d.id !== 0 ? "#333333" : "#FF0000" /*color(d.group)*/; })
+                    .call(d3.drag()
+                            .on("start", dragstarted)
+                            .on("drag", dragged)
+                            .on("end", dragended));
+
+      node.append("title").text(function(d) { return d.id; });
+
+      simulation.nodes(graph.nodes).on("tick", ticked);
+
+      simulation.force("link").links(graph.links);
+
+      function ticked() {
+        link
+            .attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
+        node
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+      }
+    });
+
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+      if (!d3.event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+
+</script>

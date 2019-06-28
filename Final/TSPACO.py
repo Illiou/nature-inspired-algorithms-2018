@@ -85,7 +85,7 @@ class TSPACO:
                 # find the point/index at which this number would be inserted to keep the cumulative sum ordered
                 # (which is what bisect does), which then makes for a weighted random selection of a city
                 cum_sum = np.cumsum(cities_left[i])
-                i = bisect.bisect_left(cum_sum, cum_sum[-1] * rands[cnt])
+                i = bisect.bisect_right(cum_sum, cum_sum[-1] * rands[cnt])
                 paths[k, cnt] = i
         return paths
 
