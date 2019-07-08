@@ -7,8 +7,10 @@ class Solution:
         """
 
         Args:
-            tsp_solutions: 2D List of customer permutation per vehicle. Empty list if no customer is visited (eg. [[1,4,20,5,2], [3,6,0], [7,9], [], []])
-            solution_lengths: 1D ndArray of path length per vehicle in tsp solution. 0 if no customer visited (eg. [123, 23, 4, 0, 0])
+            tsp_solutions: 2D List of customer permutation per vehicle.
+            Empty list if no customer is visited (eg. [[1,4,20,5,2], [3,6,0], [7,9], [], []])
+            solution_lengths: 1D ndArray of path length per vehicle in tsp solution.
+            0 if no customer visited (eg. [123, 23, 4, 0, 0])
         """
         self.tsp_solutions = tsp_solutions
         self.solution_lengths = solution_lengths

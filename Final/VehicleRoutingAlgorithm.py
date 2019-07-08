@@ -1,5 +1,5 @@
 import numpy as np
-from Final.HierarchicalCluster import HierarchicalClustering, Cluster
+from Final.HierarchicalCluster import VRPHierarchicalClustering, VRPCluster
 from Final.Solution import Solution
 from Final.TSPACO import TSPACO
 
@@ -7,7 +7,7 @@ from Final.TSPACO import TSPACO
 INITIALIZATION_VALUE = 5
 EVAPORATION_RATE = 0.02
 INTENSIFICATION_VALUE = 0.6
-ITERATIONS = 1200
+ITERATIONS = 500
 ALPHA = 1
 BETA = 6
 ANT_NUMBER = 100
@@ -22,6 +22,7 @@ class Problem:
             vehicles(ndarray): list of vehicles(capacity and cost)
             distances(ndarray): n*n matrix of distances between customers and depot
             demands(ndarray): list of demands
+            max_allowed_value(int): the value that should be passed at least
         """
         self.vehicles = vehicles
         self.distances = distances
@@ -33,25 +34,48 @@ class Problem:
 
 
 def vehicles_from_files(capacity_file, transportation_cost_file):
+    """
+    Create the vehicles with capacity and cost from the given files
+    Args:
+        capacity_file(str): the path to the capacity file
+        transportation_cost_file(str): the path to the transportation_cost file
+    Returns: ndarray of vehicles
+    """
     caps = np.loadtxt(capacity_file, dtype=int)
     costs = np.loadtxt(transportation_cost_file, dtype=int)
     return np.vstack((caps, costs)).T
 
 
 def problem_from_files(capacity_file, transportation_cost_file, demands_file, distance_file, max_value_file):
+    """
+    Create the problem from the given files
+    Args:
+        capacity_file(str): the path to the capacity file
+        transportation_cost_file(str): the path to the transportation_cost file
+        demands_file(str): the path to the demands file
+        distance_file(str): the path to the distance file
+        max_value_file(str): the path to the should_be_better_than_value file
+    Returns: (Problem) the loaded Problem
+    """
     vehicles = vehicles_from_files(capacity_file, transportation_cost_file)
     demands = np.loadtxt(demands_file, dtype=int)
     distances = np.loadtxt(distance_file, dtype=int)
-    max_allowed_value = np.loadtxt(max_value_file, dtype=int)
+    max_allowed_value = int(np.loadtxt(max_value_file, dtype=int))
     return Problem(vehicles, distances, demands, max_allowed_value)
 
 
 class VRPAlgorithm:
     def __init__(self, problem):
+        """
+        Algorithm to solve the given VRP Problem with Hierarchical Clustering and ACO
+        Args:
+            problem(Problem): the problem to be solved
+        """
         self.problem = problem
         self.customer_per_vehicle = None
 
     def run(self):
+        """Starts the algorithm"""
         self.customer_per_vehicle = self.calculate_customer_per_vehicle(inner_distance_ratio_bound=0.57)
         print(self.customer_per_vehicle)
         permutation_for_vehicles = self.calculate_permutation_for_vehicles()
@@ -61,12 +85,13 @@ class VRPAlgorithm:
         return solution
 
     def calculate_permutation_for_vehicles(self):  # TODO test 1 customer in vehicle
+        """Calculate the best path for every vehicle to visit its customers"""
         customer_count_per_vehicle = np.sum(self.customer_per_vehicle, axis=1)
         vehicle_count = self.problem.vehicles.shape[0]
-        permutation_per_vehicle = [([0], 0) for _ in range(vehicle_count)]
-        # every vehicle visits depot
+        permutation_per_vehicle = [([0], 0) for _ in range(vehicle_count)] # every vehicle visits depot
         vehicle_visits_at_least_one = customer_count_per_vehicle > 1
         for i, vehicle_customers in enumerate(self.customer_per_vehicle[vehicle_visits_at_least_one]):
+            # go through all vehicles, which visit at least one customer and determine their path with ACO
             nonzero_indices = vehicle_customers.nonzero()[0]
             distances = self.problem.distances[np.ix_(nonzero_indices, nonzero_indices)]
             aco = TSPACO(distances, INITIALIZATION_VALUE, EVAPORATION_RATE, INTENSIFICATION_VALUE, ALPHA, BETA,
@@ -77,7 +102,16 @@ class VRPAlgorithm:
         return permutation_per_vehicle
 
     def calculate_customer_per_vehicle(self, inner_distance_ratio_bound=None):
-        cluster = [HierarchicalClustering(self.problem.distances[1:, 1:], self.problem.demands).cluster()]
+        """
+        Calculate which customer should be visited by which vehicle by doing Hierarchical Clustering
+        and then assigning clusters to vehicles
+        Args:
+            inner_distance_ratio_bound(float): the mean inner distance of the customers served by one vehicle
+            should not be larger than inner_distance_ratio_bound * mean_distance of all customers
+        Returns: (ndarray) with the customers served by each vehicle as one hot
+
+        """
+        cluster = [VRPHierarchicalClustering(self.problem.distances[1:, 1:], self.problem.demands).cluster()]
         vehicles = np.copy(self.problem.vehicles)
         customer_per_vehicle = np.zeros([self.problem.vehicles.shape[0], self.problem.customer_count])
         served_customers = 0
@@ -88,7 +122,7 @@ class VRPAlgorithm:
             for cl in cluster:
                 if inner_distance_ratio_bound \
                         and cl.inner_distance(self.problem.distances[1:, 1:]) > inner_distance_bound:
-                    new_cluster.extend(cl.subcluster)
+                    new_cluster.extend(cl.subclusters)
                     continue
                 v_index = self._vehicle_for_cluster(cl, vehicles)
                 if v_index:
@@ -96,10 +130,10 @@ class VRPAlgorithm:
                     customer_per_vehicle[v_index][cl.cluster_indices] = True
                     vehicles[v_index][0] -= cl.demand
                 else:
-                    if not cl.subcluster:
+                    if not cl.subclusters:
                         raise ValueError(f"No solution found. The inner_distance_bound "
                                          f"{inner_distance_ratio_bound} might be too low")
-                    new_cluster.extend(cl.subcluster)
+                    new_cluster.extend(cl.subclusters)
 
             cluster = new_cluster
         customer_per_vehicle = np.concatenate((np.ones((customer_per_vehicle.shape[0], 1)), customer_per_vehicle),
@@ -111,7 +145,7 @@ class VRPAlgorithm:
         """
         Returns the index of the smallest vehicle with enough capacity for the given cluster
         Args:
-            cluster(Cluster): the given cluster
+            cluster(VRPCluster): the given cluster
             vehicles(ndarray): the possible vehicles
         Returns:
             (int): the index of the according vehicle or None if no vehicle is large enough
@@ -124,13 +158,20 @@ class VRPAlgorithm:
         return index_of_smallest_sufficient
 
     def objective_function(self, solution):
+        """
+        The cost for the given solution
+        Args:
+            solution(Solution): the solution
+        Returns: (float) the cost for the solution
+        """
         return np.dot(self.problem.vehicles[:, 1], solution.solution_lengths)
 
 
 if __name__ == '__main__':
     problem_number = 1
     path = f"./Vehicle_Routing_Problems/VRP{problem_number}/"
-    problem = problem_from_files(path + "capacity.txt", path + "transportation_cost.txt",
+    problem = problem_from_files(path + "capacity.txt",
+                                 path + "transportation_cost.txt",
                                  path + "demand.txt", path + "distance.txt",
                                  path + "should_be_better_than_value.txt")
 
