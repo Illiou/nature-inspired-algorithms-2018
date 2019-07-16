@@ -30,7 +30,7 @@ class TSPACO:
     def run(self, iterations=1):
         """ Runs the algorithm for the given number of iterations """
         best_paths_lengths = np.zeros(iterations)
-        best_paths = np.zeros((iterations, self.cities))
+        best_paths = np.zeros((iterations, self.cities), dtype=np.int64)
         for i in range(iterations):
             if i % 100 == 0:
                 print(f"Iteration {i}")

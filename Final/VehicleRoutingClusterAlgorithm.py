@@ -7,9 +7,9 @@ from Final.TSPACO import TSPACO
 INITIALIZATION_VALUE = 5
 EVAPORATION_RATE = 0.02
 INTENSIFICATION_VALUE = 0.6
-ITERATIONS = 500
+ITERATIONS = 1500
 ALPHA = 1
-BETA = 6
+BETA = 2
 ANT_NUMBER = 100
 N_BEST_TO_INTENSIFY = 3
 
@@ -80,6 +80,8 @@ class VRPAlgorithm:
         print(self.customer_per_vehicle)
         permutation_for_vehicles = self.calculate_permutation_for_vehicles()
         print(permutation_for_vehicles)
+        print(list(zip(*permutation_for_vehicles))[0])
+        print(list(zip(*permutation_for_vehicles))[1])
         solution = Solution(*zip(*permutation_for_vehicles))
         solution.cost = self.objective_function(solution)
         return solution
