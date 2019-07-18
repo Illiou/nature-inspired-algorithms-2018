@@ -5,6 +5,7 @@ from VehicleRoutingABC import *
 def run_algorithm(algorithm, solution_file_base=None):
     solution = algorithm.run()
     print(f"Solution is {solution}")
+    print(f"visited customers: {set([item for sublist in solution.tsp_solutions for item in sublist])}")
     csv_name = None
     json_name = None
     if solution_file_base is not None:
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     problem_1 = load_problem(1)
     problem_2 = load_problem(2)
 
-    run_abc_algo(problem_1)
-    run_abc_algo(problem_2)
+    # run_abc_algo(problem_1)
+    # run_abc_algo(problem_2)
     run_cluster_algo(problem_1)
-    run_cluster_algo(problem_2)
+    # run_cluster_algo(problem_2)

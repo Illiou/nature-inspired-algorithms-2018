@@ -105,13 +105,16 @@ class VRPAlgorithm(AbstractVehicleRoutingAlgorithm):
         vehicle_visits_at_least_one = customer_count_per_vehicle > 1
         for i, vehicle_customers in enumerate(self.customer_per_vehicle[vehicle_visits_at_least_one]):
             # go through all vehicles, which visit at least one customer and determine their path with ACO
-            nonzero_indices = vehicle_customers.nonzero()[0]
-            distances = self.problem.distances[np.ix_(nonzero_indices, nonzero_indices)]
+            customer_to_be_visited = vehicle_customers.nonzero()[0]
+            distances = self.problem.distances[np.ix_(customer_to_be_visited, customer_to_be_visited)]
             aco = TSPACO(distances, INITIALIZATION_VALUE, EVAPORATION_RATE, INTENSIFICATION_VALUE, ALPHA, BETA,
                          ANT_NUMBER, N_BEST_TO_INTENSIFY)
             best_paths, best_paths_lengths = aco.run(ITERATIONS)
+            best_path = best_paths[-1]
+            best_path_distances = best_paths_lengths[-1]
+            correct_ordered_customers = customer_to_be_visited[best_path]
             vehicle_index = np.arange(vehicle_count)[vehicle_visits_at_least_one][i]
-            permutation_per_vehicle[vehicle_index] = (best_paths[-1], best_paths_lengths[-1])
+            permutation_per_vehicle[vehicle_index] = (correct_ordered_customers, best_path_distances)
         return permutation_per_vehicle
 
     def calculate_customer_per_vehicle(self, inner_distance_ratio_bound=None):
