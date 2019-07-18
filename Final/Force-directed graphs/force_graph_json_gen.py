@@ -1,23 +1,25 @@
 import numpy as np
 import json
 
-problem = 1
+problem = 2
 distances_file = f"../Vehicle_Routing_Problems/VRP{problem}/distance.txt"
 distance_matrix = np.loadtxt(distances_file)
+
+force_multiplier = 2  # problem distances dependent, changes overall size of resulting graph
 
 # direction differences
 # compared = distance_matrix != distance_matrix.T
 # print(np.dstack((distance_matrix[compared], distance_matrix.T[compared])))
 
 n = distance_matrix.shape[0]
-#n = 50
-
 nodes = [{"id": i, "group": i / n} for i in range(n)]
+
 links = []
 for i in range(n):
     for j in range(i + 1, n):
         if distance_matrix[i, j] != 0:
-            links.append({"source": i, "target": j, "value": (distance_matrix[i, j] + distance_matrix[j, i]) / 2 * 2.1})
+            links.append({"source": i, "target": j,
+                          "value": (distance_matrix[i, j] + distance_matrix[j, i]) / 2 * force_multiplier})
 
 data = {"nodes": nodes, "links": links}
 
