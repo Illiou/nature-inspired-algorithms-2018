@@ -8,7 +8,7 @@ from AbstractVehicleRoutingAlgorithm import AbstractVehicleRoutingAlgorithm
 INITIALIZATION_VALUE = 5
 EVAPORATION_RATE = 0.02
 INTENSIFICATION_VALUE = 0.6
-ITERATIONS = 1500
+ITERATIONS = 1000
 ALPHA = 1
 BETA = 2
 ANT_NUMBER = 100

@@ -36,7 +36,7 @@ if __name__ == '__main__':
     problem_1 = load_problem(1)
     problem_2 = load_problem(2)
 
-    # run_abc_algo(problem_1)
-    # run_abc_algo(problem_2)
+    run_abc_algo(problem_1)
+    run_abc_algo(problem_2)
     run_cluster_algo(problem_1)
-    # run_cluster_algo(problem_2)
+    run_cluster_algo(problem_2)
