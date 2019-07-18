@@ -1,0 +1,34 @@
+vehicles	visited customers	driven distance
+vehicle_1	[0]	0
+vehicle_2	[0, 23, 75, 83, 25, 14, 53, 99]	1020
+vehicle_3	[0]	0
+vehicle_4	[0, 87, 11, 19, 13, 51, 33]	1456
+vehicle_5	[0]	0
+vehicle_6	[0]	0
+vehicle_7	[0]	0
+vehicle_8	[0, 94, 33, 60, 41, 56, 52, 14]	1213
+vehicle_9	[0, 62, 98, 44, 40, 8]	894
+vehicle_10	[0]	0
+vehicle_11	[0]	0
+vehicle_12	[0]	0
+vehicle_13	[0, 54, 84, 31, 75]	908
+vehicle_14	[0, 99, 68, 16, 73, 37, 57]	629
+vehicle_15	[0]	0
+vehicle_16	[0]	0
+vehicle_17	[0, 9, 27, 46, 88, 39, 7, 40]	1068
+vehicle_18	[0, 45, 77, 1, 38, 80]	618
+vehicle_19	[0, 59, 71, 90, 12, 50, 49, 35]	1534
+vehicle_20	[0]	0
+vehicle_21	[0]	0
+vehicle_22	[0]	0
+vehicle_23	[0]	0
+vehicle_24	[0]	0
+vehicle_25	[0]	0
+vehicle_26	[0]	0
+vehicle_27	[0]	0
+vehicle_28	[0, 97, 63, 29, 89, 91, 64, 24, 42, 35, 66, 21, 26, 85, 96, 48, 55, 5, 81, 17, 3, 69, 20, 92, 76, 18, 0, 6]	2452
+vehicle_29	[0, 93, 15, 10, 36, 78, 34, 22, 30, 65, 47, 86, 4, 79, 82, 43, 95, 72, 2, 74, 67, 32, 58, 28, 70, 17]	2822
+vehicle_30	[0]	0
+vehicle_31	[0]	0
+vehicle_32	[0]	0
+vehicle_33	[0]	0

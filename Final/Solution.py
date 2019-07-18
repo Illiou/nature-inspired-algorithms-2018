@@ -1,5 +1,6 @@
 import csv
 import json
+import numpy as np
 
 
 class Solution:
@@ -28,13 +29,14 @@ class Solution:
         if csv_filename is None and json_filename is None:
             csv_filename = f"./Solution files/solution_{self.cost}.tsv"
             json_filename = f"./Solution files/solution_{self.cost}.json"
-        vehicle_zip = zip([f"vehicle_{i + 1}" for i, _ in enumerate(self.solution_lengths)], self.tsp_solutions,
-                          self.solution_lengths)
+        vehicle_zip_list = list(zip([f"vehicle_{i + 1}" for i, _ in enumerate(self.solution_lengths)],
+                                    self.tsp_solutions, self.solution_lengths))
         if csv_filename is not None:
             with open(csv_filename, "w+") as csv_file:
                 csv_writer = csv.writer(csv_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 csv_writer.writerow(["vehicles", "visited customers", "driven distance"])
-                csv_writer.writerows(vehicle_zip)
+                csv_writer.writerows(vehicle_zip_list)
+            print(f"Solution written to {csv_filename}")
         if json_filename is not None:
             json_dict = {}
             per_vehicle_key = "per_vehicle"
@@ -43,7 +45,9 @@ class Solution:
             length_key = "driven_distance"
             json_dict[per_vehicle_key] = {}
             json_dict[per_attribute_key] = {tsp_key: {}, length_key: {}}
-            for vehicle, tsp, length in vehicle_zip:
+            for vehicle, tsp, length in vehicle_zip_list:
+                if isinstance(tsp, np.ndarray):
+                    tsp = tsp.tolist()
                 json_dict[per_vehicle_key][vehicle] = {tsp_key: tsp, length_key: length}
                 if length > 0:
                     json_dict[per_attribute_key][tsp_key][vehicle] = tsp
@@ -51,3 +55,4 @@ class Solution:
             json_dumps = json.dumps(json_dict)
             with open(json_filename, "w+") as json_file:
                 json_file.write(json_dumps)
+            print(f"Solution written to {json_filename}")

@@ -1,7 +1,8 @@
 import numpy as np
-from Final.HierarchicalCluster import VRPHierarchicalClustering, VRPCluster
-from Final.Solution import Solution
-from Final.TSPACO import TSPACO
+from HierarchicalCluster import VRPHierarchicalClustering, VRPCluster
+from Solution import Solution
+from TSPACO import TSPACO
+from AbstractVehicleRoutingAlgorithm import AbstractVehicleRoutingAlgorithm
 
 # ant parameters TODO
 INITIALIZATION_VALUE = 5
@@ -15,7 +16,7 @@ N_BEST_TO_INTENSIFY = 3
 
 
 class Problem:
-    def __init__(self, vehicles, distances, demands, max_allowed_value=None):
+    def __init__(self, vehicles, distances, demands, max_allowed_value=None, problem_name=""):
         """
         A VehicleRoutingProblem
         Args:
@@ -29,6 +30,7 @@ class Problem:
         self.demands = demands
         self.max_allowed_value = max_allowed_value
         self.customer_count = len(demands)
+        self.name = problem_name
         if self.distances.shape != (self.customer_count + 1, self.customer_count + 1):
             raise AttributeError("One demand per customer must be given and distance must be quadratic")
 
@@ -46,7 +48,18 @@ def vehicles_from_files(capacity_file, transportation_cost_file):
     return np.vstack((caps, costs)).T
 
 
-def problem_from_files(capacity_file, transportation_cost_file, demands_file, distance_file, max_value_file):
+def load_problem(number):
+    path = f"./Vehicle_Routing_Problems/VRP{number}/"
+    return problem_from_files(path + "capacity.txt",
+                                 path + "transportation_cost.txt",
+                                 path + "demand.txt", path + "distance.txt",
+                                 path + "should_be_better_than_value.txt",
+                                problem_name=f"problem_{number}"
+                              )
+
+
+def problem_from_files(capacity_file, transportation_cost_file, demands_file, distance_file, max_value_file,
+                       problem_name=""):
     """
     Create the problem from the given files
     Args:
@@ -61,10 +74,10 @@ def problem_from_files(capacity_file, transportation_cost_file, demands_file, di
     demands = np.loadtxt(demands_file, dtype=int)
     distances = np.loadtxt(distance_file, dtype=int)
     max_allowed_value = int(np.loadtxt(max_value_file, dtype=int))
-    return Problem(vehicles, distances, demands, max_allowed_value)
+    return Problem(vehicles, distances, demands, max_allowed_value, problem_name=problem_name)
 
 
-class VRPAlgorithm:
+class VRPAlgorithm(AbstractVehicleRoutingAlgorithm):
     def __init__(self, problem):
         """
         Algorithm to solve the given VRP Problem with Hierarchical Clustering and ACO
@@ -80,8 +93,6 @@ class VRPAlgorithm:
         print(self.customer_per_vehicle)
         permutation_for_vehicles = self.calculate_permutation_for_vehicles()
         print(permutation_for_vehicles)
-        print(list(zip(*permutation_for_vehicles))[0])
-        print(list(zip(*permutation_for_vehicles))[1])
         solution = Solution(*zip(*permutation_for_vehicles))
         solution.cost = self.objective_function(solution)
         return solution
