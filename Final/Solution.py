@@ -1,6 +1,7 @@
 import csv
 import json
 import numpy as np
+from VehicleRoutingClusterAlgorithm import *
 
 
 class Solution:
@@ -34,8 +35,9 @@ class Solution:
         if csv_filename is not None:
             with open(csv_filename, "w+") as csv_file:
                 csv_writer = csv.writer(csv_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                csv_writer.writerow(["vehicles", "visited customers", "driven distance"])
+                csv_writer.writerow(["vehicles", "visited customers", "driven distance", "cost"])
                 csv_writer.writerows(vehicle_zip_list)
+                csv_writer.writerow([""] * 3 + [self.cost])
             print(f"Solution written to {csv_filename}")
         if json_filename is not None:
             json_dict = {}
@@ -45,6 +47,7 @@ class Solution:
             length_key = "driven_distance"
             json_dict[per_vehicle_key] = {}
             json_dict[per_attribute_key] = {tsp_key: {}, length_key: {}}
+            json_dict["cost"] = int(self.cost)
             for vehicle, tsp, length in vehicle_zip_list:
                 if isinstance(tsp, np.ndarray):
                     tsp = tsp.tolist()
@@ -56,3 +59,23 @@ class Solution:
             with open(json_filename, "w+") as json_file:
                 json_file.write(json_dumps)
             print(f"Solution written to {json_filename}")
+
+
+def check_json_solution(problem, json_filename):
+    with open(json_filename, "r") as json_file:
+        json_dump = json.load(json_file)
+
+    customers_to_visit = set(range(1, len(problem.demands)+1))
+    visited_customers = set()
+    for vehicle in json_dump["per_vehicle"].values():
+        for c in vehicle["visited_customers"]:
+            visited_customers.add(c)
+    print(problem.demands)
+    print(customers_to_visit)
+    print(visited_customers)
+    print(f"{len(customers_to_visit.difference(visited_customers))} customers not visited")
+
+
+if __name__ == '__main__':
+    problem = load_problem(1)
+    check_json_solution(problem, "./Solution files/solution_cluster_problem_1.json")

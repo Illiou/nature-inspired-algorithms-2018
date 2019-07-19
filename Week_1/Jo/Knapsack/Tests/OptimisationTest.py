@@ -37,7 +37,7 @@ class OptimisationTest(unittest.TestCase):
 
     def test_run(self):
         assignment = [1, 1, 0, 0, 0]
-        iterations, time, assignment = self.optimisation_large_hill.run(assignment)
+        iterations, time, assignment = self.optimisation_large_hill.run()
         self.assertEqual(2, iterations)
         self.assertEqual(13000, self.knapsack.value_for_assignment(assignment))
         self.assertEqual(311, self.knapsack.weight_for_assignment(assignment))
